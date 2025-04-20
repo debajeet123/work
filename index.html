@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Debajeet's Corner Globe</title>
+  <title>Debajeet's Animated Globe</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     html, body {
@@ -30,13 +30,17 @@
       z-index: 999;
       pointer-events: none;
     }
+    canvas {
+      width: 100% !important;
+      height: 100% !important;
+    }
   </style>
 </head>
 <body>
 
   <div class="content">
     <h1>Hi, I'm Debajeet</h1>
-    <p>This is a test of a 3D Earth using Three.js in the top-right corner.</p>
+    <p>This page has an animated 3D Earth in the top-right corner using Three.js.</p>
   </div>
 
   <div id="cornerGlobe"></div>
@@ -49,20 +53,22 @@
 
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
     renderer.setSize(200, 200);
-    renderer.setClearColor(0x000000, 0); // transparent
+    renderer.setClearColor(0x000000, 0);
     document.getElementById("cornerGlobe").appendChild(renderer.domElement);
 
     const loader = new THREE.TextureLoader();
-    loader.load('https://raw.githubusercontent.com/josephsurin/earth-globe-threejs/main/textures/earthmap1k.jpg', texture => {
+    loader.load('https://raw.githubusercontent.com/josephsurin/earth-globe-threejs/main/textures/earthmap1k.jpg', function(texture) {
       const geometry = new THREE.SphereGeometry(5, 64, 64);
       const material = new THREE.MeshPhongMaterial({ map: texture });
       const globe = new THREE.Mesh(geometry, material);
       scene.add(globe);
 
-      scene.add(new THREE.AmbientLight(0x888888));
-      const light = new THREE.DirectionalLight(0xffffff, 0.9);
-      light.position.set(5, 3, 5);
-      scene.add(light);
+      const ambientLight = new THREE.AmbientLight(0x888888);
+      scene.add(ambientLight);
+
+      const dirLight = new THREE.DirectionalLight(0xffffff, 1);
+      dirLight.position.set(5, 3, 5);
+      scene.add(dirLight);
 
       function animate() {
         requestAnimationFrame(animate);
@@ -70,6 +76,12 @@
         renderer.render(scene, camera);
       }
       animate();
+    });
+
+    window.addEventListener("resize", () => {
+      camera.aspect = 1;
+      camera.updateProjectionMatrix();
+      renderer.setSize(200, 200);
     });
   </script>
 </body>
