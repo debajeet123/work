@@ -10,46 +10,55 @@
       height: 100%;
       background: #0d0d0d;
       font-family: sans-serif;
+      overflow-x: hidden;
     }
-    #globeCanvas {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      width: 250px;
-      height: 250px;
-      z-index: 10;
-      pointer-events: none;
-    }
+
     .content {
       padding: 40px;
       max-width: 800px;
       margin: 0 auto;
       color: #eee;
     }
+
     h1 {
       color: #00ffe1;
+    }
+
+    /* 🎯 Top-Right 3D Globe */
+    #cornerGlobe {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      width: 200px;
+      height: 200px;
+      z-index: 999;
+      pointer-events: none;
     }
   </style>
 </head>
 <body>
+
   <div class="content">
-    <h1>Welcome to Debajeet's Site</h1>
-    <p>This page features a 3D rotating globe in the top-right corner using pure Three.js.</p>
+    <h1>Hi, I'm Debajeet</h1>
+    <p>Welcome to my research site! You’ll see a live 3D globe spinning in the top-right corner using Three.js.</p>
   </div>
 
-  <div id="globeCanvas"></div>
+  <div id="cornerGlobe"></div>
 
+  <!-- Load Three.js -->
   <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
   <script>
+    // 🔧 Setup
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 1000);
     camera.position.z = 10;
 
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-    renderer.setSize(250, 250);
-    renderer.setClearColor(0x000000, 0);  // transparent background
-    document.getElementById("globeCanvas").appendChild(renderer.domElement);
+    renderer.setSize(200, 200);
+    renderer.setClearColor(0x000000, 0); // transparent background
+    document.getElementById("cornerGlobe").appendChild(renderer.domElement);
 
+    // 🌍 Load Texture
     const loader = new THREE.TextureLoader();
     loader.load('https://raw.githubusercontent.com/josephsurin/earth-globe-threejs/main/textures/earthmap1k.jpg', texture => {
       const geometry = new THREE.SphereGeometry(5, 64, 64);
@@ -57,13 +66,13 @@
       const globe = new THREE.Mesh(geometry, material);
       scene.add(globe);
 
-      const ambientLight = new THREE.AmbientLight(0x888888);
-      scene.add(ambientLight);
-
-      const dirLight = new THREE.DirectionalLight(0xffffff, 0.9);
-      dirLight.position.set(5, 3, 5);
+      // 💡 Lighting
+      scene.add(new THREE.AmbientLight(0x888888));
+      const dirLight = new THREE.DirectionalLight(0xffffff, 1);
+      dirLight.position.set(5, 5, 5);
       scene.add(dirLight);
 
+      // 🔄 Animate
       function animate() {
         requestAnimationFrame(animate);
         globe.rotation.y += 0.002;
@@ -74,3 +83,4 @@
   </script>
 </body>
 </html>
+
