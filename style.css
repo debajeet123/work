@@ -1,0 +1,30 @@
+body {
+  margin: 0;
+  background: black;
+  font-family: 'Segoe UI', sans-serif;
+  color: #e0e0e0;
+  overflow: hidden;
+}
+
+#globeViz {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  padding: 60px 30px;
+  max-width: 900px;
+  margin: auto;
+}
+
+h1 {
+  color: #00ffe1;
+  text-shadow: 0 0 8px #00ffe1;
+}
