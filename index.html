@@ -2,59 +2,64 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Debajeet's Animated Globe</title>
+  <title>Debajeet's Spinning Background Globe</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     html, body {
       margin: 0;
       height: 100%;
-      background: #0d0d0d;
+      background: black;
       font-family: sans-serif;
-      overflow-x: hidden;
+      overflow: hidden;
+      color: #ffffff;
+    }
+    #globeCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
     }
     .content {
-      padding: 40px;
+      position: relative;
+      z-index: 1;
       max-width: 800px;
-      margin: 0 auto;
-      color: #eee;
+      margin: 100px auto;
+      padding: 40px;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 12px;
     }
     h1 {
       color: #00ffe1;
+      margin-top: 0;
     }
-    #cornerGlobe {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      width: 200px;
-      height: 200px;
-      z-index: 999;
-      pointer-events: none;
-    }
-    canvas {
-      width: 100% !important;
-      height: 100% !important;
+    p {
+      font-size: 18px;
+      line-height: 1.6;
     }
   </style>
 </head>
 <body>
 
-  <div class="content">
-    <h1>Hi, I'm Debajeet</h1>
-    <p>This page has an animated 3D Earth in the top-right corner using Three.js.</p>
-  </div>
+  <div id="globeCanvas"></div>
 
-  <div id="cornerGlobe"></div>
+  <div class="content">
+    <h1>Welcome to Debajeet's Globe</h1>
+    <p>This is a full-page spinning 3D globe background with transparent content sections floating above.</p>
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
   <script>
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 1000);
+    const camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 0.1, 1000);
     camera.position.z = 10;
 
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-    renderer.setSize(200, 200);
+    renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setClearColor(0x000000, 0);
-    document.getElementById("cornerGlobe").appendChild(renderer.domElement);
+    document.getElementById("globeCanvas").appendChild(renderer.domElement);
 
     const loader = new THREE.TextureLoader();
     loader.load('https://raw.githubusercontent.com/josephsurin/earth-globe-threejs/main/textures/earthmap1k.jpg', function(texture) {
@@ -79,9 +84,9 @@
     });
 
     window.addEventListener("resize", () => {
-      camera.aspect = 1;
+      camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
-      renderer.setSize(200, 200);
+      renderer.setSize(window.innerWidth, window.innerHeight);
     });
   </script>
 </body>
