@@ -10,7 +10,7 @@ document.getElementById("cornerGlobe").appendChild(renderer.domElement);
 
 const loader = new THREE.TextureLoader();
 loader.load("https://unpkg.com/three-globe/example/img/earth-night.jpg", function (texture) {
-  const geometry = new THREE.SphereGeometry(1, 64, 64);
+  const geometry = new THREE.SphereGeometry(7, 64, 64);
   const material = new THREE.MeshPhongMaterial({ map: texture });
   const globe = new THREE.Mesh(geometry, material);
   scene.add(globe);
