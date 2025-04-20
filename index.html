@@ -2,33 +2,54 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Debajeet's 3D Earth</title>
+  <title>Debajeet's Corner Globe</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     html, body {
       margin: 0;
       height: 100%;
-      background: black;
-      overflow: hidden;
+      background: #0d0d0d;
+      font-family: sans-serif;
     }
-    canvas {
-      display: block;
+    #globeCanvas {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      width: 250px;
+      height: 250px;
+      z-index: 10;
+      pointer-events: none;
+    }
+    .content {
+      padding: 40px;
+      max-width: 800px;
+      margin: 0 auto;
+      color: #eee;
+    }
+    h1 {
+      color: #00ffe1;
     }
   </style>
 </head>
 <body>
+  <div class="content">
+    <h1>Welcome to Debajeet's Site</h1>
+    <p>This page features a 3D rotating globe in the top-right corner using pure Three.js.</p>
+  </div>
+
+  <div id="globeCanvas"></div>
+
   <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
   <script>
-    // Scene setup
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 1000);
     camera.position.z = 10;
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    document.body.appendChild(renderer.domElement);
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    renderer.setSize(250, 250);
+    renderer.setClearColor(0x000000, 0);  // transparent background
+    document.getElementById("globeCanvas").appendChild(renderer.domElement);
 
-    // Load Earth texture
     const loader = new THREE.TextureLoader();
     loader.load('https://raw.githubusercontent.com/josephsurin/earth-globe-threejs/main/textures/earthmap1k.jpg', texture => {
       const geometry = new THREE.SphereGeometry(5, 64, 64);
@@ -36,28 +57,19 @@
       const globe = new THREE.Mesh(geometry, material);
       scene.add(globe);
 
-      // Lighting
-      const ambient = new THREE.AmbientLight(0x888888);
-      scene.add(ambient);
+      const ambientLight = new THREE.AmbientLight(0x888888);
+      scene.add(ambientLight);
 
-      const directional = new THREE.DirectionalLight(0xffffff, 0.9);
-      directional.position.set(5, 3, 5);
-      scene.add(directional);
+      const dirLight = new THREE.DirectionalLight(0xffffff, 0.9);
+      dirLight.position.set(5, 3, 5);
+      scene.add(dirLight);
 
-      // Animate
       function animate() {
         requestAnimationFrame(animate);
         globe.rotation.y += 0.002;
         renderer.render(scene, camera);
       }
       animate();
-    });
-
-    // Resize
-    window.addEventListener('resize', () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
     });
   </script>
 </body>
