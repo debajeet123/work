@@ -4,21 +4,30 @@
   <meta charset="UTF-8" />
   <title>Debajeet – 3D Globe</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="style.css" />
+  <link href="style.css" rel="stylesheet" />
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
 </head>
 <body>
   <div id="globeViz"></div>
-
   <div class="container">
-    <section>
+    <section data-aos="fade-up">
       <h1>Hi, I'm Debajeet</h1>
-      <p>Ph.D. candidate in Geophysics using 3D seismic imaging & computational geoscience.</p>
+      <p>Ph.D. candidate in Geophysics focused on seismic imaging, inverse modeling, and HPC-driven tomography.</p>
+    </section>
+    <section data-aos="fade-up">
+      <h2>About Me</h2>
+      <p>I work on ambient noise tomography, wavefield inversion, and crustal imaging using machine learning and parallel programming.</p>
+    </section>
+    <section data-aos="fade-up">
+      <h2>Contact</h2>
+      <p>Email: <a href="mailto:debajeet.barman@spaceuniversity.edu">debajeet.barman@spaceuniversity.edu</a></p>
+      <p>LinkedIn: <a href="https://linkedin.com/in/debajeetbarman" target="_blank">linkedin.com/in/debajeetbarman</a></p>
     </section>
   </div>
 
-  <!-- JS Scripts: Correct order -->
   <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/globe.gl@4.6.4/dist/globe.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
