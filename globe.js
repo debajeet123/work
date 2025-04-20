@@ -24,14 +24,12 @@ loader.load(
     scene.add(globe);
 
     // Lights
-    const ambientLight = new THREE.AmbientLight(0x888888);
-    scene.add(ambientLight);
+    scene.add(new THREE.AmbientLight(0x888888));
+    const dirLight = new THREE.DirectionalLight(0xffffff, 1);
+    dirLight.position.set(5, 3, 5);
+    scene.add(dirLight);
 
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-    directionalLight.position.set(5, 3, 5);
-    scene.add(directionalLight);
-
-    // Animation loop
+    // Animation
     function animate() {
       requestAnimationFrame(animate);
       globe.rotation.y += 0.002;
@@ -41,10 +39,9 @@ loader.load(
   }
 );
 
-// Resize handling
+// Handle resizing
 window.addEventListener("resize", () => {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
 });
-
