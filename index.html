@@ -1,57 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>3D Globe – Debajeet</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <title>Debajeet's 3D Earth</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     html, body {
       margin: 0;
-      padding: 0;
       height: 100%;
       background: black;
       overflow: hidden;
     }
-    #globeContainer {
-      width: 100vw;
-      height: 100vh;
-      position: absolute;
-      top: 0;
-      left: 0;
+    canvas {
+      display: block;
     }
   </style>
 </head>
 <body>
-  <div id="globeContainer"></div>
-
-  <!-- External JS Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
-
   <script>
+    // Scene setup
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(
-      45, window.innerWidth / window.innerHeight, 0.1, 1000
-    );
+    const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
     camera.position.z = 10;
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
-    document.getElementById("globeContainer").appendChild(renderer.domElement);
+    document.body.appendChild(renderer.domElement);
 
-    const textureLoader = new THREE.TextureLoader();
-    textureLoader.load("https://unpkg.com/three-globe/example/img/earth-night.jpg", function(texture) {
+    // Load Earth texture
+    const loader = new THREE.TextureLoader();
+    loader.load('https://raw.githubusercontent.com/josephsurin/earth-globe-threejs/main/textures/earthmap1k.jpg', texture => {
       const geometry = new THREE.SphereGeometry(5, 64, 64);
       const material = new THREE.MeshPhongMaterial({ map: texture });
       const globe = new THREE.Mesh(geometry, material);
       scene.add(globe);
 
-      const ambientLight = new THREE.AmbientLight(0x888888);
-      scene.add(ambientLight);
+      // Lighting
+      const ambient = new THREE.AmbientLight(0x888888);
+      scene.add(ambient);
 
-      const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-      directionalLight.position.set(5, 3, 5);
-      scene.add(directionalLight);
+      const directional = new THREE.DirectionalLight(0xffffff, 0.9);
+      directional.position.set(5, 3, 5);
+      scene.add(directional);
 
+      // Animate
       function animate() {
         requestAnimationFrame(animate);
         globe.rotation.y += 0.002;
@@ -60,7 +53,8 @@
       animate();
     });
 
-    window.addEventListener("resize", () => {
+    // Resize
+    window.addEventListener('resize', () => {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
