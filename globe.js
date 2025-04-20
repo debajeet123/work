@@ -1,12 +1,11 @@
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 1000); // square aspect ratio for corner
+const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 1000);
 camera.position.z = 10;
 
 const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-renderer.setSize(200, 200); // match CSS size
+renderer.setSize(200, 200);
 renderer.setPixelRatio(window.devicePixelRatio);
-renderer.setClearColor(0x000000, 0); // transparent background
-
+renderer.setClearColor(0x000000, 0);
 document.getElementById("cornerGlobe").appendChild(renderer.domElement);
 
 const loader = new THREE.TextureLoader();
@@ -29,4 +28,6 @@ loader.load("https://unpkg.com/three-globe/example/img/earth-night.jpg", functio
   animate();
 });
 
-
+window.addEventListener("resize", () => {
+  renderer.setSize(200, 200);
+});
