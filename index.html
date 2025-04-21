@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,50 +6,55 @@
   <title>Debajeet Barman – Geophysicist</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="globe.css">
+  <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
 </head>
+
 <body>
-<div class="ricker-wavelet"></div>
-<div id="cornerGlobe"></div>
-<div class="tabs">
-  <div class="tab-buttons">
-    <button class="tab-link active" onclick="openTab(event, 'home')">Home</button>
-    <button class="tab-link" onclick="openTab(event, 'about')">About</button>
-    <button class="tab-link" onclick="openTab(event, 'projects')">Projects</button>
-    <button class="tab-link" onclick="openTab(event, 'publications')">Publications</button>
-    <button class="tab-link" onclick="openTab(event, 'resume')">Resume</button>
-    <button class="tab-link" onclick="openTab(event, 'contact')">Contact</button>
+
+  <!-- 🌊 Ricker Wavelet -->
+  <div class="ricker-wavelet"></div>
+
+  <!-- 🌍 Spinning Globe -->
+  <div id="cornerGlobe"></div>
+
+  <!-- 📁 Tab Navigation -->
+  <div class="tabs">
+    <div class="tab-buttons">
+      <button class="tab-link active" onclick="openTab(event, 'home')">Home</button>
+      <button class="tab-link" onclick="openTab(event, 'about')">About</button>
+      <button class="tab-link" onclick="openTab(event, 'projects')">Projects</button>
+      <button class="tab-link" onclick="openTab(event, 'publications')">Publications</button>
+      <button class="tab-link" onclick="openTab(event, 'resume')">Resume</button>
+      <button class="tab-link" onclick="openTab(event, 'contact')">Contact</button>
+    </div>
+
+    <div class="tab-content active" id="home">
+      <h1>Welcome to Debajeet's Space</h1>
+      <p>Exploring the geophysical cosmos with data, models, and ideas.</p>
+    </div>
+    <div class="tab-content" id="about">
+      <h1>About Me</h1>
+      <p>Ph.D. candidate in geophysics combining HPC, seismic imaging, and ML.</p>
+    </div>
+    <div class="tab-content" id="projects">
+      <h1>Projects</h1>
+      <p>Ambient noise tomography, velocity models, and real-time data processing.</p>
+    </div>
+    <div class="tab-content" id="publications">
+      <h1>Publications</h1>
+      <p>Published research in seismology, modeling, and machine learning for Earth sciences.</p>
+    </div>
+    <div class="tab-content" id="resume">
+      <h1>Resume</h1>
+      <p>Geophysicist with advanced HPC and seismic modeling experience (PDF resume coming soon).</p>
+    </div>
+    <div class="tab-content" id="contact">
+      <h1>Contact</h1>
+      <p>Email: debajeet.barman1@baylor.edu<br>LinkedIn: linkedin.com/in/debajeetbarman</p>
+    </div>
   </div>
 
-  <div class="tab-content active" id="home">
-    <h1>Welcome to Debajeet's Space</h1>
-    <p>Exploring the geophysical cosmos with data, models, and ideas.</p>
-  </div>
-  <div class="tab-content" id="about">
-    <h1>About Me</h1>
-    <p>Ph.D. candidate in geophysics combining HPC, seismic imaging, and ML.</p>
-  </div>
-  <div class="tab-content" id="projects">
-    <h1>Projects</h1>
-    <p>Ambient noise tomography, velocity models, and real-time data processing.</p>
-  </div>
-  <div class="tab-content" id="publications">
-    <h1>Publications</h1>
-    <p>Published research in seismology, modeling, and machine learning for Earth sciences.</p>
-  </div>
-  <div class="tab-content" id="resume">
-    <h1>Resume</h1>
-    <p>Geophysicist with advanced HPC and seismic modeling experience (PDF resume coming soon).</p>
-  </div>
-  <div class="tab-content" id="contact">
-    <h1>Contact</h1>
-    <p>Email: debajeet.barman1@baylor.edu<br>LinkedIn: linkedin.com/in/debajeetbarman</p>
-  </div>
-</div>
-
-<script src="globe.js"></script>
-
-
-
+  <!-- 👤 Info Card -->
   <div class="info-card">
     <h1>Debajeet Barman</h1>
     <h2>Ph.D. Candidate in Geophysics</h2>
@@ -60,23 +66,25 @@
     </p>
   </div>
 
+  <!-- 📜 Bio Section -->
   <div class="bio-section">
     <h2>About Me</h2>
     <p>I am a geophysicist pursuing my Ph.D. at Baylor University, with research collaborations at UT Austin and previous industry experience at Shell. My work focuses on seismic imaging and geophysical inverse problems, combining ambient noise tomography, full waveform inversion, and high-performance computing (CUDA, MPI).</p>
     <p>I’m passionate about integrating machine learning into geoscientific workflows and developing scalable algorithms for crustal structure and velocity modeling. My projects include ambient noise analysis of the Suwannee Suture Zone, optimization of finite-difference operators, and neural network-based seismic inversion techniques.</p>
   </div>
 
-  
-
-  <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
-  <script src="globe.js"></script>
+  <!-- 🏅 Membership Logos -->
   <div class="member-logos">
-  <a href="https://www.agu.org" target="_blank">
-    <img src="agu.png"/>
-  </a>
-  <a href="https://www.seismosoc.org" target="_blank">
-    <img src="ssa.jpeg" />
-  </a>
-</div>
+    <a href="https://www.agu.org" target="_blank">
+      <img src="agu.png" alt="AGU"/>
+    </a>
+    <a href="https://www.seismosoc.org" target="_blank">
+      <img src="ssa.jpeg" alt="SSA"/>
+    </a>
+  </div>
+
+  <!-- 📜 JavaScript -->
+  <script src="globe.js"></script>
 </body>
 </html>
+
