@@ -214,3 +214,19 @@ canvas {
   object-fit: cover;
 }
 
+.sediment-layers {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+.sediment-layers svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
