@@ -81,3 +81,13 @@ canvas {
   margin-bottom: 12px;
 }
 
+html, body {
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+.info-card, .bio-section {
+  margin-left: auto;
+  margin-right: auto;
+}
+
