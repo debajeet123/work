@@ -52,13 +52,16 @@ if (canvas) {
   canvas.width = 80;
   canvas.height = window.innerHeight;
 
-  function rickerWavelet(t, f = 6) {
+  let tOffset = 0;
+  let direction = 1;
+
+  function rickerWavelet(t, f = 6, phase = 0) {
     const pi2f2 = Math.PI * Math.PI * f * f;
-    const term = pi2f2 * t * t;
+    const term = pi2f2 * (t - phase) * (t - phase);
     return (1 - 2 * term) * Math.exp(-term);
   }
 
-  function drawWave() {
+  function drawWave(phase = 0) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.beginPath();
     ctx.strokeStyle = "#00ffe1";
@@ -69,7 +72,7 @@ if (canvas) {
 
     for (let y = 0; y < canvas.height; y++) {
       const t = (y - canvas.height / 2) / 50;
-      const x = centerX + rickerWavelet(t) * scaleY;
+      const x = centerX + rickerWavelet(t, 6, phase) * scaleY;
       if (y === 0) {
         ctx.moveTo(x, y);
       } else {
@@ -80,12 +83,15 @@ if (canvas) {
     ctx.stroke();
   }
 
-  function animateWave() {
-    drawWave();
-    requestAnimationFrame(animateWave);
+  function animatePulse() {
+    tOffset += direction * 0.01;
+    if (Math.abs(tOffset) > 0.4) direction *= -1; // ping-pong effect
+    drawWave(tOffset);
+    requestAnimationFrame(animatePulse);
   }
 
-  animateWave();
+  animatePulse();
 }
+
 
 
