@@ -130,7 +130,11 @@ canvas {
   padding: 0 40px;
 }
 
+
 .tab-buttons {
+  position: relative;
+  z-index: 2;
+}
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start; /* 👈 aligns buttons to the left */
