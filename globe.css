@@ -94,5 +94,24 @@ html, body {
   margin-left: auto;
   margin-right: auto;
 }
+.member-logos {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 20px;
+  z-index: 1000;
+}
+
+.member-logos img {
+  height: 40px;
+  opacity: 0.9;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.member-logos img:hover {
+  transform: scale(1.1);
+  opacity: 1;
+}
 
 
