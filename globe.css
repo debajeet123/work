@@ -140,7 +140,10 @@ canvas {
   background: #00ffe1;
   color: #000;
 }
+
 .tab-content {
+  color: #00ffe1;
+  text-shadow: 0 0 8px #00ffe1;
   display: none;
   animation: fadeIn 0.8s ease-in-out forwards;
 }
