@@ -17,9 +17,10 @@ html, body{
 #rickerCanvas {
   position: fixed;
   top: 50;
-  left: -20;
+  left: 0;
   width: 20px;
   height: 100vh;
+  transform: none;
   background: transparent;
   pointer-events: none;
   z-index: 998;
@@ -153,7 +154,7 @@ canvas {
 
 .tab-content {
   color: #00ffe1;
-  text-shadow: 0 0 8px #00ffe1;
+  
   display: none;
   animation: fadeIn 0.8s ease-in-out forwards;
 }
