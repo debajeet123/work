@@ -46,54 +46,7 @@ window.addEventListener('scroll', () => {
   wavelet.style.transform = `scaleY(${1 + scrollTop / 500})`;
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-  const canvas = document.getElementById('rickerCanvas');
-  if (canvas) {
-    const ctx = canvas.getContext('2d');
-    canvas.width = 60;
-    canvas.height = window.innerHeight;
 
-    let tOffset = 0;
-    let direction = 1;
-
-    function rickerWavelet(t, f = 0.01, phase = 0) {
-      const pi2f2 = Math.PI * Math.PI * f * f;
-      const term = pi2f2 * (t - phase) * (t - phase);
-      return (1 - 2 * term) * Math.exp(-term);
-    }
-
-    function drawWave(phase = 0) {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.beginPath();
-      ctx.strokeStyle = "#00ffe1";
-      ctx.lineWidth = 2;
-
-      const centerX = canvas.width / 2;
-      const scaleY = 20;
-
-      for (let y = 0; y < canvas.height; y++) {
-        const t = (y - canvas.height / 2) / 50;
-        const x = centerX + rickerWavelet(t, 2, phase) * scaleY;
-        if (y === 0) {
-          ctx.moveTo(x, y);
-        } else {
-          ctx.lineTo(x, y);
-        }
-      }
-
-      ctx.stroke();
-    }
-
-    function animatePulse() {
-      tOffset += direction * 0.01;
-      if (Math.abs(tOffset) > 0.4) direction *= -1;
-      drawWave(tOffset);
-      requestAnimationFrame(animatePulse);
-    }
-
-    animatePulse();
-  }
-});
 
 
 
