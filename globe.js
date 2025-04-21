@@ -40,3 +40,9 @@ function openTab(evt, tabId) {
   evt.currentTarget.classList.add("active");
 }
 
+window.addEventListener('scroll', () => {
+  const wavelet = document.querySelector('.ricker-wavelet');
+  const scrollTop = window.scrollY;
+  wavelet.style.transform = `scaleY(${1 + scrollTop / 500})`;
+});
+
