@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const canvas = document.getElementById('rickerCanvas');
   if (canvas) {
     const ctx = canvas.getContext('2d');
-    canvas.width = 80;
+    canvas.width = 30;
     canvas.height = window.innerHeight;
 
     let tOffset = 0;
