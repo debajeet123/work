@@ -46,3 +46,4 @@ window.addEventListener('scroll', () => {
   wavelet.style.transform = `scaleY(${1 + scrollTop / 500})`;
 });
 
+
