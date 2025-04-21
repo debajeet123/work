@@ -4,7 +4,7 @@ html, body{
   padding: 0;
   height: 100%;
   font-family: 'Segoe UI', sans-serif;
-  background: url('background.png') no-repeat center center fixed;
+  background: url('back.png') no-repeat center center fixed;
   background-size: cover;
   overflow-x: hidden;
   scroll-behavior: smooth; /* ✅ This adds smooth scrolling */
