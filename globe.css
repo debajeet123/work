@@ -153,16 +153,22 @@ html, body {
   to {opacity: 1; transform: translateY(0);}
 }
 
-#rickerCanvas {
+.ricker-wavelet {
   position: fixed;
-  top: 0;
   left: 0;
-  width: 80px;
+  top: 0;
+  width: 4px;
   height: 100vh;
+  background: repeating-linear-gradient(
+    to bottom,
+    #00ffe1 0px,
+    #00ffe1 4px,
+    transparent 4px,
+    transparent 12px
+  );
+  opacity: 0.5;
   z-index: 999;
-  background: transparent;
-  pointer-events: none;
+  transition: transform 0.3s ease-out;
 }
-
 
 
