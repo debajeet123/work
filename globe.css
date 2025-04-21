@@ -16,11 +16,11 @@ html, body{
 
 #rickerCanvas {
   position: fixed;
-  top: 50;
-  left: 0;
-  width: 20px;
-  height: 100vh;
-  transform: none;
+  top: 50%;
+  left: 30px;
+  transform: translateY(-50%); /* 👈 vertically center it */
+  width: 120px;
+  height: 60vh;
   background: transparent;
   pointer-events: none;
   z-index: 998;
