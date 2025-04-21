@@ -167,6 +167,30 @@ canvas {
   from {opacity: 0; transform: translateY(20px);}
   to {opacity: 1; transform: translateY(0);}
 }
+.tab-section {
+  padding: 80px 40px;
+  max-width: 900px;
+  margin: 0 auto 60px;
+  background: rgba(0, 0, 0, 0.65);
+  border-left: 4px solid #00ffe1;
+  border-radius: 8px;
+  box-shadow: 0 0 12px rgba(0, 255, 255, 0.1);
+  color: #ccffcc; /* light green-blue text */
+}
+
+.tab-section h1 {
+  color: #00ffe1;
+  font-size: 28px;
+  margin-bottom: 10px;
+  border-bottom: 2px solid #00ffe1;
+  padding-bottom: 5px;
+}
+
+.tab-section p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #b8fadc;
+}
 
 .profile-photo {
   position: fixed;
