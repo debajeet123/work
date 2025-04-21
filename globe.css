@@ -168,23 +168,27 @@ canvas {
   to {opacity: 1; transform: translateY(0);}
 }
 .tab-section {
-  padding: 80px 40px;
+  padding: 120px 40px 60px; /* more top padding so it's visible below fixed header elements */
   max-width: 900px;
   margin: 0 auto 60px;
   background: rgba(0, 0, 0, 0.65);
   border-left: 4px solid #00ffe1;
   border-radius: 8px;
   box-shadow: 0 0 12px rgba(0, 255, 255, 0.1);
-  color: #ccffcc; /* light green-blue text */
+  color: #ccffcc;
+  scroll-margin-top: 100px; /* This is key */
 }
+
 
 .tab-section h1 {
   color: #00ffe1;
-  font-size: 28px;
+  font-size: 32px;
   margin-bottom: 10px;
+  text-shadow: 0 0 6px #00ffe1;
   border-bottom: 2px solid #00ffe1;
-  padding-bottom: 5px;
+  padding-bottom: 6px;
 }
+
 
 .tab-section p {
   font-size: 16px;
