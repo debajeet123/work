@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const canvas = document.getElementById('rickerCanvas');
   if (canvas) {
     const ctx = canvas.getContext('2d');
-    canvas.width = 30;
+    canvas.width = 60;
     canvas.height = window.innerHeight;
 
     let tOffset = 0;
@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
       ctx.lineWidth = 2;
 
       const centerX = canvas.width / 2;
-      const scaleY = 10;
+      const scaleY = 20;
 
       for (let y = 0; y < canvas.height; y++) {
         const t = (y - canvas.height / 2) / 50;

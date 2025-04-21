@@ -17,13 +17,14 @@ html, body{
 #rickerCanvas {
   position: fixed;
   top: 0;
-  left: 0; /* stick to the left side */
-  width: 80px; /* keep narrow */
+  left: 0;
+  width: 60px;
   height: 100vh;
   background: transparent;
-  pointer-events: none; /* so it doesn’t block clicks */
-  z-index: 1; /* lower than content */
+  pointer-events: none;
+  z-index: 2;
 }
+
 
 /* 🌍 Circular Spinning Globe */
 #cornerGlobe {
