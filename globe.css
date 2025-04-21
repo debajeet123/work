@@ -15,7 +15,7 @@ html, body{
 }
 
 #rickerCanvas {
-  display: block;      /* ✅ OK */
+  display: block;      
   margin: 0;           /* ✅ remove centering */
   position: fixed;
   top: 0;
