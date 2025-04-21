@@ -8,6 +8,10 @@ html, body{
   background-size: cover;
   overflow-x: hidden;
   scroll-behavior: smooth; /* ✅ This adds smooth scrolling */
+
+  overflow-y: auto;
+  scroll-behavior: smooth;
+
 }
 
 
@@ -81,11 +85,6 @@ canvas {
   font-size: 16px;
   line-height: 1.6;
   margin-bottom: 12px;
-}
-
-html, body {
-  overflow-y: auto;
-  scroll-behavior: smooth;
 }
 
 .info-card, .bio-section {
