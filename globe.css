@@ -112,11 +112,12 @@ html, body {
   opacity: 1;
 }
 .tabs {
-  position: relative;
-  z-index: 2;
-  padding: 60px 20px;
-  text-align: center;
+  text-align: left;
+  max-width: 900px;
+  margin: 60px auto 40px;
+  padding: 0 40px;
 }
+
 .tab-buttons {
   margin-bottom: 40px;
   flex-wrap: wrap;
