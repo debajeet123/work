@@ -6,7 +6,44 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="globe.css">
 </head>
-  
+<div class="tabs">
+  <div class="tab-buttons">
+    <button class="tab-link active" onclick="openTab(event, 'home')">Home</button>
+    <button class="tab-link" onclick="openTab(event, 'about')">About</button>
+    <button class="tab-link" onclick="openTab(event, 'projects')">Projects</button>
+    <button class="tab-link" onclick="openTab(event, 'publications')">Publications</button>
+    <button class="tab-link" onclick="openTab(event, 'resume')">Resume</button>
+    <button class="tab-link" onclick="openTab(event, 'contact')">Contact</button>
+  </div>
+
+  <div class="tab-content active" id="home">
+    <h1>Welcome to Debajeet's Space</h1>
+    <p>Exploring the geophysical cosmos with data, models, and ideas.</p>
+  </div>
+  <div class="tab-content" id="about">
+    <h1>About Me</h1>
+    <p>Ph.D. candidate in geophysics combining HPC, seismic imaging, and ML.</p>
+  </div>
+  <div class="tab-content" id="projects">
+    <h1>Projects</h1>
+    <p>Ambient noise tomography, velocity models, and real-time data processing.</p>
+  </div>
+  <div class="tab-content" id="publications">
+    <h1>Publications</h1>
+    <p>Published research in seismology, modeling, and machine learning for Earth sciences.</p>
+  </div>
+  <div class="tab-content" id="resume">
+    <h1>Resume</h1>
+    <p>Geophysicist with advanced HPC and seismic modeling experience (PDF resume coming soon).</p>
+  </div>
+  <div class="tab-content" id="contact">
+    <h1>Contact</h1>
+    <p>Email: debajeet.barman1@baylor.edu<br>LinkedIn: linkedin.com/in/debajeetbarman</p>
+  </div>
+</div>
+
+<script src="tab-script.js"></script>
+
 <body>
 
   <div class="info-card">

@@ -31,3 +31,12 @@ loader.load("https://unpkg.com/three-globe/example/img/earth-night.jpg", functio
 window.addEventListener("resize", () => {
   renderer.setSize(300, 300);
 });
+function openTab(evt, tabId) {
+  const tabs = document.querySelectorAll(".tab-content");
+  const links = document.querySelectorAll(".tab-link");
+  tabs.forEach(tab => tab.classList.remove("active"));
+  links.forEach(link => link.classList.remove("active"));
+  document.getElementById(tabId).classList.add("active");
+  evt.currentTarget.classList.add("active");
+}
+

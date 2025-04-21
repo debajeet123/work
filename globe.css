@@ -111,5 +111,41 @@ html, body {
   transform: scale(1.1);
   opacity: 1;
 }
+.tabs {
+  position: relative;
+  z-index: 2;
+  padding: 60px 20px;
+  text-align: center;
+}
+.tab-buttons {
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+.tab-buttons button {
+  background: transparent;
+  color: #00ffe1;
+  border: 2px solid #00ffe1;
+  padding: 10px 20px;
+  margin: 10px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.tab-buttons button:hover,
+.tab-buttons button.active {
+  background: #00ffe1;
+  color: #000;
+}
+.tab-content {
+  display: none;
+  animation: fadeIn 0.8s ease-in-out forwards;
+}
+.tab-content.active {
+  display: block;
+}
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(20px);}
+  to {opacity: 1; transform: translateY(0);}
+}
 
 
