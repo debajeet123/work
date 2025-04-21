@@ -5,7 +5,7 @@ html, body {
   background: url('https://unpkg.com/three-globe/example/img/night-sky.png') no-repeat center center fixed;
   background-size: cover;
   font-family: sans-serif;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 #cornerGlobe {
@@ -27,7 +27,6 @@ canvas {
   width: 100% !important;
   height: 100% !important;
 }
-
 
 .info-card {
   position: absolute;
@@ -56,4 +55,23 @@ canvas {
 }
 .info-card a:hover {
   text-decoration: underline;
+}
+
+.bio-section {
+  position: relative;
+  margin: 40px auto;
+  max-width: 700px;
+  padding: 30px;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 12px;
+  color: #ffffff;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+}
+.bio-section h2 {
+  color: #00ffe1;
+  margin-top: 0;
+}
+.bio-section p {
+  font-size: 16px;
+  line-height: 1.6;
 }
