@@ -119,9 +119,13 @@ html, body {
 }
 
 .tab-buttons {
-  margin-bottom: 40px;
+  display: flex;
   flex-wrap: wrap;
+  justify-content: flex-start; /* 👈 aligns buttons to the left */
+  gap: 10px;
+  margin-bottom: 30px;
 }
+
 .tab-buttons button {
   background: transparent;
   color: #00ffe1;
