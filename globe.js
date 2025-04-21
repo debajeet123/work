@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let tOffset = 0;
     let direction = 1;
 
-    function rickerWavelet(t, f = 6, phase = 0) {
+    function rickerWavelet(t, f = 2, phase = 0) {
       const pi2f2 = Math.PI * Math.PI * f * f;
       const term = pi2f2 * (t - phase) * (t - phase);
       return (1 - 2 * term) * Math.exp(-term);
@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
       ctx.lineWidth = 2;
 
       const centerX = canvas.width / 2;
-      const scaleY = 50;
+      const scaleY = 10;
 
       for (let y = 0; y < canvas.height; y++) {
         const t = (y - canvas.height / 2) / 50;
