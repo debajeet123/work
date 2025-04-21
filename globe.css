@@ -3,7 +3,7 @@ html, body{
   margin: 0;
   padding: 0;
   height: 100%;
-  font-family: Fira Code', 'Courier New', Courier, monospace;
+  font-family: 'Segoe UI', sans-serif;
   background: url('back.png') no-repeat center center fixed;
   background-size: cover;
   overflow-x: hidden;
