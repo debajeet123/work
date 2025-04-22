@@ -124,28 +124,38 @@ canvas {
   opacity: 1;
 }
 .tabs {
-  position: absolute;      /* Sit relative to .layered-bg */
-  top: 180px;              /* ⬇ Adjust Y-position */
+  position: absolute;
+  top: 180px; /* Adjust if needed */
   width: 100%;
-  z-index: 11;             /* Above strata but under globe */
   display: flex;
   justify-content: center;
-  gap: 14px;
+  gap: 16px;
+  z-index: 11;
+  padding: 12px 0;
 }
 
 .tab-link {
+  font-size: 15px;
+  padding: 10px 20px;
   color: #00ffe1;
-  font-weight: 600;
+  font-weight: bold;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid #00ffe1;
+  border-radius: 50px;
   text-decoration: none;
-  padding: 8px 18px;
-  border: 2px solid #00ffe1;
-  border-radius: 25px;
-  transition: all 0.3s ease;
+  box-shadow: 0 0 6px rgba(0, 255, 255, 0.4);
+  backdrop-filter: blur(6px);
+  transition: all 0.25s ease-in-out;
 }
-.tab-link:hover {
+
+.tab-link:hover,
+.tab-link.active {
   background: #00ffe1;
-  color: black;
+  color: #000;
+  box-shadow: 0 0 12px rgba(0, 255, 255, 0.6);
+  transform: scale(1.05);
 }
+
 
 .tab-buttons {
   position: relative;
