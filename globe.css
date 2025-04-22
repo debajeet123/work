@@ -124,12 +124,13 @@ canvas {
   opacity: 1;
 }
 .tabs {
-  position: relative; /* ⬅️ now inside .layered-bg */
-  z-index: 11;         /* ⬆️ sits on top of strata */
-  padding: 20px 40px;
+  position: absolute;      /* Sit relative to .layered-bg */
+  top: 180px;              /* ⬇ Adjust Y-position */
+  width: 100%;
+  z-index: 11;             /* Above strata but under globe */
   display: flex;
   justify-content: center;
-  gap: 12px;
+  gap: 14px;
 }
 
 .tab-link {
