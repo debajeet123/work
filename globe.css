@@ -125,14 +125,14 @@ canvas {
 }
 .tabs {
   position: absolute;
-  top: 180px; /* Adjust if needed */
-  left: 32px;              /* ⬅️ pushes tabs to the left */
-  width: 100%;
+  top: 180px;              /* adjust vertically as needed */
+  left: 40px;              /* ⬅️ pushes tabs to the left */
+  width: fit-content;      /* shrink-wrap the tab buttons */
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 16px;
   z-index: 11;
-  padding: 12px 0;
+  padding: 12px 20px;
 }
 
 .tab-link {
