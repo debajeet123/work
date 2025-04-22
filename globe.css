@@ -126,7 +126,7 @@ canvas {
 .tabs {
   position: absolute;
   top: 180px; /* Adjust if needed */
-  left: 40px;              /* ⬅️ pushes tabs to the left */
+  left: 30px;              /* ⬅️ pushes tabs to the left */
   width: 100%;
   display: flex;
   justify-content: center;
