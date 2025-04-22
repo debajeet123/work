@@ -325,10 +325,10 @@ canvas {
 
 --strata-mask: linear-gradient(
   to right,
-  rgba(0, 0, 0, 0) 0%,        /* fully transparent at left */
+  rgba(0, 0, 0, 0) 10%,        /* fully transparent at left */
   rgba(0, 0, 0, 1) 30%,       /* fully visible before center */
-  rgba(0, 0, 0, 1) 70%,       /* still visible after center */
-  rgba(0, 0, 0, 0) 100%       /* fade out to transparent at right */
+  rgba(0, 0, 0, 1) 60%,       /* still visible after center */
+  rgba(0, 0, 0, 0) 90%       /* fade out to transparent at right */
 );
 
 mask-image: var(--strata-mask);
