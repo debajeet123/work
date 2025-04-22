@@ -1,6 +1,6 @@
 html, body {
   margin: 0;
-  padding-top: 360px;  /* ✅ PUSHES content down */
+  padding-top: 420px;  /* ✅ PUSHES content down */
   height: 100%;
   font-family: 'Segoe UI', sans-serif;
   background: url('back.png') no-repeat center center fixed;
