@@ -1,6 +1,6 @@
 html, body {
   margin: 0;
-  padding-top: 300px;  /* ✅ PUSHES content down */
+  padding-top: 340px; /* Adjust based on strata + tabs height */
   height: 100%;
   font-family: 'Segoe UI', sans-serif;
   background: url('back.png') no-repeat center center fixed;
@@ -9,6 +9,7 @@ html, body {
   overflow-y: auto;
   scroll-behavior: smooth;
 }
+
 
 
 #rickerCanvas {
@@ -264,7 +265,7 @@ canvas {
   z-index: 1;
   overflow: hidden;
   pointer-events: none;
-
+}
 
 .top-tabs-bg::after {
   content: "";
