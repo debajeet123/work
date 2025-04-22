@@ -46,7 +46,46 @@ window.addEventListener('scroll', () => {
   wavelet.style.transform = `scaleY(${1 + scrollTop / 500})`;
 });
 
+fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_day.geojson')
+  .then(response => response.json())
+  .then(data => {
+    // Process earthquake data here
+  });
 
+data.features.forEach(eq => {
+  const [lon, lat] = eq.geometry.coordinates;
+  const magnitude = eq.properties.mag;
 
+  // Convert latitude and longitude to 3D coordinates
+  const phi = (90 - lat) * (Math.PI / 180);
+  const theta = (lon + 180) * (Math.PI / 180);
+  const radius = 5; // Same as your globe's radius
+
+  const x = radius * Math.sin(phi) * Math.cos(theta);
+  const y = radius * Math.cos(phi);
+  const z = radius * Math.sin(phi) * Math.sin(theta);
+
+  // Create a marker (e.g., a small sphere)
+  const markerGeometry = new THREE.SphereGeometry(0.05 * magnitude, 8, 8);
+  const markerMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+  const marker = new THREE.Mesh(markerGeometry, markerMaterial);
+  marker.position.set(x, y, z);
+
+  scene.add(marker);
+});
+
+function animateMarker(marker) {
+  const scaleFactor = 1.5;
+  const duration = 1000; // in milliseconds
+
+  const initialScale = marker.scale.clone();
+  const targetScale = initialScale.clone().multiplyScalar(scaleFactor);
+
+  const tween = new TWEEN.Tween(marker.scale)
+    .to(targetScale, duration / 2)
+    .yoyo(true)
+    .repeat(Infinity)
+    .start();
+}
 
 
