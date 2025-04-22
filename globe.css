@@ -344,6 +344,8 @@ canvas {
   animation:
     typing 4s steps(60, end) 0.5s forwards,
     blink-caret 0.7s step-end infinite;
+  animation-fill-mode: forwards;
+
 }
 
 @keyframes typing {
