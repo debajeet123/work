@@ -1,6 +1,6 @@
 html, body {
   margin: 0;
-  padding-top: 360px;
+  padding-top: 400px;  /* ✅ PUSHES content down */
   height: 100%;
   font-family: 'Segoe UI', sans-serif;
   background: url('back.png') no-repeat center center fixed;
@@ -215,6 +215,7 @@ canvas {
   border-radius: 8px;
   color: #ccffcc;
   scroll-margin-top: 100px; /* This is key */
+  
 }
 
 
@@ -310,6 +311,7 @@ canvas {
   background: url('strata.png') no-repeat center 50%;
   background-size: 80% 60%;
   z-index: 0;
+
   pointer-events: none;
 
   /* 👇 Horizontal fade mask */
