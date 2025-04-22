@@ -176,6 +176,19 @@ canvas {
   from {opacity: 0; transform: translateY(20px);}
   to {opacity: 1; transform: translateY(0);}
 }
+@keyframes explodeStrata {
+  0% {
+    transform: scale(1) translateX(0);
+    opacity: 1;
+    filter: blur(0);
+  }
+  100% {
+    transform: scale(1.02) translateX(-10px) rotate(-1deg);
+    opacity: 0.85;
+    filter: blur(1px) brightness(1.1);
+  }
+}
+
 .tab-section {
   padding: 120px 40px 60px; /* more top padding so it's visible below fixed header elements */
   max-width: 900px;
