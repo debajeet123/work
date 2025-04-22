@@ -313,26 +313,17 @@ canvas {
   z-index: 0;
   pointer-events: none;
 
-  mask-image: radial-gradient(
-    circle at 40% 30%, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 100%
+  /* 👇 Horizontal fade mask */
+  --strata-mask: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0) 10%,
+    rgba(0, 0, 0, 1) 30%,
+    rgba(0, 0, 0, 1) 60%,
+    rgba(0, 0, 0, 0) 90%
   );
-  -webkit-mask-image: radial-gradient(
-    circle at 40% 30%, rgba(0,0,0,1) 30%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%
-  );
 
-  animation: erodeFade 8s ease-in-out infinite alternate;
-}
-
---strata-mask: linear-gradient(
-  to right,
-  rgba(0, 0, 0, 0) 10%,        /* fully transparent at left */
-  rgba(0, 0, 0, 1) 30%,       /* fully visible before center */
-  rgba(0, 0, 0, 1) 60%,       /* still visible after center */
-  rgba(0, 0, 0, 0) 90%       /* fade out to transparent at right */
-);
-
-mask-image: var(--strata-mask);
--webkit-mask-image: var(--strata-mask);
+  mask-image: var(--strata-mask);
+  -webkit-mask-image: var(--strata-mask);
 
 
 
