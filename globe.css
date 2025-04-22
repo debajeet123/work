@@ -215,6 +215,8 @@ canvas {
   background: transparent;
   border-left: none;
   box-shadow: none;
+  position: relative;   /* Ensures z-index stacking works */
+  z-index: 2;           /* Pushes sections visually above fixed strata */
 }
 
 
