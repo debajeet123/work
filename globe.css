@@ -177,15 +177,16 @@ canvas {
   to {opacity: 1; transform: translateY(0);}
 }
 .tab-section {
-  padding: 80px 60px 60px;
-  background: rgba(0, 0, 0, 0.5); /* Optional: still keeps text readable */
+  padding: 120px 40px 60px; /* more top padding so it's visible below fixed header elements */
+  max-width: 900px;
+  margin: 0 auto 60px;
+  background: rgba(0, 0, 0, 0.65);
   border-left: 4px solid #00ffe1;
+  border-radius: 8px;
   box-shadow: 0 0 12px rgba(0, 255, 255, 0.1);
   color: #ccffcc;
-  scroll-margin-top: 100px;
-  margin-bottom: 60px;
+  scroll-margin-top: 100px; /* This is key */
 }
-
 
 
 .tab-section h1 {
@@ -247,21 +248,23 @@ canvas {
 
 
 .layered-bg {
-  position: fixed; /* 🔥 keeps it in place on scroll */
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 200px;
+  height: 220px;
   background: url('strata.png') no-repeat center 30%;
   background-size: 150% auto;
   z-index: 0;
-  opacity: 1;
-
-  /* ✨ Elliptical fading */
-  mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 100%);
-  -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 100%);
   pointer-events: none;
+
+  mask-image: radial-gradient(ellipse at 40% 50%, rgba(0,0,0,1) 40%, rgba(0,0,0,0.3) 80%, rgba(0,0,0,0) 100%);
+  -webkit-mask-image: radial-gradient(ellipse at 40% 50%, rgba(0,0,0,1) 40%, rgba(0,0,0,0.3) 80%, rgba(0,0,0,0) 100%);
+
+  animation: explodeStrata 5s infinite alternate ease-in-out;
+  transform-origin: left center;
 }
+
 
 
 .layered-bg::after {
