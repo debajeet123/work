@@ -126,7 +126,7 @@ canvas {
 .tabs {
   position: absolute;
   top: 180px;              /* adjust vertically as needed */
-  left: 164px;              /* ⬅️ pushes tabs to the left */
+  left: 180px;              /* ⬅️ pushes tabs to the left */
   width: fit-content;      /* shrink-wrap the tab buttons */
   display: flex;
   justify-content: flex-start;
