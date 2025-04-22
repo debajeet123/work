@@ -277,6 +277,30 @@ canvas {
 }
 
 
+@keyframes erodeFade {
+  0% {
+    mask-position: 50% 50%;
+    -webkit-mask-position: 50% 50%;
+    transform: scale(1) rotate(0deg);
+    opacity: 0.95;
+    filter: blur(0.5px);
+  }
+  50% {
+    mask-position: 48% 52%;
+    -webkit-mask-position: 48% 52%;
+    transform: scale(1.02) rotate(-0.3deg);
+    opacity: 0.88;
+    filter: blur(1px);
+  }
+  100% {
+    mask-position: 52% 48%;
+    -webkit-mask-position: 52% 48%;
+    transform: scale(1.01) rotate(0.2deg);
+    opacity: 0.93;
+    filter: blur(0.7px);
+  }
+}
+
 .layered-bg {
   position: fixed;
   top: 0;
@@ -288,7 +312,6 @@ canvas {
   z-index: 0;
   pointer-events: none;
 
-  /* ✨ Amorphous fade effect using layered radial masks */
   mask-image: radial-gradient(
     circle at 40% 30%, rgba(0,0,0,1) 30%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%
   );
@@ -296,37 +319,9 @@ canvas {
     circle at 40% 30%, rgba(0,0,0,1) 30%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%
   );
 
-  filter: blur(0.5px) brightness(1.05);
+  animation: erodeFade 8s ease-in-out infinite alternate;
 }
 
-
-
-
-
-
-.layered-bg::after {
-  content: "";
-  position: fixed; /* same as image */
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 120px;
-  background: linear-gradient(to bottom, rgba(0,0,0,0) 40%, rgba(0,0,0,0.9) 100%);
-  z-index: 1;
-  pointer-events: none;
-}
-
-.strata-noise {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 220px;
-  background: url('noise.png') repeat;
-  opacity: 0.04;
-  pointer-events: none;
-  z-index: 1;
-}
 
 
 
