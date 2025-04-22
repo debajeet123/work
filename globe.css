@@ -1,7 +1,6 @@
-html, body{
-  
+html, body {
   margin: 0;
-  padding-top: 360px; /* Increase if strata+tabs height is more */
+  padding-top: 360px;
   height: 100%;
   font-family: 'Segoe UI', sans-serif;
   background: url('back.png') no-repeat center center fixed;
@@ -9,10 +8,8 @@ html, body{
   overflow-x: hidden;
   overflow-y: auto;
   scroll-behavior: smooth;
-
-  padding-top: 300px; /* 👈 Space for the fixed strata */
-
 }
+
 
 #rickerCanvas {
   display: block;      
