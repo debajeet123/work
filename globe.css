@@ -252,15 +252,25 @@ canvas {
   top: 0;
   left: 0;
   width: 100%;
-  height: 450px; /* 🔧 Increase this to show more strata */
+  height: 450px;
   background: url('strata.png') no-repeat center top;
   background-size: cover;
   z-index: 0;
   opacity: 1;
 
-  mask-image: radial-gradient(ellipse at center, rgba(0, 0, 0, 1) 60%, rgba(0, 0, 0, 0) 100%);
-  -webkit-mask-image: radial-gradient(ellipse at center, rgba(0, 0, 0, 1) 60%, rgba(0, 0, 0, 0) 100%);
+  /* 🧠 Fade on all sides using radial gradient */
+  mask-image: radial-gradient(
+    ellipse at center,
+    rgba(0, 0, 0, 1) 40%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  -webkit-mask-image: radial-gradient(
+    ellipse at center,
+    rgba(0, 0, 0, 1) 40%,
+    rgba(0, 0, 0, 0) 100%
+  );
 }
+
 
 
 
