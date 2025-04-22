@@ -178,11 +178,7 @@ canvas {
   cursor: pointer;
   transition: all 0.3s ease;
 }
-.tab-buttons button:hover,
-.tab-buttons button.active {
-  background: #00ffe1;
-  color: #000;
-}
+
 
 .tab-content {
   color: #00ffe1;
