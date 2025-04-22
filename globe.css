@@ -215,7 +215,6 @@ canvas {
   padding: 120px 40px 60px; /* more top padding so it's visible below fixed header elements */
   max-width: 900px;
   margin: 0 auto 60px;
-  
   border-radius: 8px;
   color: #ccffcc;
   scroll-margin-top: 100px; /* This is key */
