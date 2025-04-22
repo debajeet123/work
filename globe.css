@@ -301,6 +301,7 @@ canvas {
   }
 }
 
+
 .layered-bg {
   position: fixed;
   top: 0;
@@ -321,6 +322,17 @@ canvas {
 
   animation: erodeFade 8s ease-in-out infinite alternate;
 }
+
+--strata-mask: linear-gradient(
+  to right,
+  rgba(0, 0, 0, 0) 0%,        /* fully transparent at left */
+  rgba(0, 0, 0, 1) 30%,       /* fully visible before center */
+  rgba(0, 0, 0, 1) 70%,       /* still visible after center */
+  rgba(0, 0, 0, 0) 100%       /* fade out to transparent at right */
+);
+
+mask-image: var(--strata-mask);
+-webkit-mask-image: var(--strata-mask);
 
 
 
