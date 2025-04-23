@@ -8,7 +8,8 @@ renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setClearColor(0x000000, 0);
 document.getElementById("cornerGlobe").appendChild(renderer.domElement);
 
-let globe;
+let globe; // define in outer scope
+
 const loader = new THREE.TextureLoader();
 loader.load("https://unpkg.com/three-globe/example/img/earth-night.jpg", function (texture) {
   const geometry = new THREE.SphereGeometry(5, 64, 64);
@@ -21,52 +22,66 @@ loader.load("https://unpkg.com/three-globe/example/img/earth-night.jpg", functio
   dirLight.position.set(5, 3, 5);
   scene.add(dirLight);
 
-  // 3) Fetch and plot earthquakes **here**:
+  // ✅ Fetch and plot earthquakes
   fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_day.geojson')
-    .then(res => res.json())
+    .then(res => {
+      if (!res.ok) throw new Error("Failed to fetch earthquake data");
+      return res.json();
+    })
     .then(data => {
+      console.log(`Fetched ${data.features.length} earthquakes`);
+
       data.features.forEach(eq => {
         const [lon, lat, depth] = eq.geometry.coordinates;
         const mag = eq.properties.mag;
-        // convert lon/lat → phi/theta → x,y,z exactly like globe
-        const phi   = (90 - lat) * Math.PI/180;
-        const theta = (lon + 180) * Math.PI/180;
-        const r = 5; // globe radius
-        const x = r * Math.sin(phi) * Math.cos(theta);
-        const y = r * Math.cos(phi);
-        const z = r * Math.sin(phi) * Math.sin(theta);
 
-        // marker
-        const geo = new THREE.SphereGeometry(0.1 * mag, 8, 8);
-        const mat = new THREE.MeshBasicMaterial({ color: 0xff5500 });
-        const m   = new THREE.Mesh(geo, mat);
-        m.position.set(x, y, z);
-        scene.add(m);
+        // Debug print
+        console.log(`EQ: M${mag} at [${lat.toFixed(2)}, ${lon.toFixed(2)}]`);
 
-        // pulse animation
-        new TWEEN.Tween(m.scale)
-          .to({ x:2, y:2, z:2 }, 800)
+        // Convert lon/lat → 3D coords
+        const phi = (90 - lat) * (Math.PI / 180);
+        const theta = (lon + 180) * (Math.PI / 180);
+        const radius = 5;
+
+        const x = radius * Math.sin(phi) * Math.cos(theta);
+        const y = radius * Math.cos(phi);
+        const z = radius * Math.sin(phi) * Math.sin(theta);
+
+        // Marker
+        const markerGeometry = new THREE.SphereGeometry(0.1 * mag, 8, 8);
+        const markerMaterial = new THREE.MeshBasicMaterial({ color: 0xff5500 });
+        const marker = new THREE.Mesh(markerGeometry, markerMaterial);
+        marker.position.set(x, y, z);
+        scene.add(marker);
+
+        // Pulse animation
+        new TWEEN.Tween(marker.scale)
+          .to({ x: 2, y: 2, z: 2 }, 800)
           .yoyo(true)
           .repeat(Infinity)
           .start();
       });
-    });
-
-  // 4) Start your render loop
-  animate();
+    })
+    .catch(err => console.error("Earthquake fetch error:", err));
 });
 
-// your animate() function:
+// ✅ Animation loop
 function animate() {
   requestAnimationFrame(animate);
-  globe.rotation.y += 0.002;
-  TWEEN.update();        // ← tick your tweens every frame
+  if (globe) globe.rotation.y += 0.002;
+  TWEEN.update();
   renderer.render(scene, camera);
 }
 
+// Start animation no matter what
+animate();
+
+// Resize fix
 window.addEventListener("resize", () => {
   renderer.setSize(300, 300);
 });
+
+// Tab handling
 function openTab(evt, tabId) {
   const tabs = document.querySelectorAll(".tab-content");
   const links = document.querySelectorAll(".tab-link");
@@ -76,13 +91,11 @@ function openTab(evt, tabId) {
   evt.currentTarget.classList.add("active");
 }
 
+// Scroll effect
 window.addEventListener('scroll', () => {
   const wavelet = document.querySelector('.ricker-wavelet');
   const scrollTop = window.scrollY;
-  wavelet.style.transform = `scaleY(${1 + scrollTop / 500})`;
+  if (wavelet) wavelet.style.transform = `scaleY(${1 + scrollTop / 500})`;
 });
-
-
-
 
 
