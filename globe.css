@@ -358,6 +358,8 @@ canvas {
   50% { border-color: #00ffe1 }
 }
 
-
+#cornerGlobe canvas {
+  background-color: rgba(0, 0, 0, 0.3); /* Optional */
+}
 
 
