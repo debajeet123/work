@@ -1,48 +1,45 @@
 
-document.addEventListener("DOMContentLoaded", function () {
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 1000);
-  camera.position.z = 15;
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(
+  40,
+  window.innerWidth / window.innerHeight,
+  0.1,
+  1000
+);
+camera.position.z = 4;
 
-  const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-  renderer.setSize(300, 300);
-  renderer.setPixelRatio(window.devicePixelRatio);
-  renderer.setClearColor(0x000000, 0);
-  document.getElementById("cornerGlobe").appendChild(renderer.domElement);
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
 
-  let globe;
+// Load Earth texture from online (no local file needed)
+const loader = new THREE.TextureLoader();
+const earthTexture = loader.load(
+  "https://raw.githubusercontent.com/jeromeetienne/threex.planets/master/images/earthmap1k.jpg"
+);
 
-  const loader = new THREE.TextureLoader();
-  loader.load(
-    "https://unpkg.com/three-globe/example/img/earth-night.jpg",
-    function (texture) {
-      console.log("✅ Texture loaded!");
+// Create the globe
+const sphereGeometry = new THREE.SphereGeometry(1, 64, 64);
+const sphereMaterial = new THREE.MeshBasicMaterial({ map: earthTexture });
+const globe = new THREE.Mesh(sphereGeometry, sphereMaterial);
+scene.add(globe);
 
-      const geometry = new THREE.SphereGeometry(5, 64, 64);
-      const material = new THREE.MeshPhongMaterial({ map: texture });
-      globe = new THREE.Mesh(geometry, material);
-      scene.add(globe);
+// Animate the globe
+function animate() {
+  requestAnimationFrame(animate);
+  globe.rotation.y += 0.0015;
+  renderer.render(scene, camera);
+}
 
-      scene.add(new THREE.AmbientLight(0x888888));
-      const dirLight = new THREE.DirectionalLight(0xffffff, 1);
-      dirLight.position.set(5, 3, 5);
-      scene.add(dirLight);
-    }
-  );
+animate();
 
-  function animate() {
-    requestAnimationFrame(animate);
-    if (globe) globe.rotation.y += 0.002;
-    TWEEN.update();
-    renderer.render(scene, camera);
-  }
+// Handle window resizing
+window.addEventListener("resize", () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
 
-  animate();
-
-  // Resize fix
-  window.addEventListener("resize", () => {
-    renderer.setSize(300, 300);
-  });
 
   // Tab handling
   window.openTab = function (evt, tabId) {
