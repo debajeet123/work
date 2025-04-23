@@ -27,6 +27,7 @@ loader.load(
   scene.add(dirLight);
 
   
+  
 
 // ✅ Animation loop
 function animate() {
