@@ -28,6 +28,17 @@ loader.load("https://unpkg.com/three-globe/example/img/earth-night.jpg", functio
   animate();
 });
 
+// … after scene.add(globe) and lights …
+fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_day.geojson')
+  .then(res => res.json())
+  .then(data => {
+    data.features.forEach(eq => {
+      // compute x,y,z and create marker
+      scene.add(marker);
+      animateMarker(marker);
+    });
+  });
+
 window.addEventListener("resize", () => {
   renderer.setSize(300, 300);
 });
@@ -46,39 +57,7 @@ window.addEventListener('scroll', () => {
   wavelet.style.transform = `scaleY(${1 + scrollTop / 500})`;
 });
 
-fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_day.geojson')
-    .then(res => res.json())
-    .then(data => {
-      data.features.forEach(eq => {
-        const [lon, lat] = eq.geometry.coordinates;
-        const mag = eq.properties.mag;
-        const phi = (90 - lat) * Math.PI/180;
-        const theta = (lon + 180) * Math.PI/180;
-        const r = 5;
-        const x = r * Math.sin(phi) * Math.cos(theta);
-        const y = r * Math.cos(phi);
-        const z = r * Math.sin(phi) * Math.sin(theta);
 
-        const markGeo = new THREE.SphereGeometry(0.05 * mag, 8, 8);
-        const markMat = new THREE.MeshBasicMaterial({ color: 0xff0000 });
-        const marker = new THREE.Mesh(markGeo, markMat);
-        marker.position.set(x, y, z);
-        scene.add(marker);
-
-        // optional: pulse animation
-        animateMarker(marker);
-      });
-    });
-
-
-  // 4) kick off render loop
-  (function animate() {
-    requestAnimationFrame(animate);
-    globe.rotation.y += 0.002;
-    renderer.render(scene, camera);
-    TWEEN.update();
-  })();
-});
 
 
 
