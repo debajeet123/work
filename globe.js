@@ -8,6 +8,7 @@ renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setClearColor(0x000000, 0);
 document.getElementById("cornerGlobe").appendChild(renderer.domElement);
 
+let globe;
 const loader = new THREE.TextureLoader();
 loader.load("https://unpkg.com/three-globe/example/img/earth-night.jpg", function (texture) {
   const geometry = new THREE.SphereGeometry(5, 64, 64);
@@ -20,24 +21,50 @@ loader.load("https://unpkg.com/three-globe/example/img/earth-night.jpg", functio
   dirLight.position.set(5, 3, 5);
   scene.add(dirLight);
 
-  function animate() {
-    requestAnimationFrame(animate);
-    globe.rotation.y += 0.002;
-    renderer.render(scene, camera);
-  }
+  // 3) Fetch and plot earthquakes **here**:
+  fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_day.geojson')
+    .then(res => res.json())
+    .then(data => {
+      data.features.forEach(eq => {
+        const [lon, lat, depth] = eq.geometry.coordinates;
+        const mag = eq.properties.mag;
+        // convert lon/lat → phi/theta → x,y,z exactly like globe
+        const phi   = (90 - lat) * Math.PI/180;
+        const theta = (lon + 180) * Math.PI/180;
+        const r = 5; // globe radius
+        const x = r * Math.sin(phi) * Math.cos(theta);
+        const y = r * Math.cos(phi);
+        const z = r * Math.sin(phi) * Math.sin(theta);
+
+        // marker
+        const geo = new THREE.SphereGeometry(0.1 * mag, 8, 8);
+        const mat = new THREE.MeshBasicMaterial({ color: 0xff5500 });
+        const m   = new THREE.Mesh(geo, mat);
+        m.position.set(x, y, z);
+        scene.add(m);
+
+        // pulse animation
+        new TWEEN.Tween(m.scale)
+          .to({ x:2, y:2, z:2 }, 800)
+          .yoyo(true)
+          .repeat(Infinity)
+          .start();
+      });
+    });
+
+  // 4) Start your render loop
   animate();
 });
 
-// … after scene.add(globe) and lights …
-fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_day.geojson')
-  .then(res => res.json())
-  .then(data => {
-    data.features.forEach(eq => {
-      // compute x,y,z and create marker
-      scene.add(marker);
-      animateMarker(marker);
-    });
-  });
+console.log(`EQ: M${mag} at [${lat.toFixed(2)}, ${lon.toFixed(2)}]`);
+
+// your animate() function:
+function animate() {
+  requestAnimationFrame(animate);
+  globe.rotation.y += 0.002;
+  TWEEN.update();        // ← tick your tweens every frame
+  renderer.render(scene, camera);
+}
 
 window.addEventListener("resize", () => {
   renderer.setSize(300, 300);
