@@ -11,10 +11,14 @@ document.getElementById("cornerGlobe").appendChild(renderer.domElement);
 let globe; // define in outer scope
 
 const loader = new THREE.TextureLoader();
-loader.load("https://unpkg.com/three-globe/example/img/earth-night.jpg", function (texture) {
-  const geometry = new THREE.SphereGeometry(5, 64, 64);
+loader.load(
+  "https://unpkg.com/three-globe/example/img/earth-night.jpg",
+  function (texture) {
+    console.log("✅ Texture loaded!");
+ const geometry = new THREE.SphereGeometry(5, 64, 64);
   const material = new THREE.MeshPhongMaterial({ map: texture });
-  globe = new THREE.Mesh(geometry, material);
+  globe = new THREE.Mesh(geometry, material); // ✅ no `const`
+
   scene.add(globe);
 
   scene.add(new THREE.AmbientLight(0x888888));
