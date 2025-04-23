@@ -25,9 +25,8 @@ loader.load(
   const dirLight = new THREE.DirectionalLight(0xffffff, 1);
   dirLight.position.set(5, 3, 5);
   scene.add(dirLight);
+  
 
-  
-  
 
 // ✅ Animation loop
 function animate() {
