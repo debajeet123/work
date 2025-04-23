@@ -13,7 +13,7 @@ const loader = new THREE.TextureLoader();
 loader.load("https://unpkg.com/three-globe/example/img/earth-night.jpg", function (texture) {
   const geometry = new THREE.SphereGeometry(5, 64, 64);
   const material = new THREE.MeshPhongMaterial({ map: texture });
-  const globe = new THREE.Mesh(geometry, material);
+  globe = new THREE.Mesh(geometry, material);
   scene.add(globe);
 
   scene.add(new THREE.AmbientLight(0x888888));
@@ -55,8 +55,6 @@ loader.load("https://unpkg.com/three-globe/example/img/earth-night.jpg", functio
   // 4) Start your render loop
   animate();
 });
-
-console.log(`EQ: M${mag} at [${lat.toFixed(2)}, ${lon.toFixed(2)}]`);
 
 // your animate() function:
 function animate() {
