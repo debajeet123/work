@@ -38,29 +38,28 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   animate();
-});
 
+  // Resize fix
+  window.addEventListener("resize", () => {
+    renderer.setSize(300, 300);
+  });
 
-// Resize fix
-window.addEventListener("resize", () => {
-  renderer.setSize(300, 300);
-});
+  // Tab handling
+  window.openTab = function (evt, tabId) {
+    const tabs = document.querySelectorAll(".tab-content");
+    const links = document.querySelectorAll(".tab-link");
+    tabs.forEach(tab => tab.classList.remove("active"));
+    links.forEach(link => link.classList.remove("active"));
+    document.getElementById(tabId).classList.add("active");
+    evt.currentTarget.classList.add("active");
+  };
 
-// Tab handling
-function openTab(evt, tabId) {
-  const tabs = document.querySelectorAll(".tab-content");
-  const links = document.querySelectorAll(".tab-link");
-  tabs.forEach(tab => tab.classList.remove("active"));
-  links.forEach(link => link.classList.remove("active"));
-  document.getElementById(tabId).classList.add("active");
-  evt.currentTarget.classList.add("active");
-}
-
-// Scroll effect
-window.addEventListener('scroll', () => {
-  const wavelet = document.querySelector('.ricker-wavelet');
-  const scrollTop = window.scrollY;
-  if (wavelet) wavelet.style.transform = `scaleY(${1 + scrollTop / 500})`;
+  // Scroll effect
+  window.addEventListener('scroll', () => {
+    const wavelet = document.querySelector('.ricker-wavelet');
+    const scrollTop = window.scrollY;
+    if (wavelet) wavelet.style.transform = `scaleY(${1 + scrollTop / 500})`;
+  });
 });
 
 
