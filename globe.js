@@ -70,6 +70,7 @@ fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_day.geojson
       });
     });
 
+
   // 4) kick off render loop
   (function animate() {
     requestAnimationFrame(animate);
