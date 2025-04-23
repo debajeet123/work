@@ -22,48 +22,7 @@ loader.load("https://unpkg.com/three-globe/example/img/earth-night.jpg", functio
   dirLight.position.set(5, 3, 5);
   scene.add(dirLight);
 
-  // ✅ Fetch and plot earthquakes
-  fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_day.geojson')
-    .then(res => {
-      if (!res.ok) throw new Error("Failed to fetch earthquake data");
-      return res.json();
-    })
-    .then(data => {
-      console.log(`Fetched ${data.features.length} earthquakes`);
-
-      data.features.forEach(eq => {
-        const [lon, lat, depth] = eq.geometry.coordinates;
-        const mag = eq.properties.mag;
-
-        // Debug print
-        console.log(`EQ: M${mag} at [${lat.toFixed(2)}, ${lon.toFixed(2)}]`);
-
-        // Convert lon/lat → 3D coords
-        const phi = (90 - lat) * (Math.PI / 180);
-        const theta = (lon + 180) * (Math.PI / 180);
-        const radius = 5;
-
-        const x = radius * Math.sin(phi) * Math.cos(theta);
-        const y = radius * Math.cos(phi);
-        const z = radius * Math.sin(phi) * Math.sin(theta);
-
-        // Marker
-        const markerGeometry = new THREE.SphereGeometry(0.1 * mag, 8, 8);
-        const markerMaterial = new THREE.MeshBasicMaterial({ color: 0xff5500 });
-        const marker = new THREE.Mesh(markerGeometry, markerMaterial);
-        marker.position.set(x, y, z);
-        scene.add(marker);
-
-        // Pulse animation
-        new TWEEN.Tween(marker.scale)
-          .to({ x: 2, y: 2, z: 2 }, 800)
-          .yoyo(true)
-          .repeat(Infinity)
-          .start();
-      });
-    })
-    .catch(err => console.error("Earthquake fetch error:", err));
-});
+  
 
 // ✅ Animation loop
 function animate() {
