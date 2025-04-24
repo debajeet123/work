@@ -6,11 +6,16 @@ html, body {
   overflow: hidden;
 }
 #cornerGlobe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 300px;
+  height: 300px;
+  z-index: 1000;
+  pointer-events: none;
+  border-radius: 50%;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+  overflow: hidden;
   background: transparent;
 }
 canvas {
