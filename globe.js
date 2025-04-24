@@ -18,7 +18,11 @@ document.addEventListener("DOMContentLoaded", () => {
     texture => {
       const globe = new THREE.Mesh(
         new THREE.SphereGeometry(1, 64, 64),
-        new THREE.MeshPhongMaterial({ map: texture })
+        new THREE.MeshPhongMaterial({
+          map: texture,
+          emissive: 0x111111,
+          emissiveIntensity: 0.4
+        })
       );
       scene.add(globe);
 
@@ -30,4 +34,12 @@ document.addEventListener("DOMContentLoaded", () => {
       animate();
     }
   );
+
+  window.addEventListener("resize", () => {
+    const w = container.clientWidth;
+    const h = container.clientHeight;
+    renderer.setSize(w, h);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+  });
 });
