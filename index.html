@@ -5,17 +5,17 @@
   <meta charset="UTF-8" />
   <title>Debajeet Barman – Geophysicist</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
+  <script src="https://unpkg.com/three@0.152.2/build/three.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/18.6.4/TWEEN.min.js"></script>
-  <link rel="stylesheet" href="globe.css" />
+  <link rel="stylesheet" href="./globe.css" />
 </head>
 <body>
   <div id="cornerGlobe"></div>
   <div class="profile-photo">
-    <div class="strata-noise"></div>
-    <img src="profile.jpg" alt="Debajeet Barman">
+    <img src="profile.jpg" alt="Debajeet Barman" />
   </div>
   <canvas id="rickerCanvas"></canvas>
+
   <div class="top-tabs-bg">
     <div class="layered-bg">
       <div class="tabs">
@@ -30,43 +30,38 @@
       </div>
     </div>
   </div>
+
   <section id="home" class="tab-section">
     <h1>Welcome to Debajeet's Space</h1>
     <p><span class="typewriter">Exploring the geophysical cosmos with data, models, and ideas.</span></p>
   </section>
-  <section id="about" class="tab-section">
-    <h1>About Me</h1>
-    <p>Ph.D. candidate in geophysics combining HPC, seismic imaging, and ML.</p>
-  </section>
-  <section id="projects" class="tab-section">
-    <h1>Projects</h1>
-    <p>Ambient noise tomography, velocity models, and real-time data processing.</p>
-  </section>
-  <section id="publications" class="tab-section">
-    <h1>Publications</h1>
-    <p>Published research in seismology, modeling, and machine learning for Earth sciences.</p>
-  </section>
-  <section id="resume" class="tab-section">
-    <h1>Resume</h1>
-    <p>Geophysicist with advanced HPC and seismic modeling experience (PDF resume coming soon).</p>
-  </section>
+
+  <section id="about" class="tab-section"><h1>About Me</h1><p>Ph.D. candidate in geophysics combining HPC, seismic imaging, and ML.</p></section>
+  <section id="projects" class="tab-section"><h1>Projects</h1><p>Ambient noise tomography, velocity models, and real-time data processing.</p></section>
+  <section id="publications" class="tab-section"><h1>Publications</h1><p>Published research in seismology, modeling, and machine learning for Earth sciences.</p></section>
+  <section id="resume" class="tab-section"><h1>Resume</h1><p>Geophysicist with advanced HPC and seismic modeling experience (PDF resume coming soon).</p></section>
+
   <section id="contact" class="tab-section" style="padding-bottom: 150px;">
     <h1>Debajeet Barman</h1>
     <h2>Ph.D. Candidate in Geophysics</h2>
     <p>Email: <a href="mailto:Debajeet_Barman1@baylor.edu">Debajeet_Barman1@baylor.edu</a></p>
   </section>
+
   <div class="info-card">
     <a href="https://linkedin.com/in/debajeetbarman" target="_blank">LinkedIn</a> |
     <a href="https://scholar.google.com/citations?user=_i8vIAEAAAAJ" target="_blank">Google Scholar</a>
   </div>
+
   <div class="bio-section">
     <h2>About Me</h2>
     <p>I am a geophysicist (PhD.) at Baylor University... [rest of your bio]</p>
   </div>
+
   <div class="member-logos">
     <a href="https://www.agu.org" target="_blank"><img src="agu.png" alt="AGU" /></a>
     <a href="https://www.seismosoc.org" target="_blank"><img src="ssa.jpeg" alt="SSA" /></a>
   </div>
-  <script src="globe.js"></script>
+
+  <script src="./globe.js"></script>
 </body>
 </html>
