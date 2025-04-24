@@ -13,59 +13,78 @@ camera.position.z = 4;
 
 // 2. Create renderer and attach to the cornerGlobe container
 const container = document.getElementById("cornerGlobe");
-const renderer = new THREE.WebGLRenderer({ antialias: true });
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 renderer.setSize(container.clientWidth, container.clientHeight);
+renderer.setPixelRatio(window.devicePixelRatio);
+renderer.setClearColor(0x000000, 0); // transparent
 container.appendChild(renderer.domElement);
 
 // 3. Update camera aspect based on container
 camera.aspect = container.clientWidth / container.clientHeight;
 camera.updateProjectionMatrix();
 
-// 4. Load Earth texture
-const loader = new THREE.TextureLoader();
-const earthTexture = loader.load(
-  "https://raw.githubusercontent.com/jeromeetienne/threex.planets/master/images/earthmap1k.jpg"
-);
+// 4. Load Earth textures (color + bump)
+const textureLoader = new THREE.TextureLoader();
+const earthMap = textureLoader.load("https://raw.githubusercontent.com/jeromeetienne/threex.planets/master/images/earthmap1k.jpg");
+const bumpMap = textureLoader.load("https://raw.githubusercontent.com/jeromeetienne/threex.planets/master/images/earthbump1k.jpg");
+const specularMap = textureLoader.load("https://raw.githubusercontent.com/jeromeetienne/threex.planets/master/images/earthspec1k.jpg");
 
-// 5. Create the globe mesh
-const sphereGeometry = new THREE.SphereGeometry(1, 64, 64);
-const sphereMaterial = new THREE.MeshBasicMaterial({ map: earthTexture });
-const globe = new THREE.Mesh(sphereGeometry, sphereMaterial);
-scene.add(globe);
+// 5. Create geoid shape — slight flattening to mimic Earth’s real oblateness
+const geoidGeometry = new THREE.SphereGeometry(1.0, 64, 64);
+geoidGeometry.scale(1, 0.99, 1);  // Slight vertical squish for geoid realism
 
-// 6. Animation loop
+const geoidMaterial = new THREE.MeshPhongMaterial({
+  map: earthMap,
+  bumpMap: bumpMap,
+  bumpScale: 0.05,
+  specularMap: specularMap,
+  specular: new THREE.Color("grey"),
+  shininess: 10
+});
+
+const geoid = new THREE.Mesh(geoidGeometry, geoidMaterial);
+scene.add(geoid);
+
+// 6. Add lighting
+const ambientLight = new THREE.AmbientLight(0x888888);
+scene.add(ambientLight);
+
+const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2);
+directionalLight.position.set(5, 2, 5);
+scene.add(directionalLight);
+
+// 7. Animate
 function animate() {
   requestAnimationFrame(animate);
-  globe.rotation.y += 0.0015;
+  geoid.rotation.y += 0.0015;
   renderer.render(scene, camera);
 }
 animate();
 
-// 7. Handle window resize
+// 8. Resize handler
 window.addEventListener("resize", () => {
   renderer.setSize(container.clientWidth, container.clientHeight);
   camera.aspect = container.clientWidth / container.clientHeight;
   camera.updateProjectionMatrix();
 });
 
+// 9. Tab handling
+window.openTab = function (evt, tabId) {
+  const tabs = document.querySelectorAll(".tab-content");
+  const links = document.querySelectorAll(".tab-link");
+  tabs.forEach(tab => tab.classList.remove("active"));
+  links.forEach(link => link.classList.remove("active"));
+  document.getElementById(tabId).classList.add("active");
+  evt.currentTarget.classList.add("active");
+};
 
+// 10. Scroll animation (Ricker wavelet stretch)
+window.addEventListener("scroll", () => {
+  const wavelet = document.querySelector('.ricker-wavelet');
+  const scrollTop = window.scrollY;
+  if (wavelet) wavelet.style.transform = `scaleY(${1 + scrollTop / 500})`;
+});
 
-  // Tab handling
-  window.openTab = function (evt, tabId) {
-    const tabs = document.querySelectorAll(".tab-content");
-    const links = document.querySelectorAll(".tab-link");
-    tabs.forEach(tab => tab.classList.remove("active"));
-    links.forEach(link => link.classList.remove("active"));
-    document.getElementById(tabId).classList.add("active");
-    evt.currentTarget.classList.add("active");
-  };
-
-  // Scroll effect
-  window.addEventListener('scroll', () => {
-    const wavelet = document.querySelector('.ricker-wavelet');
-    const scrollTop = window.scrollY;
-    if (wavelet) wavelet.style.transform = `scaleY(${1 + scrollTop / 500})`;
-  });
 
 
 
