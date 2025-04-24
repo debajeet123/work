@@ -1,63 +1,45 @@
+
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 1000);
-camera.position.z = 15;
+const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
+camera.position.z = 5;
 
 const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-renderer.setSize(300, 300);
-renderer.setPixelRatio(window.devicePixelRatio);
-renderer.setClearColor(0x000000, 0);
-document.getElementById("cornerGlobe").appendChild(renderer.domElement);
+const container = document.getElementById("cornerGlobe");
+renderer.setSize(container.clientWidth, container.clientHeight);
+container.appendChild(renderer.domElement);
 
-const loader = new THREE.TextureLoader();
-loader.load("https://unpkg.com/three-globe/example/img/earth-night.jpg", function (texture) {
-  const geometry = new THREE.SphereGeometry(5, 64, 64);
-  const material = new THREE.MeshPhongMaterial({ map: texture });
-  const globe = new THREE.Mesh(geometry, material);
-  scene.add(globe);
+const light = new THREE.DirectionalLight(0xffffff, 1);
+light.position.set(3, 3, 3);
+scene.add(light);
 
-  scene.add(new THREE.AmbientLight(0x888888));
-  const dirLight = new THREE.DirectionalLight(0xffffff, 1);
-  dirLight.position.set(5, 3, 5);
-  scene.add(dirLight);
+const ambientLight = new THREE.AmbientLight(0x404040);
+scene.add(ambientLight);
 
-  function animate() {
-    requestAnimationFrame(animate);
-    globe.rotation.y += 0.002;
-    renderer.render(scene, camera);
-  }
-  animate();
+const geometry = new THREE.IcosahedronGeometry(1, 5);
+const material = new THREE.MeshStandardMaterial({
+  color: 0x8855ff,
+  wireframe: false,
+  roughness: 0.5,
+  metalness: 0.6
 });
+const rock = new THREE.Mesh(geometry, material);
+scene.add(rock);
 
-window.addEventListener("resize", () => {
-  renderer.setSize(300, 300);
-});
-function openTab(evt, tabId) {
-  const tabs = document.querySelectorAll(".tab-content");
-  const links = document.querySelectorAll(".tab-link");
-  tabs.forEach(tab => tab.classList.remove("active"));
-  links.forEach(link => link.classList.remove("active"));
-  document.getElementById(tabId).classList.add("active");
-  evt.currentTarget.classList.add("active");
-}
+const clock = new THREE.Clock();
 
-window.addEventListener('scroll', () => {
-  const wavelet = document.querySelector('.ricker-wavelet');
-  const scrollTop = window.scrollY;
-  wavelet.style.transform = `scaleY(${1 + scrollTop / 500})`;
-});
+function animate() {
+  requestAnimationFrame(animate);
+  const t = clock.getElapsedTime();
 
-fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_day.geojson')
-  .then(response => response.json())
-  .then(data => {
-    data.features.forEach(eq => {
-      const [lon, lat] = eq.geometry.coordinates;
-      const magnitude = eq.properties.mag;
-      ...
-      scene.add(marker);
-      animateMarker(marker);
-    });
-    
+  rock.rotation.x += 0.005;
+  rock.rotation.y += 0.01;
+
+  // Create a dynamic distortion effect
+  rock.geometry.vertices.forEach(v => {
+    v.normalize().multiplyScalar(1 + 0.1 * Math.sin(t * 5 + v.x * 10));
   });
+  rock.geometry.verticesNeedUpdate = true;
 
-
-
+  renderer.render(scene, camera);
+}
+animate();
