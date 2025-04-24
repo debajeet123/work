@@ -1,139 +1,19 @@
 html, body {
   margin: 0;
-  padding-top: 340px; /* top layer space */
-  height: 100%;
+  padding-top: 340px;
   font-family: 'Segoe UI', sans-serif;
   background: #000;
   overflow-x: hidden;
   overflow-y: auto;
   scroll-behavior: smooth;
 }
-
-/* Globe in top right */
-#cornerGlobe {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  width: 300px;
-  height: 300px;
-  z-index: 1000;
-  border-radius: 50%;
-  overflow: hidden;
-  box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
-  background: rgba(0, 0, 0, 0.3); /* fallback */
-}
-
-/* Ensure canvas fills its container */
-canvas {
-  display: block;
-  width: 100% !important;
-  height: 100% !important;
-}
-
-/* Main content sections */
-.tab-section {
-  padding: 100px 40px;
-  max-width: 900px;
-  margin: auto;
-  color: #b8fadc;
-}
-.tab-section h1 {
-  color: #00ffe1;
-  border-bottom: 2px solid #00ffe1;
-  font-size: 32px;
-  margin-bottom: 12px;
-}
-
-/* Profile photo styling */
-.profile-photo {
-  position: fixed;
-  top: 30px;
-  left: 30px;
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  overflow: hidden;
-  box-shadow: 0 0 10px rgba(0, 255, 255, 0.4);
-  z-index: 999;
-}
-.profile-photo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* Info card links */
-.info-card {
-  text-align: center;
-  margin: 80px auto;
-  color: #00ffe1;
-}
-
-/* Strata background banner */
-.top-tabs-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 300px;
-  z-index: 1;
-  overflow: hidden;
-}
 .layered-bg {
+  position: fixed;
+  top: 0px;
+  left: 0px;
   width: 100%;
-  height: 100%;
+  height: 300px;
   background: url('strata.png') no-repeat center center;
-  background-size: contain;
-  mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%);
-  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%);
+  background-size: 80% 60%;
+  z-index: 0;
 }
-
-/* Tab links */
-.tabs {
-  position: absolute;
-  top: 180px;
-  left: 250px;
-  display: flex;
-  gap: 16px;
-  z-index: 2;
-}
-.tab-link {
-  font-size: 15px;
-  padding: 10px 20px;
-  color: #00ffe1;
-  font-weight: bold;
-  background: rgba(0, 0, 0, 0.4);
-  border: 1px solid #00ffe1;
-  border-radius: 50px;
-  text-decoration: none;
-  box-shadow: 0 0 6px rgba(0, 255, 255, 0.4);
-  backdrop-filter: blur(6px);
-  transition: all 0.25s ease-in-out;
-}
-.tab-link:hover,
-.tab-link.active {
-  background: #00ffe1;
-  color: #000;
-  transform: scale(1.05);
-}
-
-/* Typing animation */
-.typewriter {
-  display: inline-block;
-  overflow: hidden;
-  white-space: nowrap;
-  border-right: 2px solid #00ffe1;
-  font-family: monospace;
-  animation:
-    typing 4s steps(60, end) 0.5s forwards,
-    blink-caret 0.7s step-end infinite;
-}
-@keyframes typing {
-  from { width: 0 }
-  to { width: 100% }
-}
-@keyframes blink-caret {
-  from, to { border-color: transparent }
-  50% { border-color: #00ffe1 }
-}
-
