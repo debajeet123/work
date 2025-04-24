@@ -15,7 +15,7 @@ html, body {
   right: 20px;
   width: 300px;
   height: 300px;
-  z-index: 10;
+  z-index: 1000;
 }
 canvas {
   width: 100% !important;

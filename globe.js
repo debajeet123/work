@@ -18,26 +18,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const loader = new THREE.TextureLoader();
   loader.load(
-    "https://raw.githubusercontent.com/ajayns/earth-js/master/images/earth-night.jpg",
-    function (texture) {
-      const geometry = new THREE.SphereGeometry(1, 64, 64);
-      const material = new THREE.MeshPhongMaterial({
-        map: texture,
-        shininess: 1,
-        emissive: 0x111111,
-        emissiveIntensity: 0.3,
-      });
-      const globe = new THREE.Mesh(geometry, material);
-      scene.add(globe);
-
-      function animate() {
-        requestAnimationFrame(animate);
-        globe.rotation.y += 0.0015;
-        renderer.render(scene, camera);
-      }
-      animate();
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Night_map.png/1024px-Night_map.png",
+  function (texture) {
+    const geometry = new THREE.SphereGeometry(1, 64, 64);
+    const material = new THREE.MeshPhongMaterial({
+      map: texture,
+      shininess: 1,
+      emissive: 0x111111,
+      emissiveIntensity: 0.3,
+    });
+    const globe = new THREE.Mesh(geometry, material);
+    scene.add(globe);
+    function animate() {
+      requestAnimationFrame(animate);
+      globe.rotation.y += 0.0015;
+      renderer.render(scene, camera);
     }
-  );
+    animate();
+  }
+);
+
 
   window.addEventListener("resize", () => {
     const w = container.clientWidth;
