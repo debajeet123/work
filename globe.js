@@ -1,10 +1,15 @@
 
 document.addEventListener("DOMContentLoaded", () => {
+  const container = document.getElementById("cornerGlobe");
+  if (!container) {
+    console.error("❌ cornerGlobe container not found!");
+    return;
+  }
+
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 1000);
+  const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
   camera.position.z = 3;
 
-  const container = document.getElementById("cornerGlobe");
   const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
   renderer.setSize(container.clientWidth, container.clientHeight);
   renderer.setPixelRatio(window.devicePixelRatio);
@@ -17,27 +22,33 @@ document.addEventListener("DOMContentLoaded", () => {
   scene.add(directionalLight);
 
   const loader = new THREE.TextureLoader();
-  loader.load(
-  "https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Night_map.png/1024px-Night_map.png",
-  function (texture) {
-    const geometry = new THREE.SphereGeometry(1, 64, 64);
-    const material = new THREE.MeshPhongMaterial({
-      map: texture,
-      shininess: 1,
-      emissive: 0x111111,
-      emissiveIntensity: 0.3,
-    });
-    const globe = new THREE.Mesh(geometry, material);
-    scene.add(globe);
-    function animate() {
-      requestAnimationFrame(animate);
-      globe.rotation.y += 0.0015;
-      renderer.render(scene, camera);
-    }
-    animate();
-  }
-);
+  loader.crossOrigin = ''; // Enable CORS for GitHub Pages
 
+  loader.load(
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Night_map.png/1024px-Night_map.png",
+    texture => {
+      const geometry = new THREE.SphereGeometry(1, 64, 64);
+      const material = new THREE.MeshPhongMaterial({
+        map: texture,
+        shininess: 1,
+        emissive: 0x111111,
+        emissiveIntensity: 0.3,
+      });
+      const globe = new THREE.Mesh(geometry, material);
+      scene.add(globe);
+
+      function animate() {
+        requestAnimationFrame(animate);
+        globe.rotation.y += 0.0015;
+        renderer.render(scene, camera);
+      }
+      animate();
+    },
+    undefined,
+    err => {
+      console.error("❌ Failed to load Earth texture:", err);
+    }
+  );
 
   window.addEventListener("resize", () => {
     const w = container.clientWidth;
@@ -47,3 +58,4 @@ document.addEventListener("DOMContentLoaded", () => {
     camera.updateProjectionMatrix();
   });
 });
+
