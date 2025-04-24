@@ -1,12 +1,56 @@
+
 html, body {
   margin: 0;
+  padding-top: 300px;
+  height: 100%;
   font-family: 'Segoe UI', sans-serif;
   background: #000;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+#cornerGlobe {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 300px;
+  height: 300px;
+  z-index: 1000;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+}
+canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+.tab-section {
+  padding: 100px 40px;
+  max-width: 900px;
+  margin: auto;
+  color: #b8fadc;
+}
+.tab-section h1 {
+  color: #00ffe1;
+  border-bottom: 2px solid #00ffe1;
+}
+.profile-photo {
+  position: fixed;
+  top: 30px;
+  left: 30px;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.profile-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.info-card {
+  text-align: center;
+  margin: 80px auto;
   color: #00ffe1;
 }
-.tab-content { display: none; padding: 20px; }
-.tab-content.active { display: block; }
-.tab-link { cursor: pointer; padding: 10px; color: cyan; }
-.profile-photo { position: fixed; top: 10px; left: 10px; width: 100px; height: 100px; }
-#cornerGlobe { position: fixed; top: 20px; right: 20px; width: 300px; height: 300px; }
-canvas { width: 100%; height: 100%; display: block; }
