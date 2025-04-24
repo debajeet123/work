@@ -9,8 +9,7 @@ const camera = new THREE.PerspectiveCamera(
 camera.position.z = 4;
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.setSize(window.innerWidth, window.innerHeight);
-document.body.appendChild(renderer.domElement);
+
 
 // Load Earth texture from online (no local file needed)
 const loader = new THREE.TextureLoader();
@@ -33,12 +32,12 @@ function animate() {
 
 animate();
 
-// Handle window resizing
 window.addEventListener("resize", () => {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-});
+    const container = document.getElementById("cornerGlobe");
+    camera.aspect = container.clientWidth / container.clientHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(container.clientWidth, container.clientHeight);
+  });
 
 
   // Tab handling
