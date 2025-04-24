@@ -66,6 +66,6 @@ window.addEventListener("resize", () => {
     const scrollTop = window.scrollY;
     if (wavelet) wavelet.style.transform = `scaleY(${1 + scrollTop / 500})`;
   });
-});
+
 
 
