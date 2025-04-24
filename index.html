@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +10,28 @@
 </head>
 <body>
   <div id="cornerGlobe"></div>
-<script src="globe.js"></script>
-
+  <div class="profile-photo"><img src="profile.jpg" alt="Debajeet Barman"></div>
+  <canvas id="rickerCanvas"></canvas>
+  <div class="top-tabs-bg">
+    <div class="layered-bg">
+      <div class="tabs">
+        <div class="tab-buttons">
+          <a class="tab-link active" onclick="openTab(event, 'home')">Home</a>
+          <a class="tab-link" onclick="openTab(event, 'about')">About</a>
+          <a class="tab-link" onclick="openTab(event, 'projects')">Projects</a>
+          <a class="tab-link" onclick="openTab(event, 'publications')">Publications</a>
+          <a class="tab-link" onclick="openTab(event, 'resume')">Resume</a>
+          <a class="tab-link" onclick="openTab(event, 'contact')">Contact</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="home" class="tab-content active"><h1>Welcome</h1><p>Geophysical Cosmos</p></div>
+  <div id="about" class="tab-content"><h1>About</h1><p>PhD Candidate in Geophysics</p></div>
+  <div id="projects" class="tab-content"><h1>Projects</h1></div>
+  <div id="publications" class="tab-content"><h1>Publications</h1></div>
+  <div id="resume" class="tab-content"><h1>Resume</h1></div>
+  <div id="contact" class="tab-content"><h1>Contact</h1></div>
+  <script src="globe.js"></script>
 </body>
 </html>
