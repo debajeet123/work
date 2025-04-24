@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // 4. Load dark Earth texture
   const loader = new THREE.TextureLoader();
   loader.load(
-    "https://raw.githubusercontent.com/ajayns/earth-js/master/images/earth-night.jpg",
+    "https://cdn.jsdelivr.net/gh/ajayns/earth-js@master/images/earth-night.jpg",
     function (texture) {
       const geometry = new THREE.SphereGeometry(1, 64, 64);
       const material = new THREE.MeshPhongMaterial({
