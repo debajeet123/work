@@ -4,6 +4,8 @@ const ROTATION_SPEED = 0.003;
 const DAY_TEXTURE_URL = 'https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/earth_atmos_2048.jpg';
 const NIGHT_TEXTURE_URL = 'https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/earth_night_2048.jpg';
 const CLOUDS_TEXTURE_URL = 'https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/earth_clouds_1024.png';
+const BUMP_TEXTURE_URL = 'https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/earth_normal_2048.jpg';
+const SPECULAR_TEXTURE_URL = 'https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/earth_specular_2048.jpg';
 
 // Create a function to initialize a globe
 function createGlobe(containerId, size) {
@@ -22,11 +24,11 @@ function createGlobe(containerId, size) {
   renderer.setClearColor(0x000000, 0);
   document.getElementById(containerId).appendChild(renderer.domElement);
 
-  // Lighting
-  const ambientLight = new THREE.AmbientLight(0xffffff, 2.5);
+  // Enhanced lighting
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
   scene.add(ambientLight);
 
-  const directionalLight = new THREE.DirectionalLight(0xffffff, 3);
+  const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
   directionalLight.position.set(5, 3, 5);
   scene.add(directionalLight);
 
@@ -88,25 +90,33 @@ function createGlobe(containerId, size) {
   Promise.all([
     new Promise((resolve) => loader.load(DAY_TEXTURE_URL, resolve)),
     new Promise((resolve) => loader.load(NIGHT_TEXTURE_URL, resolve)),
-    new Promise((resolve) => loader.load(CLOUDS_TEXTURE_URL, resolve))
-  ]).then(([dayTexture, nightTexture, cloudsTexture]) => {
-    // Create Earth sphere
-    const earthGeometry = new THREE.SphereGeometry(GLOBE_RADIUS, 64, 64);
+    new Promise((resolve) => loader.load(CLOUDS_TEXTURE_URL, resolve)),
+    new Promise((resolve) => loader.load(BUMP_TEXTURE_URL, resolve)),
+    new Promise((resolve) => loader.load(SPECULAR_TEXTURE_URL, resolve))
+  ]).then(([dayTexture, nightTexture, cloudsTexture, bumpTexture, specularTexture]) => {
+    // Create Earth sphere with higher geometry detail
+    const earthGeometry = new THREE.SphereGeometry(GLOBE_RADIUS, 128, 128);
     const earthMaterial = new THREE.MeshPhongMaterial({
       map: dayTexture,
       emissiveMap: nightTexture,
       emissive: 0x222222,
-      emissiveIntensity: 1.5
+      emissiveIntensity: 1.5,
+      bumpMap: bumpTexture,
+      bumpScale: 0.05,
+      specularMap: specularTexture,
+      specular: new THREE.Color(0x333333),
+      shininess: 5
     });
     const earth = new THREE.Mesh(earthGeometry, earthMaterial);
     scene.add(earth);
 
-    // Create clouds sphere
-    const cloudsGeometry = new THREE.SphereGeometry(GLOBE_RADIUS * 1.01, 64, 64);
+    // Create clouds sphere with higher detail
+    const cloudsGeometry = new THREE.SphereGeometry(GLOBE_RADIUS * 1.01, 128, 128);
     const cloudsMaterial = new THREE.MeshPhongMaterial({
       map: cloudsTexture,
       transparent: true,
-      opacity: 0.4
+      opacity: 0.4,
+      side: THREE.DoubleSide
     });
     const clouds = new THREE.Mesh(cloudsGeometry, cloudsMaterial);
     scene.add(clouds);
@@ -123,9 +133,14 @@ function createGlobe(containerId, size) {
     function animate() {
       requestAnimationFrame(animate);
       
-      // Rotate Earth and clouds
+      // Rotate Earth and clouds with slight variation
       earth.rotation.y += ROTATION_SPEED;
-      clouds.rotation.y += ROTATION_SPEED * 1.1; // Slightly faster rotation for clouds
+      clouds.rotation.y += ROTATION_SPEED * 1.1;
+      
+      // Add subtle wobble effect
+      const time = Date.now() * 0.001;
+      earth.rotation.x = Math.sin(time * 0.1) * 0.01;
+      clouds.rotation.x = Math.sin(time * 0.1) * 0.01;
       
       controls.update();
       renderer.render(scene, camera);
