@@ -25,11 +25,11 @@ function createGlobe(containerId, size) {
   document.getElementById(containerId).appendChild(renderer.domElement);
 
   // Enhanced lighting
-  const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+  const ambientLight = new THREE.AmbientLight(0x111111, 0.5); // very dim
   scene.add(ambientLight);
 
-  const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
-  directionalLight.position.set(5, 3, 5);
+  const directionalLight = new THREE.DirectionalLight(0xffffff, 2);
+  directionalLight.position.set(5, 0, 0); // light from right side
   scene.add(directionalLight);
 
   // Add subtle atmospheric glow
@@ -178,4 +178,4 @@ function createGlobe(containerId, size) {
 
 // Initialize both globes
 createGlobe('cornerGlobe', 500); // Original corner globe
-createGlobe('topRightGlobe', 300); // New top right globe 
+createGlobe('topRightGlobe', 300); // New top right globe Messages
