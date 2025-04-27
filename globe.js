@@ -1,8 +1,8 @@
 // Constants
 const GLOBE_RADIUS = 1;
 const ROTATION_SPEED = 0.003;
-const DAY_TEXTURE_URL = 'https://cdn.jsdelivr.net/gh/Chalarangelo/static-hosted-assets/earthmap1k.jpg';
-const NIGHT_TEXTURE_URL = 'https://cdn.jsdelivr.net/gh/Chalarangelo/static-hosted-assets/earthlights1k.jpg';
+const DAY_TEXTURE_URL = 'https://threejs.org/examples/textures/land_ocean_ice_cloud_2048.jpg';
+const NIGHT_TEXTURE_URL = 'https://threejs.org/examples/textures/earth_lights_2048.jpg';
 const MAX_FPS = 60;
 const FRAME_TIME = 1000 / MAX_FPS;
 
