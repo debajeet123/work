@@ -77,6 +77,11 @@ body::after {
   border-radius: 50%;
   overflow: hidden;
   box-shadow: 0 0 30px rgba(0, 255, 255, 0.6);
+  transition: transform 0.3s ease;
+}
+
+#cornerGlobe:hover {
+  transform: scale(1.05);
 }
 
 /* Profile Photo */
@@ -91,12 +96,23 @@ body::after {
   z-index: 1003;
   border: 3px solid rgba(0, 255, 255, 0.3);
   box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profile-photo:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.6);
 }
 
 .profile-photo img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.profile-photo:hover img {
+  transform: scale(1.1);
 }
 
 /* Ricker Canvas */
@@ -105,6 +121,11 @@ body::after {
   bottom: 20px;
   left: 20px;
   z-index: 1001;
+  transition: transform 0.3s ease;
+}
+
+#rickerCanvas:hover {
+  transform: scale(1.05);
 }
 
 /* Tabs Navigation */
@@ -123,6 +144,7 @@ body::after {
   padding: 10px 20px;
   border-radius: 30px;
   backdrop-filter: blur(10px);
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
 }
 
 .tab-link {
@@ -131,11 +153,32 @@ body::after {
   padding: 8px 16px;
   border-radius: 20px;
   transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.tab-link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 255, 255, 0.1);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+}
+
+.tab-link:hover::before {
+  transform: scaleX(1);
+  transform-origin: left;
 }
 
 .tab-link:hover {
   background: rgba(0, 255, 255, 0.2);
   color: #0ff;
+  transform: translateY(-2px);
 }
 
 /* Tab Sections */
@@ -152,21 +195,31 @@ body::after {
   backdrop-filter: blur(10px);
   z-index: 1000;
   display: none;
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
+  transition: all 0.3s ease;
 }
 
 .tab-section.active {
   display: block;
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translate(-50%, -50%) scale(0.95); }
+  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
 }
 
 .tab-section h1 {
   color: #0ff;
   margin-bottom: 20px;
   font-size: 2.5em;
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
 }
 
 .tab-section p {
   font-size: 1.2em;
   line-height: 1.6;
+  text-shadow: 0 0 5px rgba(0, 255, 255, 0.3);
 }
 
 /* Typewriter Effect */
@@ -190,17 +243,44 @@ body::after {
   border-radius: 15px;
   backdrop-filter: blur(10px);
   z-index: 1005;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.info-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.4);
 }
 
 .info-card a {
   color: #0ff;
   text-decoration: none;
   margin: 0 10px;
-  transition: color 0.3s ease;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.info-card a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #0ff;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+}
+
+.info-card a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
 }
 
 .info-card a:hover {
   color: #fff;
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
 }
 
 /* Responsive Design */
@@ -208,6 +288,8 @@ body::after {
   #cornerGlobe {
     width: 300px;
     height: 300px;
+    top: 10px;
+    right: 10px;
   }
 
   .profile-photo {
@@ -220,16 +302,61 @@ body::after {
   .tabs-nav {
     flex-wrap: wrap;
     justify-content: center;
+    padding: 5px 10px;
+    gap: 10px;
+  }
+
+  .tab-link {
+    padding: 5px 10px;
+    font-size: 0.9em;
   }
 
   .tab-section {
     width: 90%;
     padding: 20px;
+    top: 40%;
+  }
+
+  .tab-section h1 {
+    font-size: 2em;
+  }
+
+  .tab-section p {
+    font-size: 1em;
   }
 
   .info-card {
     bottom: 10px;
     right: 10px;
     padding: 10px 15px;
+    font-size: 0.9em;
   }
+}
+
+/* Loading Animation */
+.loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.loading::after {
+  content: '';
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(0, 255, 255, 0.3);
+  border-top-color: #0ff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
 } 

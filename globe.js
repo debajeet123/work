@@ -1,6 +1,6 @@
 // Constants
 const GLOBE_RADIUS = 1;
-const ROTATION_SPEED = 0.002;
+const ROTATION_SPEED = 0.003;
 const DAY_TEXTURE_URL = 'https://cdn.jsdelivr.net/gh/Chalarangelo/static-hosted-assets/earthmap1k.jpg';
 const NIGHT_TEXTURE_URL = 'https://cdn.jsdelivr.net/gh/Chalarangelo/static-hosted-assets/earthlights1k.jpg';
 const MAX_FPS = 60;
@@ -22,12 +22,44 @@ renderer.setClearColor(0x000000, 0);
 document.getElementById('cornerGlobe').appendChild(renderer.domElement);
 
 // Lighting
-const ambientLight = new THREE.AmbientLight(0xffffff, 2.5);
+const ambientLight = new THREE.AmbientLight(0xffffff, 3.0);
 scene.add(ambientLight);
 
-const directionalLight = new THREE.DirectionalLight(0xffffff, 3);
+const directionalLight = new THREE.DirectionalLight(0xffffff, 3.5);
 directionalLight.position.set(5, 3, 5);
 scene.add(directionalLight);
+
+// Add subtle atmospheric glow
+const glowGeometry = new THREE.SphereGeometry(GLOBE_RADIUS * 1.1, 32, 32);
+const glowMaterial = new THREE.ShaderMaterial({
+  uniforms: {
+    glowColor: { value: new THREE.Color(0x00ffff) },
+    viewVector: { value: camera.position }
+  },
+  vertexShader: `
+    varying vec3 vNormal;
+    varying vec3 vPositionNormal;
+    void main() {
+      vNormal = normalize(normalMatrix * normal);
+      vPositionNormal = normalize((modelViewMatrix * vec4(position, 1.0)).xyz);
+      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+    }
+  `,
+  fragmentShader: `
+    uniform vec3 glowColor;
+    varying vec3 vNormal;
+    varying vec3 vPositionNormal;
+    void main() {
+      float intensity = pow(0.7 - dot(vNormal, vPositionNormal), 2.0);
+      gl_FragColor = vec4(glowColor, intensity);
+    }
+  `,
+  side: THREE.BackSide,
+  blending: THREE.AdditiveBlending,
+  transparent: true
+});
+const glow = new THREE.Mesh(glowGeometry, glowMaterial);
+scene.add(glow);
 
 // Controls
 const controls = new THREE.OrbitControls(camera, renderer.domElement);
@@ -38,7 +70,7 @@ controls.minDistance = 2;
 controls.maxDistance = 5;
 controls.maxPolarAngle = Math.PI;
 controls.autoRotate = true;
-controls.autoRotateSpeed = 0.5;
+controls.autoRotateSpeed = 0.7;
 
 // Mobile touch handling
 let isTouchDevice = 'ontouchstart' in window;
@@ -74,6 +106,17 @@ let animationFrameId;
 let lastTime = 0;
 let isUserInteracting = false;
 
+// Handle window resize
+function handleResize() {
+  const container = document.getElementById('cornerGlobe');
+  const width = container.clientWidth;
+  const height = container.clientHeight;
+  
+  renderer.setSize(width, height);
+  camera.aspect = width / height;
+  camera.updateProjectionMatrix();
+}
+
 // Load both day and night textures
 Promise.all([
   new Promise((resolve) => loader.load(DAY_TEXTURE_URL, resolve)),
@@ -84,7 +127,7 @@ Promise.all([
     map: dayTexture,
     emissiveMap: nightTexture,
     emissive: 0x888888,
-    emissiveIntensity: 3.0,
+    emissiveIntensity: 3.5,
     specular: new THREE.Color(0x333333),
     shininess: 5
   });
@@ -199,12 +242,7 @@ const cleanup = () => {
   renderer.dispose();
 };
 
-// Cleanup on page unload
+// Add event listeners
+window.addEventListener('resize', handleResize);
 window.addEventListener('unload', cleanup);
-window.addEventListener('beforeunload', cleanup);
-
-window.addEventListener("resize", () => {
-  renderer.setSize(500, 500);
-  camera.aspect = 500 / 500;
-  camera.updateProjectionMatrix();
-}); 
+window.addEventListener('beforeunload', cleanup); 
