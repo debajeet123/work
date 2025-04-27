@@ -125,5 +125,5 @@ function createGlobe(containerId, size) {
 }
 
 // Initialize both globes
-createGlobe('cornerGlobe', 500); // Original corner globe
+// createGlobe('cornerGlobe', 500); // Original corner globe
 createGlobe('topRightGlobe', 300); // New top right globe
