@@ -105,6 +105,8 @@ let globe;
 let animationFrameId;
 let lastTime = 0;
 let isUserInteracting = false;
+let rotationSpeed = ROTATION_SPEED;
+let targetRotationSpeed = ROTATION_SPEED;
 
 // Handle window resize
 function handleResize() {
@@ -139,11 +141,22 @@ Promise.all([
   controls.addEventListener('start', () => {
     isUserInteracting = true;
     controls.autoRotate = false;
+    targetRotationSpeed = 0;
   });
 
   controls.addEventListener('end', () => {
     isUserInteracting = false;
     controls.autoRotate = true;
+    targetRotationSpeed = ROTATION_SPEED;
+  });
+
+  // Add mouse wheel event for smooth speed adjustment
+  document.getElementById('cornerGlobe').addEventListener('wheel', (e) => {
+    if (!isUserInteracting) {
+      e.preventDefault();
+      targetRotationSpeed = Math.max(0, Math.min(ROTATION_SPEED * 2, 
+        targetRotationSpeed + (e.deltaY > 0 ? -0.0001 : 0.0001)));
+    }
   });
 
   function animate(currentTime) {
@@ -154,9 +167,22 @@ Promise.all([
     if (deltaTime < FRAME_TIME) return;
     lastTime = currentTime;
 
+    // Smooth speed transition
+    rotationSpeed += (targetRotationSpeed - rotationSpeed) * 0.1;
+
     if (globe && !isUserInteracting) {
-      globe.rotation.y += ROTATION_SPEED;
+      globe.rotation.y += rotationSpeed;
+      
+      // Add subtle wobble effect
+      const wobble = Math.sin(currentTime * 0.001) * 0.01;
+      globe.rotation.x = wobble;
+      globe.rotation.z = wobble * 0.5;
     }
+
+    // Update glow intensity based on rotation
+    const glowIntensity = Math.sin(currentTime * 0.001) * 0.2 + 0.8;
+    glowMaterial.uniforms.glowColor.value.setRGB(0, glowIntensity, glowIntensity);
+
     controls.update();
     renderer.render(scene, camera);
   }
