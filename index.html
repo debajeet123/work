@@ -1,155 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Debajeet Barman – Geophysicist</title>
-
-  <!-- Inline CSS -->
+  <meta charset="UTF-8">
+  <title>Dynamic Layout</title>
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: #000;
-      color: #fff;
-      overflow-y: auto; /* Allow scrolling */
-    }
-
-    #cornerGlobe {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      width: 300px;
-      height: 300px;
-      z-index: 1000;
-      pointer-events: none;
-      border-radius: 50%;
-      overflow: hidden;
-      box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
-    }
-
-    /* Tabs styling */
-    .tabs-wrapper {
-      position: sticky;
-      top: 0;
-      background: #000;
-      z-index: 999;
-      padding: 10px;
-    }
-
-    .tabs-nav {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-    }
-
-    .tab-link {
-      color: #0ff;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    .tab-link:hover {
-      text-decoration: underline;
-    }
-
-    /* Sections */
-    .tab-section {
-      padding: 100px 20px;
+    .dynamic-box {
+      width: 100px;
+      height: 1000px;
+      background-color: ;
+      position: absolute;
+      top: 100px;
+      left: 100px;
       text-align: center;
-    }
-
-    /* Footer Info Card */
-    .info-card {
-      text-align: center;
-      margin: 50px 0;
+      line-height: 1000px;
+      color: white;
+      font-family: Arial, sans-serif;
+      font-size: 24px;
     }
   </style>
 </head>
 <body>
-  <!-- Profile Image -->
-  <div class="profile-photo">
-    <img src="profile.jpg" alt="Debajeet Barman">
-  </div>
-
-  <!-- Rotating Globe -->
-  <div id="cornerGlobe"></div>
-
-  <!-- Navigation Tabs -->
-  <div class="tabs-wrapper">
-    <nav class="tabs-nav">
-      <a class="tab-link" href="#home">Home</a>
-      <a class="tab-link" href="#about">About</a>
-      <a class="tab-link" href="#projects">Projects</a>
-      <a class="tab-link" href="#publications">Publications</a>
-      <a class="tab-link" href="#resume">Resume</a>
-      <a class="tab-link" href="#contact">Contact</a>
-    </nav>
-  </div>
-
-  <!-- Content Sections -->
-  <section id="home" class="tab-section"><h1>Welcome</h1><p><span class="typewriter">Exploring the geophysical cosmos...</span></p></section>
-  <section id="about" class="tab-section"><h1>About</h1><p>Ph.D. candidate in geophysics...</p></section>
-  <section id="projects" class="tab-section"><h1>Projects</h1><p>Project details coming soon...</p></section>
-  <section id="publications" class="tab-section"><h1>Publications</h1><p>Publication list coming soon...</p></section>
-  <section id="resume" class="tab-section"><h1>Resume</h1><p>Resume download link coming soon...</p></section>
-  <section id="contact" class="tab-section"><h1>Contact</h1><p>Email: debajeet@example.com</p></section>
-
-  <!-- Footer Links -->
-  <div class="info-card">
-    <a href="https://linkedin.com/in/debajeetbarman" target="_blank">LinkedIn</a> |
-    <a href="https://scholar.google.com/citations?user=_i8vIAEAAAAJ" target="_blank">Google Scholar</a>
-  </div>
-
-  <!-- Inline JS -->
-  <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 1000);
-      camera.position.z = 3;
-
-      const container = document.getElementById("cornerGlobe");
-      const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-      renderer.setSize(container.clientWidth, container.clientHeight);
-      container.appendChild(renderer.domElement);
-
-      const light = new THREE.DirectionalLight(0xffffff, 1);
-      light.position.set(5, 3, 5);
-      scene.add(new THREE.AmbientLight(0x555555));
-      scene.add(light);
-
-      new THREE.TextureLoader().load(
-        "https://raw.githubusercontent.com/ajayns/earth-js/master/images/earth-night.jpg",
-        texture => {
-          const globe = new THREE.Mesh(
-            new THREE.SphereGeometry(1, 64, 64),
-            new THREE.MeshPhongMaterial({
-              map: texture,
-              emissive: 0x111111,
-              emissiveIntensity: 0.4
-            })
-          );
-          scene.add(globe);
-
-          function animate() {
-            requestAnimationFrame(animate);
-            globe.rotation.y += 0.0015;
-            renderer.render(scene, camera);
-          }
-          animate();
-        }
-      );
-
-      window.addEventListener("resize", () => {
-        const w = container.clientWidth;
-        const h = container.clientHeight;
-        renderer.setSize(w, h);
-        camera.aspect = w / h;
-        camera.updateProjectionMatrix();
-      });
-    });
-  </script>
+  <div class="dynamic-box">Hello!</div>
 </body>
 </html>
