@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Debajeet's 3D Globe with CDN Texture</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <style>
     html, body {
       margin: 0;
@@ -13,6 +13,7 @@
       background: url('back.png') no-repeat center center fixed;
       background-size: cover;
       background-color: black;
+      touch-action: none;
     }
     #globeContainer {
       position: absolute;
@@ -29,6 +30,30 @@
       color: white;
       font-family: Arial, sans-serif;
       font-size: 24px;
+      text-align: center;
+    }
+    #error {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: red;
+      font-family: Arial, sans-serif;
+      font-size: 24px;
+      text-align: center;
+      display: none;
+    }
+    #cornerGlobe {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 500px;
+      height: 500px;
+      z-index: 1002;
+      pointer-events: none;
+      border-radius: 50%;
+      overflow: hidden;
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.6);
     }
   </style>
 </head>
@@ -36,6 +61,7 @@
 
 <div id="globeContainer"></div>
 <div id="loading">Loading...</div>
+<div id="error"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/examples/js/controls/OrbitControls.js"></script>
@@ -45,13 +71,20 @@
   const GLOBE_RADIUS = 1;
   const ROTATION_SPEED = 0.0015;
   const TEXTURE_URL = 'https://cdn.jsdelivr.net/gh/Chalarangelo/static-hosted-assets/earthmap1k.jpg';
+  const MAX_FPS = 60;
+  const FRAME_TIME = 1000 / MAX_FPS;
 
   // Scene setup
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 0.1, 1000);
   camera.position.z = 3;
 
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  const renderer = new THREE.WebGLRenderer({ 
+    antialias: true, 
+    alpha: true,
+    powerPreference: "high-performance"
+  });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.setClearColor(0x000000, 0);
   document.getElementById('globeContainer').appendChild(renderer.domElement);
@@ -68,6 +101,20 @@
   const controls = new THREE.OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true;
   controls.dampingFactor = 0.05;
+  controls.enablePan = false;
+  controls.minDistance = 2;
+  controls.maxDistance = 5;
+  controls.maxPolarAngle = Math.PI;
+
+  // Mobile touch handling
+  let isTouchDevice = 'ontouchstart' in window;
+  if (isTouchDevice) {
+    controls.enableZoom = false;
+    controls.touches = {
+      ONE: THREE.TOUCH.ROTATE,
+      TWO: THREE.TOUCH.DOLLY_PAN
+    };
+  }
 
   // Texture loading
   const loader = new THREE.TextureLoader();
@@ -84,44 +131,65 @@
     // onError
     (url) => {
       console.error('Error loading texture:', url);
-      document.getElementById('loading').textContent = 'Error loading texture. Please refresh.';
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('error').style.display = 'block';
+      document.getElementById('error').textContent = 'Error loading texture. Please refresh.';
     }
   );
 
   loader.setManager(loadingManager);
+
+  let globe;
+  let animationFrameId;
+  let lastTime = 0;
 
   loader.load(TEXTURE_URL, 
     (texture) => {
       const geometry = new THREE.SphereGeometry(GLOBE_RADIUS, 64, 64);
       const material = new THREE.MeshPhongMaterial({
         map: texture,
-        emissive: 0x222222,
-        emissiveIntensity: 0.8
+        emissive: 0x888888,
+        emissiveIntensity: 3.0
       });
 
-      const globe = new THREE.Mesh(geometry, material);
+      globe = new THREE.Mesh(geometry, material);
       scene.add(globe);
 
-      function animate() {
-        requestAnimationFrame(animate);
-        globe.rotation.y += ROTATION_SPEED;
+      function animate(currentTime) {
+        animationFrameId = requestAnimationFrame(animate);
+        
+        // Frame rate limiting
+        const deltaTime = currentTime - lastTime;
+        if (deltaTime < FRAME_TIME) return;
+        lastTime = currentTime;
+
+        if (globe) {
+          globe.rotation.y += ROTATION_SPEED;
+        }
         controls.update();
         renderer.render(scene, camera);
       }
 
-      animate();
+      animate(0);
     },
     undefined,
     (error) => {
       console.error('Error loading texture:', error);
-      document.getElementById('loading').textContent = 'Error loading texture. Please refresh.';
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('error').style.display = 'block';
+      document.getElementById('error').textContent = 'Error loading texture. Please refresh.';
     }
   );
 
   // Window resize handler
   const handleResize = () => {
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    camera.aspect = window.innerWidth / window.innerHeight;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(width, height);
+    
+    camera.aspect = width / height;
     camera.updateProjectionMatrix();
   };
 
@@ -130,12 +198,21 @@
   // Cleanup function
   const cleanup = () => {
     window.removeEventListener('resize', handleResize);
+    cancelAnimationFrame(animationFrameId);
+    
+    if (globe) {
+      scene.remove(globe);
+      globe.geometry.dispose();
+      globe.material.dispose();
+    }
+    
     controls.dispose();
     renderer.dispose();
   };
 
   // Cleanup on page unload
   window.addEventListener('unload', cleanup);
+  window.addEventListener('beforeunload', cleanup);
 </script>
 
 </body>
