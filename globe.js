@@ -1,7 +1,9 @@
 // Constants
 const GLOBE_RADIUS = 1;
 const ROTATION_SPEED = 0.003;
-const TEXTURE_URL = 'https://threejs.org/examples/textures/land_ocean_ice_cloud_2048.jpg';
+const DAY_TEXTURE_URL = 'https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/earth_atmos_2048.jpg';
+const NIGHT_TEXTURE_URL = 'https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/earth_night_2048.jpg';
+const CLOUDS_TEXTURE_URL = 'https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/earth_clouds_1024.png';
 
 // Scene setup
 const scene = new THREE.Scene();
@@ -81,16 +83,31 @@ if (isTouchDevice) {
 
 // Texture loading
 const loader = new THREE.TextureLoader();
-loader.load(TEXTURE_URL, (texture) => {
-  const geometry = new THREE.SphereGeometry(GLOBE_RADIUS, 64, 64);
-  const material = new THREE.MeshPhongMaterial({
-    map: texture,
+Promise.all([
+  new Promise((resolve) => loader.load(DAY_TEXTURE_URL, resolve)),
+  new Promise((resolve) => loader.load(NIGHT_TEXTURE_URL, resolve)),
+  new Promise((resolve) => loader.load(CLOUDS_TEXTURE_URL, resolve))
+]).then(([dayTexture, nightTexture, cloudsTexture]) => {
+  // Create Earth sphere
+  const earthGeometry = new THREE.SphereGeometry(GLOBE_RADIUS, 64, 64);
+  const earthMaterial = new THREE.MeshPhongMaterial({
+    map: dayTexture,
+    emissiveMap: nightTexture,
     emissive: 0x222222,
     emissiveIntensity: 1.5
   });
+  const earth = new THREE.Mesh(earthGeometry, earthMaterial);
+  scene.add(earth);
 
-  const globe = new THREE.Mesh(geometry, material);
-  scene.add(globe);
+  // Create clouds sphere
+  const cloudsGeometry = new THREE.SphereGeometry(GLOBE_RADIUS * 1.01, 64, 64);
+  const cloudsMaterial = new THREE.MeshPhongMaterial({
+    map: cloudsTexture,
+    transparent: true,
+    opacity: 0.4
+  });
+  const clouds = new THREE.Mesh(cloudsGeometry, cloudsMaterial);
+  scene.add(clouds);
 
   // Add event listeners for user interaction
   controls.addEventListener('start', () => {
@@ -103,13 +120,18 @@ loader.load(TEXTURE_URL, (texture) => {
 
   function animate() {
     requestAnimationFrame(animate);
+    
+    // Rotate Earth and clouds
+    earth.rotation.y += ROTATION_SPEED;
+    clouds.rotation.y += ROTATION_SPEED * 1.1; // Slightly faster rotation for clouds
+    
     controls.update();
     renderer.render(scene, camera);
   }
 
   animate();
-}, undefined, (error) => {
-  console.error('Error loading Earth texture:', error);
+}).catch((error) => {
+  console.error('Error loading textures:', error);
 });
 
 // Handle window resize
