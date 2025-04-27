@@ -1,7 +1,8 @@
 // Constants
 const GLOBE_RADIUS = 1;
 const ROTATION_SPEED = 0.0015;
-const TEXTURE_URL = 'https://cdn.jsdelivr.net/gh/Chalarangelo/static-hosted-assets/earthmap1k.jpg';
+const DAY_TEXTURE_URL = 'https://cdn.jsdelivr.net/gh/Chalarangelo/static-hosted-assets/earthmap1k.jpg';
+const NIGHT_TEXTURE_URL = 'https://cdn.jsdelivr.net/gh/Chalarangelo/static-hosted-assets/earthlights1k.jpg';
 const MAX_FPS = 60;
 const FRAME_TIME = 1000 / MAX_FPS;
 
@@ -52,11 +53,11 @@ const loader = new THREE.TextureLoader();
 const loadingManager = new THREE.LoadingManager(
   // onLoad
   () => {
-    console.log('Texture loaded successfully');
+    console.log('Textures loaded successfully');
   },
   // onProgress
   (url, loaded, total) => {
-    console.log(`Loading texture: ${Math.round((loaded/total) * 100)}%`);
+    console.log(`Loading textures: ${Math.round((loaded/total) * 100)}%`);
   },
   // onError
   (url) => {
@@ -70,40 +71,43 @@ let globe;
 let animationFrameId;
 let lastTime = 0;
 
-loader.load(TEXTURE_URL, 
-  (texture) => {
-    const geometry = new THREE.SphereGeometry(GLOBE_RADIUS, 64, 64);
-    const material = new THREE.MeshPhongMaterial({
-      map: texture,
-      emissive: 0x888888,
-      emissiveIntensity: 3.0
-    });
+// Load both day and night textures
+Promise.all([
+  new Promise((resolve) => loader.load(DAY_TEXTURE_URL, resolve)),
+  new Promise((resolve) => loader.load(NIGHT_TEXTURE_URL, resolve))
+]).then(([dayTexture, nightTexture]) => {
+  const geometry = new THREE.SphereGeometry(GLOBE_RADIUS, 64, 64);
+  const material = new THREE.MeshPhongMaterial({
+    map: dayTexture,
+    emissiveMap: nightTexture,
+    emissive: 0x888888,
+    emissiveIntensity: 3.0,
+    specular: new THREE.Color(0x333333),
+    shininess: 5
+  });
 
-    globe = new THREE.Mesh(geometry, material);
-    scene.add(globe);
+  globe = new THREE.Mesh(geometry, material);
+  scene.add(globe);
 
-    function animate(currentTime) {
-      animationFrameId = requestAnimationFrame(animate);
-      
-      // Frame rate limiting
-      const deltaTime = currentTime - lastTime;
-      if (deltaTime < FRAME_TIME) return;
-      lastTime = currentTime;
+  function animate(currentTime) {
+    animationFrameId = requestAnimationFrame(animate);
+    
+    // Frame rate limiting
+    const deltaTime = currentTime - lastTime;
+    if (deltaTime < FRAME_TIME) return;
+    lastTime = currentTime;
 
-      if (globe) {
-        globe.rotation.y += ROTATION_SPEED;
-      }
-      controls.update();
-      renderer.render(scene, camera);
+    if (globe) {
+      globe.rotation.y += ROTATION_SPEED;
     }
-
-    animate(0);
-  },
-  undefined,
-  (error) => {
-    console.error('Error loading texture:', error);
+    controls.update();
+    renderer.render(scene, camera);
   }
-);
+
+  animate(0);
+}).catch((error) => {
+  console.error('Error loading textures:', error);
+});
 
 // Tab functionality
 document.addEventListener('DOMContentLoaded', () => {
