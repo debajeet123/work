@@ -1,6 +1,6 @@
 // Constants
 const GLOBE_RADIUS = 1;
-const ROTATION_SPEED = 0.0015;
+const ROTATION_SPEED = 0.002;
 const DAY_TEXTURE_URL = 'https://cdn.jsdelivr.net/gh/Chalarangelo/static-hosted-assets/earthmap1k.jpg';
 const NIGHT_TEXTURE_URL = 'https://cdn.jsdelivr.net/gh/Chalarangelo/static-hosted-assets/earthlights1k.jpg';
 const MAX_FPS = 60;
@@ -22,10 +22,10 @@ renderer.setClearColor(0x000000, 0);
 document.getElementById('cornerGlobe').appendChild(renderer.domElement);
 
 // Lighting
-const ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
+const ambientLight = new THREE.AmbientLight(0xffffff, 2.5);
 scene.add(ambientLight);
 
-const directionalLight = new THREE.DirectionalLight(0xffffff, 2);
+const directionalLight = new THREE.DirectionalLight(0xffffff, 3);
 directionalLight.position.set(5, 3, 5);
 scene.add(directionalLight);
 
@@ -37,6 +37,8 @@ controls.enablePan = false;
 controls.minDistance = 2;
 controls.maxDistance = 5;
 controls.maxPolarAngle = Math.PI;
+controls.autoRotate = true;
+controls.autoRotateSpeed = 0.5;
 
 // Mobile touch handling
 let isTouchDevice = 'ontouchstart' in window;
@@ -70,6 +72,7 @@ loader.setManager(loadingManager);
 let globe;
 let animationFrameId;
 let lastTime = 0;
+let isUserInteracting = false;
 
 // Load both day and night textures
 Promise.all([
@@ -89,6 +92,17 @@ Promise.all([
   globe = new THREE.Mesh(geometry, material);
   scene.add(globe);
 
+  // Add event listeners for user interaction
+  controls.addEventListener('start', () => {
+    isUserInteracting = true;
+    controls.autoRotate = false;
+  });
+
+  controls.addEventListener('end', () => {
+    isUserInteracting = false;
+    controls.autoRotate = true;
+  });
+
   function animate(currentTime) {
     animationFrameId = requestAnimationFrame(animate);
     
@@ -97,7 +111,7 @@ Promise.all([
     if (deltaTime < FRAME_TIME) return;
     lastTime = currentTime;
 
-    if (globe) {
+    if (globe && !isUserInteracting) {
       globe.rotation.y += ROTATION_SPEED;
     }
     controls.update();
@@ -187,4 +201,10 @@ const cleanup = () => {
 
 // Cleanup on page unload
 window.addEventListener('unload', cleanup);
-window.addEventListener('beforeunload', cleanup); 
+window.addEventListener('beforeunload', cleanup);
+
+window.addEventListener("resize", () => {
+  renderer.setSize(500, 500);
+  camera.aspect = 500 / 500;
+  camera.updateProjectionMatrix();
+}); 
