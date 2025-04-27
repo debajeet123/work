@@ -2,23 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Debajeet Barman – 3D Globe with Background</title>
+  <title>Debajeet Barman – 3D Globe with Real Background</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
       margin: 0;
       overflow: hidden;
-    }
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: url('back.png') no-repeat center center fixed;
-      background-size: cover;
-      z-index: -1;
+      background-color: black; /* fallback */
     }
     #globeContainer {
       width: 100vw;
@@ -37,19 +27,24 @@
   const rotationSpeed = 0.0015;
 
   const scene = new THREE.Scene();
+
+  // LOAD back.png AS SCENE BACKGROUND (REAL way)
+  new THREE.TextureLoader().load('back.png', (texture) => {
+    scene.background = texture;
+  });
+
   const camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 0.1, 1000);
   camera.position.z = 3;
 
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  const renderer = new THREE.WebGLRenderer({ antialias: true });  // NO alpha needed
   renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setClearColor(0x000000, 0); // Transparent
   document.getElementById('globeContainer').appendChild(renderer.domElement);
 
-  // Lighting (BOOSTED)
-  const ambientLight = new THREE.AmbientLight(0xffffff, 2); // Much stronger
+  // Lighting (normal)
+  const ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
   scene.add(ambientLight);
 
-  const directionalLight = new THREE.DirectionalLight(0xffffff, 2.5); // Stronger
+  const directionalLight = new THREE.DirectionalLight(0xffffff, 2);
   directionalLight.position.set(5, 3, 5);
   scene.add(directionalLight);
 
@@ -58,8 +53,8 @@
     const geometry = new THREE.SphereGeometry(globeRadius, 64, 64);
     const material = new THREE.MeshPhongMaterial({
       map: texture,
-      emissive: 0x222222,         // Brighter emissive
-      emissiveIntensity: 0.9      // Strong glow
+      emissive: 0x222222,
+      emissiveIntensity: 0.8
     });
 
     const globe = new THREE.Mesh(geometry, material);
