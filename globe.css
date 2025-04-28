@@ -361,7 +361,7 @@ body::after {
   to { transform: rotate(360deg); }
 }
 
-#topRightGlobe {
+/* #topRightGlobe {
   position: fixed;
   top: 20px;
   right: 20px;
@@ -375,4 +375,4 @@ body::after {
 
 #topRightGlobe:hover {
   transform: scale(1.05);
-} 
+}  */
