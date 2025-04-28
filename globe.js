@@ -119,10 +119,10 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       const markerGeometry = new THREE.SphereGeometry(0.05, 16, 16); // Bigger
-const markerMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 }); // Bright yellow
-const marker = new THREE.Mesh(markerGeometry, markerMaterial);
-marker.position.copy(pos);
-earth.add(marker);
+      const markerMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 }); // Bright yellow
+      const marker = new THREE.Mesh(markerGeometry, markerMaterial);
+      marker.position.copy(pos);
+      earth.add(marker);
 
       // Clouds layer
       const cloudsGeometry = new THREE.SphereGeometry(1.01, 64, 64);
@@ -138,22 +138,23 @@ earth.add(marker);
 
       // Fetch recent earthquake data and add markers
       fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson')
-        .then(response => response.json())
-        .then(data => {
-          const earthquakes = data.features.slice(0, 10); // take latest 10 events
-          earthquakes.forEach(eq => {
-            const [lon, lat] = eq.geometry.coordinates;
-            const pos = latLonToVector3(lat, lon, 1.02); // position slightly above Earth's surface
-            const markerGeometry = new THREE.SphereGeometry(0.02, 8, 8);
-            const markerMaterial = new THREE.MeshBasicMaterial({ color: 0xff3333 });
-            const marker = new THREE.Mesh(markerGeometry, markerMaterial);
-            marker.position.copy(pos);
-            earth.add(marker);
-          });
-        })
-        .catch(err => {
-          console.error('Error fetching earthquake data:', err);
-        });
+  .then(response => response.json())
+  .then(data => {
+    const earthquakes = data.features.slice(0, 10); 
+    earthquakes.forEach(eq => {
+      const [lon, lat] = eq.geometry.coordinates;
+      const pos = latLonToVector3(lat, lon, 1.02);
+      const markerGeometry = new THREE.SphereGeometry(0.02, 8, 8);
+      const markerMaterial = new THREE.MeshBasicMaterial({ color: 0xff3333 });
+      const marker = new THREE.Mesh(markerGeometry, markerMaterial);
+      marker.position.copy(pos);
+      earth.add(marker);
+    });
+  })
+  .catch(err => {
+    console.error('Error fetching earthquake data:', err);
+  });
+
 
       // Convert lat/long to 3D position on the globe
       function latLonToVector3(lat, lon, radius) {
