@@ -11,11 +11,11 @@ const SPECULAR_TEXTURE_URL = 'https://raw.githubusercontent.com/mrdoob/three.js/
 function createGlobe(containerId, size) {
   // Scene setup
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(45, size/size, 0.1, 1000);
+  const camera = new THREE.PerspectiveCamera(45, size / size, 0.1, 1000);
   camera.position.z = 4;
 
   //fe
-  const renderer = new THREE.WebGLRenderer({ 
+  const renderer = new THREE.WebGLRenderer({
     antialias: true,
     alpha: true
   });
@@ -31,7 +31,7 @@ function createGlobe(containerId, size) {
 
   // Texture loading
   const loader = new THREE.TextureLoader();
-  loader.load(DAY_TEXTURE_URL, function(tex) {
+  loader.load(DAY_TEXTURE_URL, function (tex) {
     const geo = new THREE.SphereGeometry(GLOBE_RADIUS, 64, 64);
     const mat = new THREE.MeshPhongMaterial({ map: tex });
     const mesh = new THREE.Mesh(geo, mat);
@@ -51,7 +51,7 @@ function createGlobe(containerId, size) {
     const container = document.getElementById(containerId);
     const width = container.clientWidth;
     const height = container.clientHeight;
-    
+
     renderer.setSize(width, height);
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
@@ -136,24 +136,29 @@ document.addEventListener("DOMContentLoaded", () => {
       const clouds = new THREE.Mesh(cloudsGeometry, cloudsMaterial);
       scene.add(clouds);
 
-      // Fetch recent earthquake data and add markers
       fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson')
-  .then(response => response.json())
-  .then(data => {
-    const earthquakes = data.features.slice(0, 10); 
-    earthquakes.forEach(eq => {
-      const [lon, lat] = eq.geometry.coordinates;
-      const pos = latLonToVector3(lat, lon, 1.02);
-      const markerGeometry = new THREE.SphereGeometry(0.02, 8, 8);
-      const markerMaterial = new THREE.MeshBasicMaterial({ color: 0xff3333 });
-      const marker = new THREE.Mesh(markerGeometry, markerMaterial);
-      marker.position.copy(pos);
-      earth.add(marker);
-    });
-  })
-  .catch(err => {
-    console.error('Error fetching earthquake data:', err);
-  });
+        .then(response => {
+          console.log("Fetch Response:", response);
+          return response.json();
+        })
+        .then(data => {
+          console.log("Earthquake data:", data);  // 👈 See if data.features exist
+          const earthquakes = data.features.slice(0, 10);
+          earthquakes.forEach(eq => {
+            const [lon, lat] = eq.geometry.coordinates;
+            console.log(`Earthquake lat: ${lat}, lon: ${lon}`);  // 👈 See each quake's location
+            const pos = latLonToVector3(lat, lon, 1.02);
+            const markerGeometry = new THREE.SphereGeometry(0.02, 8, 8);
+            const markerMaterial = new THREE.MeshBasicMaterial({ color: 0xff3333 });
+            const marker = new THREE.Mesh(markerGeometry, markerMaterial);
+            marker.position.copy(pos);
+            earth.add(marker);
+          });
+        })
+        .catch(err => {
+          console.error('Error fetching earthquake data:', err);
+        });
+
 
 
       // Convert lat/long to 3D position on the globe
