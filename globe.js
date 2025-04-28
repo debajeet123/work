@@ -144,17 +144,20 @@ document.addEventListener("DOMContentLoaded", () => {
             if (eq.geometry && eq.geometry.coordinates && eq.geometry.coordinates.length >= 2) {
               const lon = eq.geometry.coordinates[0];
               const lat = eq.geometry.coordinates[1];
-
-              const pos = latLonToVector3(lat, lon, GLOBE_RADIUS + 0.05); // Slightly above surface
-
-              const markerGeometry = new THREE.SphereGeometry(0.03, 12, 12); // Slightly bigger and smoother
+          
+              const pos = latLonToVector3(lat, lon, GLOBE_RADIUS + 0.05);  // 🔥 Must calculate pos!
+          
+              const markerGeometry = new THREE.SphereGeometry(0.03, 12, 12);
               const markerMaterial = new THREE.MeshBasicMaterial({ color: 0xff3333 });
               const marker = new THREE.Mesh(markerGeometry, markerMaterial);
-
+          
               marker.position.copy(pos);
-              mesh.add(marker); // 🔥 Add directly to existing globe
+              mesh.add(marker);  // Add marker to the rotating Earth mesh
             }
           });
+          
+          
+          
         })
         .catch(err => {
           console.error('Error fetching earthquake data:', err);
