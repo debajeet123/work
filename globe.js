@@ -59,4 +59,4 @@ function createGlobe(containerId, size) {
 }
 
 // Initialize the globe
-createGlobe('topRightGlobe', 300); // Size in pixels
+createGlobe('topRightGlobe', 300);
