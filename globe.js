@@ -137,31 +137,30 @@ document.addEventListener("DOMContentLoaded", () => {
       scene.add(clouds);
 
       fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson')
-        .then(response => {
-          console.log("Fetch Response:", response);
-          return response.json();
-        })
+        .then(response => response.json())
         .then(data => {
-          console.log("Earthquake data:", data);  // 👈 See if data.features exist
-          const earthquakes = data.features.slice(0, 10);
+          const earthquakes = data.features.slice(0, 10); // latest 10 earthquakes
           earthquakes.forEach(eq => {
-            const [lon, lat] = eq.geometry.coordinates;
-            console.log(`Earthquake lat: ${lat}, lon: ${lon}`);  // 👈 See each quake's location
-            const pos = latLonToVector3(lat, lon, 1.02);
-            const markerGeometry = new THREE.SphereGeometry(0.02, 8, 8);
-            const markerMaterial = new THREE.MeshBasicMaterial({ color: 0xff3333 });
-            const marker = new THREE.Mesh(markerGeometry, markerMaterial);
-            marker.position.copy(pos);
-            earth.add(marker);
+            if (eq.geometry && eq.geometry.coordinates && eq.geometry.coordinates.length >= 2) {
+              const lon = eq.geometry.coordinates[0];
+              const lat = eq.geometry.coordinates[1];
+
+              const pos = latLonToVector3(lat, lon, GLOBE_RADIUS + 0.05); // Slightly above surface
+
+              const markerGeometry = new THREE.SphereGeometry(0.03, 12, 12); // Slightly bigger and smoother
+              const markerMaterial = new THREE.MeshBasicMaterial({ color: 0xff3333 });
+              const marker = new THREE.Mesh(markerGeometry, markerMaterial);
+
+              marker.position.copy(pos);
+              mesh.add(marker); // 🔥 Add directly to existing globe
+            }
           });
         })
         .catch(err => {
           console.error('Error fetching earthquake data:', err);
         });
 
-
-
-      // Convert lat/long to 3D position on the globe
+      // Helper function
       function latLonToVector3(lat, lon, radius) {
         const phi = (90 - lat) * (Math.PI / 180);
         const theta = (lon + 180) * (Math.PI / 180);
@@ -170,6 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const y = radius * Math.cos(phi);
         return new THREE.Vector3(x, y, z);
       }
+
 
       // Animate the scene
       function animate() {
