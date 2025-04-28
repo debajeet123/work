@@ -395,3 +395,70 @@ body::after {
 #topRightGlobe:hover {
   transform: scale(1.05);
 }  */
+
+/* --- About Tab Geeky Bio Styles --- */
+#about {
+  margin-top: 60px;
+  text-align: center;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  animation: float 6s ease-in-out infinite;
+  color: #00ffaa;
+  font-family: 'Courier New', Courier, monospace;
+  background: none;
+  box-shadow: none;
+}
+
+#about header {
+  margin-top: 40px;
+  text-align: center;
+}
+
+#about .typewriter {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 2px solid #00ffaa;
+  animation: typing 4s steps(40, end), blink 0.7s infinite;
+  font-size: 2rem;
+  margin-bottom: 1em;
+}
+
+#about h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  font-weight: normal;
+  border-bottom: 1px solid #00ffaa;
+  display: inline-block;
+  padding-bottom: 5px;
+}
+
+#about p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin: 0 auto;
+}
+
+#about footer {
+  position: static;
+  margin-top: 40px;
+  font-size: 0.8rem;
+  color: #00ffaa;
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes blink {
+  0%, 100% { border-color: transparent }
+  50% { border-color: #00ffaa }
+}
+
+@keyframes float {
+  0% { transform: translatey(0px); }
+  50% { transform: translatey(-5px); }
+  100% { transform: translatey(0px); }
+}
