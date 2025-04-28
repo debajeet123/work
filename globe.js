@@ -21,8 +21,8 @@ function createGlobe(containerId, size) {
   });
   renderer.setSize(size, size);
   renderer.setClearColor(0x000000, 0);
-  // document.getElementById(containerId).appendChild(renderer.domElement);
-  document.getElementById('earthquakeGlobe').appendChild(renderer.domElement);
+  document.getElementById(containerId).appendChild(renderer.domElement);
+  // document.getElementById('earthquakeGlobe').appendChild(renderer.domElement);
 
   // Lighting setup
   const light = new THREE.DirectionalLight(0xffffff, 1);
