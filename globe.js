@@ -118,9 +118,11 @@ document.addEventListener("DOMContentLoaded", () => {
         emissiveIntensity: 1.5
       });
 
-      const earthGeometry = new THREE.SphereGeometry(1, 64, 64);
-      const earth = new THREE.Mesh(earthGeometry, earthMaterial);
-      scene.add(earth);
+      const markerGeometry = new THREE.SphereGeometry(0.05, 16, 16); // Bigger
+const markerMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 }); // Bright yellow
+const marker = new THREE.Mesh(markerGeometry, markerMaterial);
+marker.position.copy(pos);
+earth.add(marker);
 
       // Clouds layer
       const cloudsGeometry = new THREE.SphereGeometry(1.01, 64, 64);
