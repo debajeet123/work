@@ -314,7 +314,7 @@ body::after {
 /* Only the tab bar shows both images */
 .tabs-background {
   background: 
-    url('https://yourdomain.com/strata.png') no-repeat center center,
+    url('https://yourdomain.com/strata.png') no-repeat center 20px,
     url('https://yourdomain.com/back.png') no-repeat center center;
   background-size: cover, cover;
   padding: 20px 0;
