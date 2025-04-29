@@ -303,7 +303,38 @@ body::after {
     left: 0;
     right: 0;
     bottom: 0;
-    background: url('strata.png') no-repeat center top;
+    background: url('strata.png') no-repeat body {
+  margin: 0;
+  background: url('https://yourdomain.com/back.png') no-repeat center center fixed;
+  background-size: cover;
+  font-family: 'Segoe UI', sans-serif;
+  color: #ddd;
+}
+
+/* Only the tab bar shows both images */
+.tabs-background {
+  background: 
+    url('https://yourdomain.com/strata.png') no-repeat center center,
+    url('https://yourdomain.com/back.png') no-repeat center center;
+  background-size: cover, cover;
+  padding: 20px 0;
+}
+
+.tabs-wrapper {
+  text-align: center;
+}
+
+.tab-link {
+  padding: 12px 20px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.3s;
+  background-color: rgba(0, 0, 0, 0.4);
+  margin: 0 5px;
+  border-radius: 6px;
+}
+;
     background-size: contain; /* or cover, based on preference */
     z-index: 10; /* Higher z-index to ensure it's on top */
     height: 50%; /* Only cover the top half */
