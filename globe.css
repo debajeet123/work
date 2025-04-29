@@ -13,8 +13,8 @@
   --background-strata: url('strata.png');
   --back-size: cover;
   --back-position: center center;
-  --strata-size: 0 120%;
-  --strata-position: cover 500px;
+  --strata-size: 50% 120%;
+  --strata-position: 0 500px;
 
   /* --- Profile and Globe Images --- */
   --profile-pic: url('profile.jpg');
