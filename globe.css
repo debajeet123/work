@@ -299,7 +299,7 @@ body::after {
     top: 0;
     left: 0;
     right: 0;
-    bottom: 50;
+    bottom: 400;
     background: url('strata.png') no-repeat center center;
     background-size: contain; /* or cover, based on preference */
     z-index: 10; /* Higher z-index to ensure it's on top */
