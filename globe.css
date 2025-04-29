@@ -1,198 +1,239 @@
-:root {
-  /* Global Layout Variables */
-  --tabs-width: 600px;
-  --tabs-height: 120px;
-  --tabs-padding-top-bottom: 40px;
-  --tab-link-width: auto;
-  --tab-link-padding: 12px 20px;
-
-  /* Background Images */
-  --background-back: url('back.png');
-  --background-strata: url('strata.png');
-
-  /* Background Sizes and Positions */
-  --strata-size: cover;
-  --strata-position: center center;
-  --back-size: cover;
-  --back-position: center center;
-}
-
-/* ============ Body and Backgrounds ============ */
-body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  width: 100%;
-  font-family: 'Arial', sans-serif;
-  background: var(--background-back) no-repeat center center fixed;
-  background-size: var(--back-size);
-  color: #fff;
-  overflow-x: hidden;
-  position: relative;
-}
-
-/* Stars (Animated Background Layer) */
-body::after {
-  content: '';
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background-image:
-    radial-gradient(2px 2px at 20px 30px, #fff, rgba(0,0,0,0)),
-    radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)),
-    radial-gradient(2px 2px at 50px 160px, #fff, rgba(0,0,0,0)),
-    radial-gradient(2px 2px at 90px 40px, #fff, rgba(0,0,0,0)),
-    radial-gradient(2px 2px at 130px 80px, #fff, rgba(0,0,0,0)),
-    radial-gradient(2px 2px at 160px 120px, #fff, rgba(0,0,0,0));
-  background-repeat: repeat;
-  background-size: 200px 200px;
-  mix-blend-mode: screen;
-  opacity: 0.6;
-  z-index: 0;
-  animation: twinkle 4s ease-in-out infinite;
-}
-
-@keyframes twinkle {
-  0%, 100% { opacity: 0.5; }
-  50% { opacity: 1; }
-}
-
-/* Optional dark overlay layer */
-.strata-layer {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: linear-gradient(45deg, rgba(0,0,0,0.3), rgba(10,10,42,0.3));
-  backdrop-filter: blur(2px);
-  z-index: 1;
-}
-
-/* ============ Tabs Background ============ */
-.tabs-background {
-  position: relative;
-  width: 100%;
-  height: var(--tabs-height);
-  padding: var(--tabs-padding-top-bottom) 0;
-  background-image: var(--background-strata), var(--background-back);
-  background-repeat: no-repeat, no-repeat;
-  background-position: var(--strata-position), var(--back-position);
-  background-size: var(--strata-size), var(--back-size);
-  z-index: 2;
-}
-
-/* ============ Tabs Wrapper and Navigation ============ */
-.tabs-wrapper {
-  max-width: var(--tabs-width);
-  margin: 0 auto;
-  text-align: center;
-  position: relative;
-  z-index: 3;
-}
-
-.tabs-nav {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  background: rgba(0,0,0,0.7);
-  padding: 10px 20px;
-  border-radius: 30px;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 0 20px rgba(0,255,255,0.3);
-}
-
-/* Tab Links */
-.tab-link {
-  display: inline-block;
-  width: var(--tab-link-width);
-  padding: var(--tab-link-padding);
-  color: #fff;
-  text-decoration: none;
-  font-weight: bold;
-  background: rgba(0,0,0,0.4);
-  border-radius: 20px;
-  overflow: hidden;
-  position: relative;
-  transition: all 0.3s ease;
-}
-
-.tab-link:hover {
-  background: rgba(0,255,255,0.2);
-  color: #0ff;
-  transform: translateY(-2px);
-}
-
-.tab-link::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,255,255,0.1);
-  transform: scaleX(0);
-  transform-origin: right;
-  transition: transform 0.3s ease;
-}
-
-.tab-link:hover::before {
-  transform: scaleX(1);
-  transform-origin: left;
-}
-
-/* ============ Tab Sections ============ */
-.tab-section {
-  position: fixed;
-  top: 55%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 80%;
-  max-width: 800px;
-  padding: 40px;
-  background: rgba(0,0,0,0.7);
-  border-radius: 20px;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 0 30px rgba(0,255,255,0.3);
-  display: none;
-  z-index: 2;
-}
-
-.tab-section.active {
-  display: block;
-  animation: fadeIn 0.5s ease;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0.95);
+/* ===============================
+   Global Design Variables
+   =============================== */
+   :root {
+    /* Layout Sizes */
+    --tabs-width: 600px;             /* Max width of the tabs area */
+    --tabs-height: 120px;             /* Height of the tab background area */
+    --tabs-padding-top-bottom: 40px;  /* Padding above and below the tabs */
+    --tab-link-width: auto;           /* Width of each tab link (auto or %) */
+    --tab-link-padding: 12px 20px;    /* Padding inside each tab link */
+    --tab-border-radius: 20px;        /* Tab link border radius */
+    --tab-gap: 20px;                  /* Space between tabs */
+  
+    /* Background Images */
+    --background-back: url('back.png');
+    --background-strata: url('strata.png');
+  
+    /* Background Settings */
+    --strata-size: cover;
+    --strata-position: center center;
+    --back-size: cover;
+    --back-position: center center;
+  
+    /* Colors and Effects */
+    --tab-text-color: #fff;
+    --tab-hover-text-color: #0ff;
+    --tab-hover-bg: rgba(0,255,255,0.2);
+    --tab-bg: rgba(0,0,0,0.4);
+    --tabs-nav-bg: rgba(0,0,0,0.7);
+    --tabs-shadow-color: rgba(0,255,255,0.3);
+  
+    --section-bg: rgba(0,0,0,0.7);
+    --section-border-radius: 20px;
+    --section-shadow-color: rgba(0,255,255,0.3);
+  
+    --info-card-bg: rgba(0,0,0,0.7);
+    --info-card-shadow-color: rgba(0,255,255,0.2);
+  
+    /* Animation */
+    --twinkle-size: 200px;
+    --twinkle-opacity-min: 0.5;
+    --twinkle-opacity-max: 1;
+    --fade-duration: 0.5s;
   }
-  to {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
+  
+  /* ===============================
+     Body and Global Background
+     =============================== */
+  body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    font-family: 'Arial', sans-serif;
+    color: var(--tab-text-color);
+    background: var(--background-back) no-repeat center center fixed;
+    background-size: var(--back-size);
+    overflow-x: hidden;
+    position: relative;
   }
-}
-
-/* ============ Info Card ============ */
-.info-card {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  padding: 15px 25px;
-  background: rgba(0,0,0,0.7);
-  border-radius: 15px;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 0 20px rgba(0,255,255,0.2);
-  font-size: 14px;
-  z-index: 5;
-}
-
-.info-card a {
-  color: #0ff;
-  text-decoration: none;
-  margin: 0 10px;
-  transition: all 0.3s ease;
-}
-
-.info-card a:hover {
-  color: #fff;
-  text-shadow: 0 0 10px #0ff;
-}
+  
+  /* Animated Stars Layer */
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-image:
+      radial-gradient(2px 2px at 20px 30px, #fff, rgba(0,0,0,0)),
+      radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)),
+      radial-gradient(2px 2px at 50px 160px, #fff, rgba(0,0,0,0)),
+      radial-gradient(2px 2px at 90px 40px, #fff, rgba(0,0,0,0)),
+      radial-gradient(2px 2px at 130px 80px, #fff, rgba(0,0,0,0)),
+      radial-gradient(2px 2px at 160px 120px, #fff, rgba(0,0,0,0));
+    background-repeat: repeat;
+    background-size: var(--twinkle-size);
+    mix-blend-mode: screen;
+    opacity: 0.6;
+    z-index: 0;
+    animation: twinkle 4s ease-in-out infinite;
+  }
+  
+  @keyframes twinkle {
+    0%, 100% { opacity: var(--twinkle-opacity-min); }
+    50% { opacity: var(--twinkle-opacity-max); }
+  }
+  
+  /* Optional Blurred Overlay */
+  .strata-layer {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(45deg, rgba(0,0,0,0.3), rgba(10,10,42,0.3));
+    backdrop-filter: blur(2px);
+    z-index: 1;
+  }
+  
+  /* ===============================
+     Tabs Background (strata + back layered)
+     =============================== */
+  .tabs-background {
+    position: relative;
+    width: 100%;
+    height: var(--tabs-height);
+    padding: var(--tabs-padding-top-bottom) 0;
+    background-image: var(--background-strata), var(--background-back);
+    background-repeat: no-repeat, no-repeat;
+    background-position: var(--strata-position), var(--back-position);
+    background-size: var(--strata-size), var(--back-size);
+    z-index: 2;
+  }
+  
+  /* ===============================
+     Tabs Wrapper
+     =============================== */
+  .tabs-wrapper {
+    max-width: var(--tabs-width);
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    z-index: 3;
+  }
+  
+  /* Tabs Navigation Bar */
+  .tabs-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--tab-gap);
+    background: var(--tabs-nav-bg);
+    padding: 10px 20px;
+    border-radius: 30px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 20px var(--tabs-shadow-color);
+  }
+  
+  /* ===============================
+     Tab Links
+     =============================== */
+  .tab-link {
+    display: inline-block;
+    width: var(--tab-link-width);
+    padding: var(--tab-link-padding);
+    color: var(--tab-text-color);
+    text-decoration: none;
+    font-weight: bold;
+    background: var(--tab-bg);
+    border-radius: var(--tab-border-radius);
+    overflow: hidden;
+    position: relative;
+    transition: all 0.3s ease;
+  }
+  
+  .tab-link:hover {
+    background: var(--tab-hover-bg);
+    color: var(--tab-hover-text-color);
+    transform: translateY(-2px);
+  }
+  
+  /* Tab Hover Effect (Background expand) */
+  .tab-link::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,255,255,0.1);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+  }
+  
+  .tab-link:hover::before {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+  
+  /* ===============================
+     Tab Sections (Tab Content)
+     =============================== */
+  .tab-section {
+    position: fixed;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 800px;
+    padding: 40px;
+    background: var(--section-bg);
+    border-radius: var(--section-border-radius);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 30px var(--section-shadow-color);
+    display: none;
+    z-index: 2;
+  }
+  
+  .tab-section.active {
+    display: block;
+    animation: fadeIn var(--fade-duration) ease;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
+  
+  /* ===============================
+     Info Card
+     =============================== */
+  .info-card {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 15px 25px;
+    background: var(--info-card-bg);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 20px var(--info-card-shadow-color);
+    font-size: 14px;
+    z-index: 5;
+  }
+  
+  .info-card a {
+    color: var(--tab-hover-text-color);
+    text-decoration: none;
+    margin: 0 10px;
+    transition: 0.3s;
+  }
+  
+  .info-card a:hover {
+    color: #fff;
+    text-shadow: 0 0 10px var(--tab-hover-text-color);
+  }
+  
