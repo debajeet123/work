@@ -296,7 +296,7 @@ body::after {
 
 .strata-layer {
     position: absolute;
-    top: 0;
+    top: 300;
     left: 0;
     right: 0;
     bottom: 400;
