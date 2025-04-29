@@ -1,189 +1,133 @@
-html,
+:root {
+  /* Global Layout Variables */
+  --tabs-width: 600px;
+  --tabs-height: 120px;
+  --tabs-padding-top-bottom: 40px;
+  --tab-link-width: auto;
+  --tab-link-padding: 12px 20px;
+
+  /* Background Images */
+  --background-back: url('back.png');
+  --background-strata: url('strata.png');
+
+  /* Background Sizes and Positions */
+  --strata-size: cover;
+  --strata-position: center center;
+  --back-size: cover;
+  --back-position: center center;
+}
+
+/* ============ Body and Backgrounds ============ */
 body {
   margin: 0;
   padding: 0;
   height: 100%;
   width: 100%;
   font-family: 'Arial', sans-serif;
-  background-color: #000;
+  background: var(--background-back) no-repeat center center fixed;
+  background-size: var(--back-size);
   color: #fff;
   overflow-x: hidden;
+  position: relative;
 }
 
-body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: url('back.png') no-repeat center center fixed;
-  background-size: cover;
-  z-index: 0;
-  filter: brightness(1.3) contrast(1.1);
-}
-
+/* Stars (Animated Background Layer) */
 body::after {
   content: '';
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
   background-image:
-    radial-gradient(2px 2px at 20px 30px, #fff, rgba(0, 0, 0, 0)),
-    radial-gradient(2px 2px at 40px 70px, #fff, rgba(0, 0, 0, 0)),
-    radial-gradient(2px 2px at 50px 160px, #fff, rgba(0, 0, 0, 0)),
-    radial-gradient(2px 2px at 90px 40px, #fff, rgba(0, 0, 0, 0)),
-    radial-gradient(2px 2px at 130px 80px, #fff, rgba(0, 0, 0, 0)),
-    radial-gradient(2px 2px at 160px 120px, #fff, rgba(0, 0, 0, 0));
+    radial-gradient(2px 2px at 20px 30px, #fff, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 50px 160px, #fff, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 90px 40px, #fff, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 130px 80px, #fff, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 160px 120px, #fff, rgba(0,0,0,0));
   background-repeat: repeat;
   background-size: 200px 200px;
+  mix-blend-mode: screen;
+  opacity: 0.6;
   z-index: 0;
   animation: twinkle 4s ease-in-out infinite;
-  mix-blend-mode: screen;
-  opacity: 0.8;
 }
 
 @keyframes twinkle {
-  0% {
-    opacity: 0.5;
-  }
-
-  50% {
-    opacity: 1;
-  }
-
-  100% {
-    opacity: 0.5;
-  }
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
 }
 
+/* Optional dark overlay layer */
 .strata-layer {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(45deg, rgba(0, 0, 0, 0.3), rgba(10, 10, 42, 0.3));
-  z-index: 1;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: linear-gradient(45deg, rgba(0,0,0,0.3), rgba(10,10,42,0.3));
   backdrop-filter: blur(2px);
+  z-index: 1;
 }
 
-#cornerGlobe {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  width: 150px;
-  height: 150px;
-  z-index: 1002;
-  pointer-events: none;
-  border-radius: 50%;
-  overflow: hidden;
-  box-shadow: 0 0 30px rgba(0, 255, 255, 0.6);
-  transition: transform 0.3s ease;
-}
-
-#cornerGlobe:hover {
-  transform: scale(1.05);
-}
-
-#topRightGlobe {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  width: 300px;
-  height: 300px;
-  z-index: 1002;
-  pointer-events: none;
-  border-radius: 50%;
-  overflow: hidden;
-  box-shadow: 0 0 30px rgba(0, 255, 255, 0.6);
-  transition: transform 0.3s ease;
-}
-
-#topRightGlobe:hover {
-  transform: scale(1.05);
-}
-
-.profile-photo {
-  position: fixed;
-  top: 50px;
-  left: 50px;
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  overflow: hidden;
-  z-index: 1003;
-  border: 3px solid rgba(0, 255, 255, 0.3);
-  box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.profile-photo:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 30px rgba(0, 255, 255, 0.6);
-}
-
-.profile-photo img {
+/* ============ Tabs Background ============ */
+.tabs-background {
+  position: relative;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.3s ease;
+  height: var(--tabs-height);
+  padding: var(--tabs-padding-top-bottom) 0;
+  background-image: var(--background-strata), var(--background-back);
+  background-repeat: no-repeat, no-repeat;
+  background-position: var(--strata-position), var(--back-position);
+  background-size: var(--strata-size), var(--back-size);
+  z-index: 2;
 }
 
-.profile-photo:hover img {
-  transform: scale(1.1);
-}
-
-#rickerCanvas {
-  position: fixed;
-  bottom: 20px;
-  left: 20px;
-  z-index: 1001;
-  transition: transform 0.3s ease;
-}
-
-#rickerCanvas:hover {
-  transform: scale(1.05);
-}
-
+/* ============ Tabs Wrapper and Navigation ============ */
 .tabs-wrapper {
-  position: fixed;
-  top: 50px;
-  right: 50%;
-  transform: translateX(50%);
-  z-index: 1004;
+  max-width: var(--tabs-width);
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  z-index: 3;
 }
 
 .tabs-nav {
   display: flex;
+  justify-content: center;
+  align-items: center;
   gap: 20px;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0,0,0,0.7);
   padding: 10px 20px;
   border-radius: 30px;
   backdrop-filter: blur(10px);
-  box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+  box-shadow: 0 0 20px rgba(0,255,255,0.3);
 }
 
+/* Tab Links */
 .tab-link {
+  display: inline-block;
+  width: var(--tab-link-width);
+  padding: var(--tab-link-padding);
   color: #fff;
   text-decoration: none;
-  padding: 8px 16px;
+  font-weight: bold;
+  background: rgba(0,0,0,0.4);
   border-radius: 20px;
-  transition: all 0.3s ease;
-  position: relative;
   overflow: hidden;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.tab-link:hover {
+  background: rgba(0,255,255,0.2);
+  color: #0ff;
+  transform: translateY(-2px);
 }
 
 .tab-link::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 255, 255, 0.1);
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,255,255,0.1);
   transform: scaleX(0);
   transform-origin: right;
   transition: transform 0.3s ease;
@@ -194,27 +138,21 @@ body::after {
   transform-origin: left;
 }
 
-.tab-link:hover {
-  background: rgba(0, 255, 255, 0.2);
-  color: #0ff;
-  transform: translateY(-2px);
-}
-
+/* ============ Tab Sections ============ */
 .tab-section {
   position: fixed;
-  top: 50%;
+  top: 55%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 80%;
   max-width: 800px;
   padding: 40px;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0,0,0,0.7);
   border-radius: 20px;
   backdrop-filter: blur(10px);
-  z-index: 1000;
+  box-shadow: 0 0 30px rgba(0,255,255,0.3);
   display: none;
-  box-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
-  transition: all 0.3s ease;
+  z-index: 2;
 }
 
 .tab-section.active {
@@ -227,58 +165,24 @@ body::after {
     opacity: 0;
     transform: translate(-50%, -50%) scale(0.95);
   }
-
   to {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
   }
 }
 
-.tab-section h1 {
-  color: #0ff;
-  margin-bottom: 20px;
-  font-size: 2.5em;
-  text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
-}
-
-.tab-section p {
-  font-size: 1.2em;
-  line-height: 1.6;
-  text-shadow: 0 0 5px rgba(0, 255, 255, 0.3);
-}
-
-.typewriter {
-  border-right: 2px solid #0ff;
-  animation: blink 0.75s step-end infinite;
-}
-
-@keyframes blink {
-  from,
-  to {
-    border-color: transparent
-  }
-
-  50% {
-    border-color: #0ff;
-  }
-}
-
+/* ============ Info Card ============ */
 .info-card {
   position: fixed;
   bottom: 20px;
   right: 20px;
   padding: 15px 25px;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0,0,0,0.7);
   border-radius: 15px;
   backdrop-filter: blur(10px);
-  z-index: 1005;
-  box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
-  transition: all 0.3s ease;
-}
-
-.info-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 0 30px rgba(0, 255, 255, 0.4);
+  box-shadow: 0 0 20px rgba(0,255,255,0.2);
+  font-size: 14px;
+  z-index: 5;
 }
 
 .info-card a {
@@ -286,186 +190,9 @@ body::after {
   text-decoration: none;
   margin: 0 10px;
   transition: all 0.3s ease;
-  position: relative;
-}
-:root {
-  /* GLOBAL VARIABLES */
-  --tabs-width: 500px;         /* Width of the tabs container */
-  --tabs-height: 100px;          /* Height of the tabs background area */
-  --tabs-padding-top-bottom: 40px; /* Top and bottom padding for the tabs */
-  --tab-link-width: auto;        /* Width of each tab link - can be 'auto' or '16%' */
-  --tab-link-padding: 12px 20px; /* Tab link padding */
-  --background-back: url('back.png');
-  --background-strata: url('strata.png');
-}
-
-/* Body background */
-body {
-  margin: 0;
-  background: var(--background-back) no-repeat center center fixed;
-  background-size: cover;
-  font-family: 'Segoe UI', sans-serif;
-  color: #ddd;
-}
-
-/* Tabs background (layered images) */
-.tabs-background {
-  position: relative;
-  width: 100%;
-  height: var(--tabs-height);
-  padding: var(--tabs-padding-top-bottom) 0;
-  
-  background-image: 
-    var(--background-strata),
-    var(--background-back);
-  background-repeat: no-repeat, no-repeat;
-  background-position: center center, center center;
-  background-size: cover, cover;
-  z-index: 1;
-}
-
-/* Tab wrapper controls tab content width */
-.tabs-wrapper {
-  max-width: var(--tabs-width);
-  margin: 0 auto;
-  text-align: center;
-}
-
-/* Individual tab links */
-.tab-link {
-  display: inline-block;
-  width: var(--tab-link-width);
-  padding: var(--tab-link-padding);
-  color: #fff;
-  text-decoration: none;
-  font-weight: bold;
-  background-color: rgba(0,0,0,0.4);
-  border-radius: 6px;
-  transition: background 0.3s;
-}
-
-.tab-link:hover {
-  background-color: rgba(255,255,255,0.2);
-}
-
-
-
-.info-card a::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: #0ff;
-  transform: scaleX(0);
-  transform-origin: right;
-  transition: transform 0.3s ease;
-}
-
-.info-card a:hover::after {
-  transform: scaleX(1);
-  transform-origin: left;
 }
 
 .info-card a:hover {
   color: #fff;
-  text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
-}
-
-@media (max-width: 768px) {
-  #cornerGlobe {
-    width: 300px;
-    height: 300px;
-    top: 10px;
-    right: 10px;
-  }
-
-  .profile-photo {
-    width: 150px;
-    height: 150px;
-    top: 30px;
-    left: 30px;
-  }
-
-  .tabs-nav {
-    flex-wrap: wrap;
-    justify-content: center;
-    padding: 5px 10px;
-    gap: 10px;
-  }
-
-  .tab-link {
-    padding: 5px 10px;
-    font-size: 0.9em;
-  }
-
-  .tab-section {
-    width: 90%;
-    padding: 20px;
-    top: 40%;
-  }
-
-  .tab-section h1 {
-    font-size: 2em;
-  }
-
-  .tab-section p {
-    font-size: 1em;
-  }
-
-  .info-card {
-    bottom: 10px;
-    right: 10px;
-    padding: 10px 15px;
-    font-size: 0.9em;
-  }
-}
-
-.loading {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.8);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-}
-
-.loading::after {
-  content: '';
-  width: 50px;
-  height: 50px;
-  border: 5px solid rgba(0, 255, 255, 0.3);
-  border-top-color: #0ff;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-#earthquakeGlobe {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -2;
-  overflow: hidden;
-}
-
-.tabs {
-  color: #333;
-  padding: 10px;
-  background-image: url('strata.png');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
+  text-shadow: 0 0 10px #0ff;
 }
