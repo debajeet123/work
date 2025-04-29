@@ -16,6 +16,20 @@
     --strata-size: 50% 120%; /* Initial width and height percentages */
     --strata-position-x: 0px; /* Initial horizontal position */
     --strata-position-y: 0px; /* Initial vertical position */
+    --background-back: url('https://yourdomain.com/back.png'); /* URL of the main background image */
+    --background-strata: url('https://yourdomain.com/strata.png'); /* URL of the overlay strata image */
+    --back-size: cover; /* Size setting for the main background to cover the entire area */
+    --back-position: center center; /* Center alignment for main background image */
+    --strata-size: 50% 120%; /* Width and height percentages for the strata overlay */
+    --strata-position-x: 0px; /* Horizontal position of the strata overlay */
+    --strata-position-y: 0px; /* Vertical position of the strata overlay */
+    --background-back: url('https://yourdomain.com/back.png'); /* URL of the main background image */
+    --background-strata: url('https://yourdomain.com/strata.png'); /* URL of the overlay strata image */
+    --back-size: cover; /* Size setting for the main background to cover the entire area */
+    --back-position: center center; /* Center alignment for main background image */
+    --strata-size: 50% 120%; /* Width and height percentages for the strata overlay */
+    --strata-position-x: 0px; /* Horizontal position of the strata overlay */
+    --strata-position-y: 0px; /* Vertical position of the strata overlay */
 
     /* --- Profile and Globe Images --- */
     --profile-pic: url('profile.jpg');
