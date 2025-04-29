@@ -14,7 +14,7 @@
   --back-size: cover;
   --back-position: center center;
   --strata-size: cover;
-  --strata-position: center center;
+  --strata-position: center top;
 
   /* --- Profile and Globe Images --- */
   --profile-pic: url('profile.jpg');
