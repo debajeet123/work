@@ -81,7 +81,7 @@
     background-size: var(--strata-size); /* Adjusts with slider */
     background-position: var(--strata-position-x) var(--strata-position-y); /* Adjusts with slider */
     z-index: 10;
-}    --background-back: url('https://yourdomain.com/back.png');
+    --background-back: url('https://yourdomain.com/back.png');
     --background-strata: url('https://yourdomain.com/strata.png');
     --back-size: cover;
     --back-position: center center;

@@ -10,46 +10,41 @@ const BUMP_TEXTURE_URL = 'https://threejs.org/examples/textures/planets/earth_no
 const SPECULAR_TEXTURE_URL = 'https://threejs.org/examples/textures/planets/earth_specular_2048.jpg';
 
 document.addEventListener('DOMContentLoaded', () => {
-  createGlobe('topRightGlobe', 300); // Initialize the globe inside the given div
+    createGlobe('topRightGlobe', 300); // Initialize the globe inside the given div
 
-  // Tab behavior
-  const tabLinks = document.querySelectorAll('.tab-link');
-  const tabSections = document.querySelectorAll('.tab-section');
+    // Tab behavior
+    const tabLinks = document.querySelectorAll('.tab-link');
+    const tabSections = document.querySelectorAll('.tab-section');
+    window.location.hash = "#home";
+    document.querySelector('.tab-link[href="#home"]').classList.add('active');
 
-  window.location.hash = "#home";
-  document.querySelector('.tab-link[href="#home"]').classList.add('active');
+    tabLinks.forEach(link => {
+        link.addEventListener('click', event => {
+            event.preventDefault();
+            const targetId = link.getAttribute('href').substring(1);
+            const targetSection = document.getElementById(targetId);
 
-  tabLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      const targetId = link.getAttribute('href').substring(1);
-      const targetSection = document.getElementById(targetId);
-document.getElementById('slider').addEventListener('input', function() {
-    let sliderValue = this.value;
+            if (targetSection) {
+                targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
 
-    // Change the size dynamically: You can set how much the image scales
-    document.documentElement.style.setProperty('--strata-size', `${50 + sliderValue / 2}% ${120}%`);
-
-    // Adjust vertical position dynamically: You can scale the multiplier to suit your needs
-    document.documentElement.style.setProperty('--strata-position-y', `${sliderValue * 8}px`);
-
-    // Optional: Adjust horizontal position if desired
-    // document.documentElement.style.setProperty('--strata-position-x', `${sliderValue * 5}px`);
-});
-      if (targetSection) {
-        targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-
-      tabLinks.forEach(tab => tab.classList.remove('active'));
-      link.classList.add('active');
+            tabLinks.forEach(tab => tab.classList.remove('active'));
+            link.classList.add('active');
+        });
     });
-  });
-});
 
-document.getElementById('design-slider').addEventListener('input', function() {
-  let sliderValue = this.value;
-  // Update the CSS variable for height based on slider position
-  document.documentElement.style.setProperty('--strata-height', sliderValue + '%');
+    // Slider behavior
+    const slider = document.getElementById('design-slider');
+    if (slider) {
+        slider.addEventListener('input', function() {
+            let sliderValue = this.value;
+            // Update the CSS variable for height based on slider position
+            document.documentElement.style.setProperty('--strata-size', `${50 + sliderValue / 2}% ${120}%`);
+            document.documentElement.style.setProperty('--strata-position-y', `${sliderValue * 8}px`);
+            // Optional: Adjust horizontal position if needed
+            // document.documentElement.style.setProperty('--strata-position-x', `${sliderValue * 5}px`);
+        });
+    }
 });
 function createGlobe(containerId, size) {
   const scene = new THREE.Scene();
