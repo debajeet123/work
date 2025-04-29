@@ -19,7 +19,7 @@
 
     /* --- Profile and Globe Images --- */
     --profile-pic: url('profile.jpg');
-    --profile-width: auto;
+    --profile-width: 50;
     --profile-height: auto;
     --profile-border: 3px solid rgba(0, 255, 255, 0.3);
     --profile-border-radius: 50%;
