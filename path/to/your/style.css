@@ -1,0 +1,7 @@
+.tabs {
+    background-image: url('path/to/strata.png');
+    background-size: cover; /* Ensures image covers the entire element */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    background-position: center; /* Centers the image in the element */
+    // ... other styles for your tabs ...
+}
