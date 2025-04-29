@@ -14,7 +14,7 @@
   --back-size: cover;
   --back-position: center center;
   --strata-size: 50% 120%;
-  --strata-position: 0 500px;
+  --strata-position: 0 30%;
 
   /* --- Profile and Globe Images --- */
   --profile-pic: url('profile.jpg');
