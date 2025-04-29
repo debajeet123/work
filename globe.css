@@ -287,15 +287,20 @@ body::after {
   margin: 0 10px;
   transition: all 0.3s ease;
   position: relative;
-}.tabs-background {
-  background: 
-    url('strata.png') no-repeat center 20px,
-    url('back.png') no-repeat center center;
-  background-size: cover, cover;
-  padding: 40px 0;
-  position: relative;
-  z-index: 1;
 }
+.tabs-background {
+  position: relative;
+  padding: 30px 0;
+
+  background-image: 
+    url('strata.png'),   /* top layer */
+    url('back.png');     /* bottom layer */
+
+  background-repeat: no-repeat, no-repeat;
+  background-position: center center, center center;
+  background-size: cover, cover;
+}
+
 .tabs-wrapper {
   text-align: center;
 }
