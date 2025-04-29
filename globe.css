@@ -18,17 +18,17 @@
     --strata-position-y: 0px; /* Initial vertical position */
 
     /* --- Profile and Globe Images --- */
-    --profile-pic: url('profile.jpg');
-    --profile-width: 50;
-    --profile-height: auto;
-    --profile-border: 3px solid rgba(0, 255, 255, 0.3);
-    --profile-border-radius: 50%;
-    --profile-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
-    --globe-image: url('globe.png');
-    --globe-width: 300px;
-    --globe-height: 300px;
-    --globe-border-radius: 50%;
-    --globe-shadow: 0 0 30px rgba(0, 255, 255, 0.6);
+    --profile-pic: url('profile.jpg'); /* URL for the profile picture */
+    --profile-width: 50; /* Width of the profile picture element */
+    --profile-height: 50; /* Height of the profile picture element set to automatic to maintain aspect ratio */
+    --profile-border: 3px solid rgba(0, 255, 255, 0.3); /* Border styling for the profile picture */
+    --profile-border-radius: 50%; /* Border radius to make the profile picture circular */
+    --profile-shadow: 0 0 20px rgba(0, 255, 255, 0.4); /* Box shadow effect for the profile picture */
+    --globe-image: url('globe.png'); /* URL for the globe image */
+    --globe-width: 300px; /* Width of the globe image */
+    --globe-height: 300px; /* Height of the globe image */
+    --globe-border-radius: 50%; /* Border radius to make the globe image circular */
+    --globe-shadow: 0 0 30px rgba(0, 255, 255, 0.6); /* Box shadow effect for the globe image */
 
     /* --- Colors --- */
     --text-color: #fff;
