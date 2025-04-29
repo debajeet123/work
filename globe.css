@@ -290,7 +290,7 @@ body::after {
 }
 :root {
   /* GLOBAL VARIABLES */
-  --tabs-width: 800px;         /* Width of the tabs container */
+  --tabs-width: 500px;         /* Width of the tabs container */
   --tabs-height: 100px;          /* Height of the tabs background area */
   --tabs-padding-top-bottom: 40px; /* Top and bottom padding for the tabs */
   --tab-link-width: auto;        /* Width of each tab link - can be 'auto' or '16%' */
