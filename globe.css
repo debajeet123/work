@@ -54,7 +54,34 @@
   --hover-scale: 1.05;
   --transition-speed: 0.3s;
   --fade-duration: 0.5s;
+:root {
     --background-back: url('https://yourdomain.com/back.png');
+    --background-strata: url('https://yourdomain.com/strata.png');
+    --back-size: cover;
+    --back-position: center center;
+    --strata-size: 50% 120%; /* Adjust initial width and height percentages */
+    --strata-position-x: 0px; /* Initial horizontal position */
+    --strata-position-y: 0px; /* Initial vertical position */
+}
+
+.tabs-background {
+    position: relative;
+    background: var(--background-back) no-repeat var(--back-position) fixed;
+    background-size: var(--back-size);
+    padding: 20px 0;
+}
+
+.strata-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background: var(--background-strata) no-repeat;
+    background-size: var(--strata-size); /* Adjusts with slider */
+    background-position: var(--strata-position-x) var(--strata-position-y); /* Adjusts with slider */
+    z-index: 10;
+}    --background-back: url('https://yourdomain.com/back.png');
     --background-strata: url('https://yourdomain.com/strata.png');
     --back-size: cover;
     --back-position: center center;
