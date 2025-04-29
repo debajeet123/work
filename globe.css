@@ -19,8 +19,8 @@
 
     /* --- Profile and Globe Images --- */
     --profile-pic: url('profile.jpg'); /* URL for the profile picture */
-    --profile-width: 50; /* Width of the profile picture element */
-    --profile-height: 50; /* Height of the profile picture element set to automatic to maintain aspect ratio */
+    --profile-width: 50px; /* Width of the profile picture element */
+    --profile-height: 50px; /* Height of the profile picture element set to automatic to maintain aspect ratio */
     --profile-border: 3px solid rgba(0, 255, 255, 0.3); /* Border styling for the profile picture */
     --profile-border-radius: 50%; /* Border radius to make the profile picture circular */
     --profile-shadow: 0 0 20px rgba(0, 255, 255, 0.4); /* Box shadow effect for the profile picture */
