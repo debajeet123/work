@@ -19,7 +19,7 @@ function createGlobe(containerId, size) {
   const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 1000); // square aspect for now
   camera.position.z = 4;
 
-  const renderer = new THREE.WebGLRenderer({ 
+  const renderer = new THREE.WebGLRenderer({
     antialias: true,
     alpha: true
   });
@@ -34,7 +34,7 @@ function createGlobe(containerId, size) {
 
   // Texture loading
   const loader = new THREE.TextureLoader();
-  loader.load(DAY_TEXTURE_URL, function(tex) {
+  loader.load(DAY_TEXTURE_URL, function (tex) {
     const geo = new THREE.SphereGeometry(GLOBE_RADIUS, 64, 64);
     const mat = new THREE.MeshPhongMaterial({ map: tex });
     const mesh = new THREE.Mesh(geo, mat);
@@ -87,6 +87,42 @@ function createGlobe(containerId, size) {
     });
   });
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  const tabLinks = document.querySelectorAll('.tab-link');
+  const tabSections = document.querySelectorAll('.tab-section');
+
+  // Show home section by default
+  document.querySelector('#home').classList.add('active');
+  document.querySelector('.tab-link[href="#home"]').classList.add('active');
+
+  tabLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const targetId = link.getAttribute('href').substring(1);
+
+      // Hide all sections
+      tabSections.forEach(section => {
+        section.classList.remove('active');
+      });
+
+      // Remove active class from all links
+      tabLinks.forEach(tab => {
+        tab.classList.remove('active');
+      });
+
+      // Show target section
+      const targetSection = document.getElementById(targetId);
+      if (targetSection) {
+        targetSection.classList.add('active');
+      }
+
+      // Highlight the active tab
+      link.classList.add('active');
+    });
+  });
+});
+
 
 // Helper to convert latitude, longitude to 3D coordinates
 function latLonToVector3(lat, lon, radius) {

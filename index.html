@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <title>Debajeet Barman – Geophysicist</title>
@@ -9,8 +10,27 @@
 
   <style>
     html {
-    scroll-behavior: smooth;
-  }
+      scroll-behavior: smooth;
+    }
+
+    .tab-link {
+      padding: 8px 16px;
+      display: inline-block;
+      color: #ccc;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .tab-link:hover {
+      color: #8ab4f8;
+    }
+
+    .tab-link.active {
+      border-bottom: 2px solid #8ab4f8;
+      color: #8ab4f8;
+    }
+
     pre {
       background-color: #222;
       color: #0f0;
@@ -71,11 +91,11 @@
   <section id="about" class="tab-section">
     <h1>About</h1>
     <p>Highly motivated geophysicist with extensive expertise in seismic processing, ambient noise tomography, and
-    inverse modeling. Experienced in applying probabilistic and unsupervised machine learning (including deep
-    reinforcement learning, GANs, and variational autoencoders) to complex geophysical inverse problems. Proficient in
-    Python, C/C++, Fortran, MATLAB, and GPU programming (CUDA, MPI) for high-performance computing. Proven track
-    record in developing robust algorithms for surface wave tomography, beamforming (MUSIC), full waveform inversion,
-    and stochastic Bayesian modeling — all essential for advanced seismic data analytics.</p>
+      inverse modeling. Experienced in applying probabilistic and unsupervised machine learning (including deep
+      reinforcement learning, GANs, and variational autoencoders) to complex geophysical inverse problems. Proficient in
+      Python, C/C++, Fortran, MATLAB, and GPU programming (CUDA, MPI) for high-performance computing. Proven track
+      record in developing robust algorithms for surface wave tomography, beamforming (MUSIC), full waveform inversion,
+      and stochastic Bayesian modeling — all essential for advanced seismic data analytics.</p>
   </section>
 
   <section id="projects" class="tab-section">
@@ -86,27 +106,47 @@
   <section id="publications" class="tab-section">
     <h1>Publications</h1>
     <div id="bibtex_display">
-      <div><strong>Barman, D and Ojha, M</strong> (2016). New Two Steps Finite Difference Scheme for Acoustic Wave Equation Using Sampling Theorem to Minimize Grid Dispersion. <em>78th EAGE Conference and Exhibition 2016</em>.</div>
+      <div><strong>Barman, D and Ojha, M</strong> (2016). New Two Steps Finite Difference Scheme for Acoustic Wave
+        Equation Using Sampling Theorem to Minimize Grid Dispersion. <em>78th EAGE Conference and Exhibition 2016</em>.
+      </div>
 
-      <div><strong>Barman, Debajeet and Pulliam, Jay and Quiros, Diego</strong> (2018). Improved Rayleigh wave group velocity estimates across the southeastern United States via double beamforming. <em>AGU Fall Meeting Abstracts</em>.</div>
+      <div><strong>Barman, Debajeet and Pulliam, Jay and Quiros, Diego</strong> (2018). Improved Rayleigh wave group
+        velocity estimates across the southeastern United States via double beamforming. <em>AGU Fall Meeting
+          Abstracts</em>.</div>
 
-      <div><strong>Quiros, Diego A and Pulliam, J and Barman, D and Polanco Rivera, E and Huerfano, V</strong> (2018). Ambient noise tomography images accreted terranes and igneous provinces in Hispaniola and Puerto Rico. <em>Geophysical Research Letters</em>.</div>
+      <div><strong>Quiros, Diego A and Pulliam, J and Barman, D and Polanco Rivera, E and Huerfano, V</strong> (2018).
+        Ambient noise tomography images accreted terranes and igneous provinces in Hispaniola and Puerto Rico.
+        <em>Geophysical Research Letters</em>.</div>
 
-      <div><strong>Barman, Debajeet and Quiros, Diego and Pulliam, Jay</strong> (2019). Shear wave velocity model of the southeastern United States from ambient noise tomography with double beamforming. <em>Seismological Society of America</em>.</div>
+      <div><strong>Barman, Debajeet and Quiros, Diego and Pulliam, Jay</strong> (2019). Shear wave velocity model of the
+        southeastern United States from ambient noise tomography with double beamforming. <em>Seismological Society of
+          America</em>.</div>
 
-      <div><strong>Barman, Debajeet and Pulliam, Jay and Quiros, Diego</strong> (2019). Improved shear wave velocity model of the southeastern United States from ambient noise tomography using cross-coherence interferometry. <em>AGU Fall Meeting Abstracts</em>.</div>
+      <div><strong>Barman, Debajeet and Pulliam, Jay and Quiros, Diego</strong> (2019). Improved shear wave velocity
+        model of the southeastern United States from ambient noise tomography using cross-coherence interferometry.
+        <em>AGU Fall Meeting Abstracts</em>.</div>
 
-      <div><strong>Barman, D and Biswas, R and Sen, Mrinal K</strong> (2019). Understanding the encoder-decoder network for solving an unsupervised seismic inversion problem. <em>AGU Fall Meeting Abstracts</em>.</div>
+      <div><strong>Barman, D and Biswas, R and Sen, Mrinal K</strong> (2019). Understanding the encoder-decoder network
+        for solving an unsupervised seismic inversion problem. <em>AGU Fall Meeting Abstracts</em>.</div>
 
-      <div><strong>Vanga, Mounika and Barman, Debajeet and Ojha, Maheswar</strong> (2022). An optimized finite-difference method to minimize numerical dispersion of acoustic wave propagation using a genetic algorithm. <em>Geophysics</em>.</div>
+      <div><strong>Vanga, Mounika and Barman, Debajeet and Ojha, Maheswar</strong> (2022). An optimized
+        finite-difference method to minimize numerical dispersion of acoustic wave propagation using a genetic
+        algorithm. <em>Geophysics</em>.</div>
 
-      <div><strong>Barman, Debajeet and Sen, Mrinal K</strong> (2022). Seismic inversion with dictionary learning using unsupervised machine learning. <em>SEG International Exposition and Annual Meeting</em>.</div>
+      <div><strong>Barman, Debajeet and Sen, Mrinal K</strong> (2022). Seismic inversion with dictionary learning using
+        unsupervised machine learning. <em>SEG International Exposition and Annual Meeting</em>.</div>
 
-      <div><strong>Barman, Debajeet and Pulliam, Jay</strong> (2022). High-resolution Rayleigh wave phase velocity inversion for the southeastern United States using the MUSIC algorithm. <em>AGU Fall Meeting Abstracts</em>.</div>
+      <div><strong>Barman, Debajeet and Pulliam, Jay</strong> (2022). High-resolution Rayleigh wave phase velocity
+        inversion for the southeastern United States using the MUSIC algorithm. <em>AGU Fall Meeting Abstracts</em>.
+      </div>
 
-      <div><strong>Barman, Debajeet and Pulliam, Jay and Quiros, Diego A</strong> (2024). Ambient seismic noise tomography of the Suwannee suture zone using cross-coherence interferometry and double beamforming. <em>Geophysical Journal International</em>.</div>
+      <div><strong>Barman, Debajeet and Pulliam, Jay and Quiros, Diego A</strong> (2024). Ambient seismic noise
+        tomography of the Suwannee suture zone using cross-coherence interferometry and double beamforming.
+        <em>Geophysical Journal International</em>.</div>
 
-      <div><strong>Barman, Debajeet and Pulliam, Jay</strong> (2023). High-resolution Rayleigh wave phase velocity and group velocity inversion at Sweetwater Texas using a Double Optimized MUSIC (DOPMUSIC) algorithm. <em>AGU Fall Meeting Abstracts</em>.</div>
+      <div><strong>Barman, Debajeet and Pulliam, Jay</strong> (2023). High-resolution Rayleigh wave phase velocity and
+        group velocity inversion at Sweetwater Texas using a Double Optimized MUSIC (DOPMUSIC) algorithm. <em>AGU Fall
+          Meeting Abstracts</em>.</div>
     </div>
   </section>
 
@@ -158,4 +198,5 @@
     });
   </script>
 </body>
+
 </html>
