@@ -76,53 +76,31 @@ function createGlobe(containerId, size) {
     }
     animate();
 
-    // Handle window resize
-    window.addEventListener('resize', () => {
-      const container = document.getElementById(containerId);
-      const width = container.clientWidth;
-      const height = container.clientHeight;
-      renderer.setSize(width, height);
-      camera.aspect = width / height;
-      camera.updateProjectionMatrix();
-    });
-  });
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  const tabLinks = document.querySelectorAll('.tab-link');
-  const tabSections = document.querySelectorAll('.tab-section');
-
-  // Show home section by default
-  document.querySelector('#home').classList.add('active');
-  document.querySelector('.tab-link[href="#home"]').classList.add('active');
-
-  tabLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      const targetId = link.getAttribute('href').substring(1);
-
-      // Hide all sections
-      tabSections.forEach(section => {
-        section.classList.remove('active');
+    document.addEventListener('DOMContentLoaded', () => {
+      const tabLinks = document.querySelectorAll('.tab-link');
+      const tabSections = document.querySelectorAll('.tab-section');
+    
+      // Set home section active on load
+      window.location.hash = "#home";
+      document.querySelector('.tab-link[href="#home"]').classList.add('active');
+    
+      tabLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const targetId = link.getAttribute('href').substring(1);
+          const targetSection = document.getElementById(targetId);
+    
+          if (targetSection) {
+            targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+    
+          // Update active tab highlight
+          tabLinks.forEach(tab => tab.classList.remove('active'));
+          link.classList.add('active');
+        });
       });
-
-      // Remove active class from all links
-      tabLinks.forEach(tab => {
-        tab.classList.remove('active');
-      });
-
-      // Show target section
-      const targetSection = document.getElementById(targetId);
-      if (targetSection) {
-        targetSection.classList.add('active');
-      }
-
-      // Highlight the active tab
-      link.classList.add('active');
     });
-  });
-});
-
+    
 
 // Helper to convert latitude, longitude to 3D coordinates
 function latLonToVector3(lat, lon, radius) {
