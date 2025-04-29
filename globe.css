@@ -1,5 +1,6 @@
 :root {
-    /* --- Layout Sizes --- */
+    /* === Layout Variables === */
+    /* Sizes and Spacing */
     --tabs-width: auto;
     --tabs-height: auto;
     --tabs-padding-top-bottom: 40px;
@@ -8,29 +9,29 @@
     --tab-border-radius: 20px;
     --tab-gap: 20px;
 
-    /* --- Main Background Images --- */
+    /* Background Images */
     --background-back: url('back.png');
     --background-strata: url('strata.png');
     --back-size: cover;
     --back-position: center center;
-    --strata-size: 50% 120%; /* Initial width and height percentages */
-    --strata-position-x: 0px; /* Initial horizontal position */
-    --strata-position-y: 0px; /* Initial vertical position */
+    --strata-size: 50% 120%;
+    --strata-position-x: 0px;
+    --strata-position-y: 0px;
 
-    /* --- Profile and Globe Images --- */
-    --profile-pic: url('profile.jpg'); /* URL for the profile picture */
-    --profile-width: 200px; /* Width of the profile picture element */
-    --profile-height: 200px; /* Height of the profile picture element set to automatic to maintain aspect ratio */
-    --profile-border: 3px solid rgba(0, 255, 255, 0.3); /* Border styling for the profile picture */
-    --profile-border-radius: 50%; /* Border radius to make the profile picture circular */
-    --profile-shadow: 0 0 20px rgba(0, 255, 255, 0.4); /* Box shadow effect for the profile picture */
-    --globe-image: url('globe.png'); /* URL for the globe image */
-    --globe-width: 300px; /* Width of the globe image */
-    --globe-height: 300px; /* Height of the globe image */
-    --globe-border-radius: 50%; /* Border radius to make the globe image circular */
-    --globe-shadow: 0 0 30px rgba(0, 255, 255, 0.6); /* Box shadow effect for the globe image */
+    /* Profile and Globe */
+    --profile-pic: url('profile.jpg');
+    --profile-width: 200px;
+    --profile-height: 200px;
+    --profile-border: 3px solid rgba(0, 255, 255, 0.3);
+    --profile-border-radius: 50%;
+    --profile-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+    --globe-image: url('globe.png');
+    --globe-width: 300px;
+    --globe-height: 300px;
+    --globe-border-radius: 50%;
+    --globe-shadow: 0 0 30px rgba(0, 255, 255, 0.6);
 
-    /* --- Colors --- */
+    /* Color Theme */
     --text-color: #fff;
     --tab-text-color: #fff;
     --tab-hover-text-color: #0ff;
@@ -44,16 +45,17 @@
     --info-card-bg: rgba(0, 0, 0, 0.7);
     --info-card-shadow-color: rgba(0, 255, 255, 0.2);
 
-    /* --- Info Card Sizes --- */
+    /* Info Card Sizes */
     --info-card-padding: 15px 25px;
     --info-card-font-size: 14px;
 
-    /* --- Animation Durations --- */
+    /* Animation Settings */
     --hover-scale: 1.05;
     --transition-speed: 0.3s;
     --fade-duration: 0.5s;
 }
 
+/* === General Body Styling === */
 body {
     margin: 0;
     padding: 0;
@@ -67,7 +69,7 @@ body {
     position: relative;
 }
 
-/* Tabs Background */
+/* === Tabs Background Styling === */
 .tabs-background {
     position: relative;
     width: 100%;
@@ -80,7 +82,7 @@ body {
     z-index: 2;
 }
 
-/* Tabs Nav */
+/* === Tabs Wrapper (Centering and Containing Nav) === */
 .tabs-wrapper {
     max-width: var(--tabs-width);
     margin: 0 auto;
@@ -89,6 +91,7 @@ body {
     z-index: 3;
 }
 
+/* === Tabs Navigation Bar === */
 .tabs-nav {
     display: flex;
     justify-content: center;
@@ -100,7 +103,7 @@ body {
     box-shadow: 0 0 20px var(--tabs-shadow-color);
 }
 
-/* Tab Links */
+/* === Individual Tab Link === */
 .tab-link {
     width: var(--tab-link-width);
     padding: var(--tab-link-padding);
@@ -114,12 +117,14 @@ body {
     position: relative;
 }
 
+/* Hover Effects for Tabs */
 .tab-link:hover {
     background: var(--tab-hover-bg);
     color: var(--tab-hover-text-color);
     transform: translateY(-2px);
 }
 
+/* Tab Hover Overlay */
 .tab-link::before {
     content: '';
     position: absolute;
@@ -136,7 +141,7 @@ body {
     transform-origin: left;
 }
 
-/* Profile Photo */
+/* === Profile Photo Styling === */
 .profile-photo {
     position: fixed;
     top: 50px;
@@ -153,11 +158,12 @@ body {
     transition: transform var(--transition-speed) ease;
 }
 
+/* Profile Photo Hover Effect */
 .profile-photo:hover {
     transform: scale(var(--hover-scale));
 }
 
-/* Globe Image */
+/* === Globe Image (Top Right) === */
 #topRightGlobe {
     position: fixed;
     top: 20px;
@@ -174,11 +180,12 @@ body {
     transition: transform var(--transition-speed) ease;
 }
 
+/* Globe Hover Animation */
 #topRightGlobe:hover {
     transform: scale(var(--hover-scale));
 }
 
-/* Sections (Tab Content) */
+/* === Tab Content Sections (Hidden by Default) === */
 .tab-section {
     position: fixed;
     top: 55%;
@@ -195,17 +202,19 @@ body {
     z-index: 2;
 }
 
+/* === Active Section Display with Animation === */
 .tab-section.active {
     display: block;
     animation: fadeIn var(--fade-duration) ease;
 }
 
+/* Fade In Animation Keyframes */
 @keyframes fadeIn {
     from { opacity: 0; transform: translate(-50%, -50%) scale(0.95); }
     to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
 }
 
-/* Info Card */
+/* === Info Card (Bottom Right) === */
 .info-card {
     position: fixed;
     bottom: 20px;
@@ -219,6 +228,7 @@ body {
     z-index: 5;
 }
 
+/* Info Card Links */
 .info-card a {
     color: var(--tab-hover-text-color);
     text-decoration: none;
@@ -226,6 +236,7 @@ body {
     transition: 0.3s;
 }
 
+/* Info Card Links Hover */
 .info-card a:hover {
     color: #fff;
     text-shadow: 0 0 10px var(--tab-hover-text-color);
