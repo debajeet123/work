@@ -24,7 +24,18 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       const targetId = link.getAttribute('href').substring(1);
       const targetSection = document.getElementById(targetId);
+document.getElementById('slider').addEventListener('input', function() {
+    let sliderValue = this.value;
 
+    // Change the size dynamically: You can set how much the image scales
+    document.documentElement.style.setProperty('--strata-size', `${50 + sliderValue / 2}% ${120}%`);
+
+    // Adjust vertical position dynamically: You can scale the multiplier to suit your needs
+    document.documentElement.style.setProperty('--strata-position-y', `${sliderValue * 8}px`);
+
+    // Optional: Adjust horizontal position if desired
+    // document.documentElement.style.setProperty('--strata-position-x', `${sliderValue * 5}px`);
+});
       if (targetSection) {
         targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
@@ -35,6 +46,11 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+document.getElementById('design-slider').addEventListener('input', function() {
+  let sliderValue = this.value;
+  // Update the CSS variable for height based on slider position
+  document.documentElement.style.setProperty('--strata-height', sliderValue + '%');
+});
 function createGlobe(containerId, size) {
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 1000);

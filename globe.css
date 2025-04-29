@@ -1,234 +1,28 @@
 :root {
-  /* --- Layout Sizes --- */
-  --tabs-width: auto;
-  --tabs-height: 120px;
-  --tabs-padding-top-bottom: 40px;
-  --tab-link-width: auto;
-  --tab-link-padding: 12px 20px;
-  --tab-border-radius: 20px;
-  --tab-gap: 20px;
-
-  /* --- Main Background Images --- */
-  --background-back: url('back.png');
-  --background-strata: url('strata.png');
-  --back-size: cover;
-  --back-position: center center;
-  --strata-size: 50% 120%;
-  --strata-position: 0 800px;
-
-  /* --- Profile and Globe Images --- */
-  --profile-pic: url('profile.jpg');
-  --profile-width: 200px;
-  --profile-height: 200px;
-  --profile-border: 3px solid rgba(0, 255, 255, 0.3);
-  --profile-border-radius: 50%;
-  --profile-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
-
-  --globe-image: url('globe.png');
-  --globe-width: 300px;
-  --globe-height: 300px;
-  --globe-border-radius: 50%;
-  --globe-shadow: 0 0 30px rgba(0, 255, 255, 0.6);
-
-  /* --- Colors --- */
-  --text-color: #fff;
-  --tab-text-color: #fff;
-  --tab-hover-text-color: #0ff;
-  --tab-bg: rgba(0, 0, 0, 0.4);
-  --tab-hover-bg: rgba(0, 255, 255, 0.2);
-  --tabs-nav-bg: rgba(0, 0, 0, 0.7);
-  --tabs-shadow-color: rgba(0, 255, 255, 0.3);
-
-  --section-bg: rgba(0, 0, 0, 0.7);
-  --section-border-radius: 20px;
-  --section-shadow-color: rgba(0, 255, 255, 0.3);
-
-  --info-card-bg: rgba(0, 0, 0, 0.7);
-  --info-card-shadow-color: rgba(0, 255, 255, 0.2);
-
-  /* --- Info Card Sizes --- */
-  --info-card-padding: 15px 25px;
-  --info-card-font-size: 14px;
-
-  /* --- Animation Durations --- */
-  --hover-scale: 1.05;
-  --transition-speed: 0.3s;
-  --fade-duration: 0.5s;
+    --background-back: url('https://yourdomain.com/back.png');
+    --background-strata: url('https://yourdomain.com/strata.png');
+    --back-size: cover;
+    --back-position: center center;
+    --strata-size: 50% 120%; /* Adjust initial width and height percentages */
+    --strata-position-x: 0px; /* Initial horizontal position */
+    --strata-position-y: 0px; /* Initial vertical position */
 }
 
-body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  width: 100%;
-  font-family: 'Arial', sans-serif;
-  color: var(--text-color);
-  background: var(--background-back) no-repeat var(--back-position) fixed;
-  background-size: var(--back-size);
-  overflow-x: hidden;
-  position: relative;
-}
-
-/* Tabs Background */
 .tabs-background {
-  position: relative;
-  width: 100%;
-  height: var(--tabs-height);
-  padding: var(--tabs-padding-top-bottom) 0;
-  background-image: var(--background-strata), var(--background-back);
-  background-repeat: no-repeat, no-repeat;
-  background-position: var(--strata-position), var(--back-position);
-  background-size: var(--strata-size), var(--back-size);
-  z-index: 2;
+    position: relative;
+    background: var(--background-back) no-repeat var(--back-position) fixed;
+    background-size: var(--back-size);
+    padding: 20px 0;
 }
 
-/* Tabs Nav */
-.tabs-wrapper {
-  max-width: var(--tabs-width);
-  margin: 0 auto;
-  text-align: center;
-  position: relative;
-  z-index: 3;
-}
-
-.tabs-nav {
-  display: flex;
-  justify-content: center;
-  gap: var(--tab-gap);
-  background: var(--tabs-nav-bg);
-  padding: 10px 20px;
-  border-radius: 30px;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 0 20px var(--tabs-shadow-color);
-}
-
-/* Tab Links */
-.tab-link {
-  width: var(--tab-link-width);
-  padding: var(--tab-link-padding);
-  background: var(--tab-bg);
-  border-radius: var(--tab-border-radius);
-  color: var(--tab-text-color);
-  text-decoration: none;
-  font-weight: bold;
-  overflow: hidden;
-  transition: all var(--transition-speed) ease;
-  position: relative;
-}
-
-.tab-link:hover {
-  background: var(--tab-hover-bg);
-  color: var(--tab-hover-text-color);
-  transform: translateY(-2px);
-}
-
-.tab-link::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0, 255, 255, 0.1);
-  transform: scaleX(0);
-  transform-origin: right;
-  transition: transform var(--transition-speed) ease;
-}
-
-.tab-link:hover::before {
-  transform: scaleX(1);
-  transform-origin: left;
-}
-
-/* Profile Photo */
-.profile-photo {
-  position: fixed;
-  top: 50px;
-  left: 50px;
-  width: var(--profile-width);
-  height: var(--profile-height);
-  border: var(--profile-border);
-  border-radius: var(--profile-border-radius);
-  background: var(--profile-pic) no-repeat center center;
-  background-size: cover;
-  overflow: hidden;
-  box-shadow: var(--profile-shadow);
-  z-index: 1003;
-  transition: transform var(--transition-speed) ease;
-}
-
-.profile-photo:hover {
-  transform: scale(var(--hover-scale));
-}
-
-/* Globe Image */
-#topRightGlobe {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  width: var(--globe-width);
-  height: var(--globe-height);
-  border-radius: var(--globe-border-radius);
-  background: var(--globe-image) no-repeat center center;
-  background-size: cover;
-  overflow: hidden;
-  box-shadow: var(--globe-shadow);
-  pointer-events: none;
-  z-index: 1002;
-  transition: transform var(--transition-speed) ease;
-}
-
-#topRightGlobe:hover {
-  transform: scale(var(--hover-scale));
-}
-
-/* Sections (Tab Content) */
-.tab-section {
-  position: fixed;
-  top: 55%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 80%;
-  max-width: 800px;
-  padding: 40px;
-  background: var(--section-bg);
-  border-radius: var(--section-border-radius);
-  box-shadow: 0 0 30px var(--section-shadow-color);
-  backdrop-filter: blur(10px);
-  display: none;
-  z-index: 2;
-}
-
-.tab-section.active {
-  display: block;
-  animation: fadeIn var(--fade-duration) ease;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translate(-50%, -50%) scale(0.95); }
-  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-}
-
-/* Info Card */
-.info-card {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  padding: var(--info-card-padding);
-  background: var(--info-card-bg);
-  border-radius: 15px;
-  box-shadow: 0 0 20px var(--info-card-shadow-color);
-  backdrop-filter: blur(10px);
-  font-size: var(--info-card-font-size);
-  z-index: 5;
-}
-
-.info-card a {
-  color: var(--tab-hover-text-color);
-  text-decoration: none;
-  margin: 0 10px;
-  transition: 0.3s;
-}
-
-.info-card a:hover {
-  color: #fff;
-  text-shadow: 0 0 10px var(--tab-hover-text-color);
+.strata-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background: var(--background-strata) no-repeat;
+    background-size: var(--strata-size); /* Adjusts with slider */
+    background-position: var(--strata-position-x) var(--strata-position-y); /* Adjusts with slider */
+    z-index: 10;
 }
