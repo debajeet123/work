@@ -59,7 +59,7 @@
     position: relative;
   }
   
-  /* Animated Stars Layer */
+  /* Animated Stars Layer
   body::after {
     content: '';
     position: fixed;
@@ -83,7 +83,7 @@
   @keyframes twinkle {
     0%, 100% { opacity: var(--twinkle-opacity-min); }
     50% { opacity: var(--twinkle-opacity-max); }
-  }
+  } */
   
   /* Optional Blurred Overlay */
   .strata-layer {
