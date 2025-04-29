@@ -62,11 +62,11 @@
 
     <div style="display:none;">
       <div class="bibtex_template">
-        <div>
-          <strong><span class="author"></span></strong>
-          (<span class="year"></span>).
-          <span class="title"></span>.
-          <em><span class="journal"></span></em>.
+        <div style="margin-bottom: 15px;">
+          <strong><span class="author"></span></strong> 
+          (<span class="year"></span>). 
+          <span class="title"></span>. 
+          <em><span class="journal"></span><span class="booktitle"></span></em>.
         </div>
       </div>
 
@@ -187,7 +187,7 @@
     </div>
 
     <script>
-      bibtex_js_draw();
+      bibtex_js_draw({ sort: [['year', 'descending']] });
     </script>
 
   </section>
