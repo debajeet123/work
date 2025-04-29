@@ -1,6 +1,6 @@
 :root {
   /* --- Layout Sizes --- */
-  --tabs-width: 600px;
+  --tabs-width: auto;
   --tabs-height: 120px;
   --tabs-padding-top-bottom: 40px;
   --tab-link-width: auto;
