@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <title>Debajeet Barman – Geophysicist</title>
@@ -7,8 +8,9 @@
   <link rel="stylesheet" href="globe.css" />
   <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
 </head>
+
 <body>
-  
+
   <div class="strata-layer"></div>
   <div id="earthquakeGlobe"></div>
 
@@ -32,9 +34,111 @@
   </section>
   <section id="about" class="tab-section">
     <h1>About</h1>
-    <p>    Highly motivated geophysicist with extensive expertise in seismic processing, ambient noise tomography, and inverse modeling. Experienced in applying probabilistic and unsupervised machine learning (including deep reinforcement learning, GANs, and variational autoencoders) to complex geophysical inverse problems. Proficient in Python, C/C++, Fortran, MATLAB, and GPU programming (CUDA, MPI) for high-performance computing. Proven track record in developing robust algorithms for surface wave tomography, beamforming (MUSIC), full waveform inversion, and stochastic Bayesian modeling — all essential for advanced seismic data analytics.
+    <p> Highly motivated geophysicist with extensive expertise in seismic processing, ambient noise tomography, and
+      inverse modeling. Experienced in applying probabilistic and unsupervised machine learning (including deep
+      reinforcement learning, GANs, and variational autoencoders) to complex geophysical inverse problems. Proficient in
+      Python, C/C++, Fortran, MATLAB, and GPU programming (CUDA, MPI) for high-performance computing. Proven track
+      record in developing robust algorithms for surface wave tomography, beamforming (MUSIC), full waveform inversion,
+      and stochastic Bayesian modeling — all essential for advanced seismic data analytics.
     </p>
   </section>
+
+  <section id="publications" class="tab-section">
+    <h1>Publications</h1>
+    <p>
+
+      [
+      {
+      "title": "New Two Steps Finite Difference Scheme for Acoustic Wave Equation Using Sampling Theorem to Minimize
+      Grid Dispersion",
+      "authors": "Barman, D and Ojha, M",
+      "journal": "78th EAGE Conference and Exhibition 2016",
+      "year": 2016,
+      "link": ""
+      },
+      {
+      "title": "Improved Rayleigh wave group velocity estimates across the southeastern United States via double
+      beamforming",
+      "authors": "Barman, Debajeet and Pulliam, Jay and Quiros, Diego",
+      "journal": "AGU Fall Meeting Abstracts",
+      "year": 2018,
+      "link": ""
+      },
+      {
+      "title": "Ambient noise tomography images accreted terranes and igneous provinces in Hispaniola and Puerto Rico",
+      "authors": "Quiros, Diego A and Pulliam, J and Barman, D and Polanco Rivera, E and Huerfano, V",
+      "journal": "Geophysical Research Letters",
+      "year": 2018,
+      "link": ""
+      },
+      {
+      "title": "Shear wave velocity model of the southeastern United States from ambient noise tomography with double
+      beamforming",
+      "authors": "Barman, Debajeet and Quiros, Diego and Pulliam, Jay",
+      "journal": "Seismological Society of America",
+      "year": 2019,
+      "link": ""
+      },
+      {
+      "title": "Improved shear wave velocity model of the southeastern United States from ambient noise tomography using
+      cross-coherence interferometry",
+      "authors": "Barman, Debajeet and Pulliam, Jay and Quiros, Diego",
+      "journal": "AGU Fall Meeting Abstracts",
+      "year": 2019,
+      "link": ""
+      },
+      {
+      "title": "Understanding the encoder-decoder network for solving an unsupervised seismic inversion problem",
+      "authors": "Barman, D and Biswas, R and Sen, Mrinal K",
+      "journal": "AGU Fall Meeting Abstracts",
+      "year": 2019,
+      "link": ""
+      },
+      {
+      "title": "An optimized finite-difference method to minimize numerical dispersion of acoustic wave propagation
+      using a genetic algorithm",
+      "authors": "Vanga, Mounika and Barman, Debajeet and Ojha, Maheswar",
+      "journal": "Geophysics",
+      "year": 2022,
+      "link": ""
+      },
+      {
+      "title": "Seismic inversion with dictionary learning using unsupervised machine learning",
+      "authors": "Barman, Debajeet and Sen, Mrinal K",
+      "journal": "SEG International Exposition and Annual Meeting",
+      "year": 2022,
+      "link": ""
+      },
+      {
+      "title": "High-resolution Rayleigh wave phase velocity inversion for the southeastern United States using the
+      MUSIC algorithm",
+      "authors": "Barman, Debajeet and Pulliam, Jay",
+      "journal": "AGU Fall Meeting Abstracts",
+      "year": 2022,
+      "link": ""
+      },
+      {
+      "title": "Ambient seismic noise tomography of the Suwannee suture zone using cross-coherence interferometry and
+      double beamforming",
+      "authors": "Barman, Debajeet and Pulliam, Jay and Quiros, Diego A",
+      "journal": "Geophysical Journal International",
+      "year": 2024,
+      "link": ""
+      },
+      {
+      "title": "High-resolution Rayleigh wave phase velocity and group velocity inversion at Sweetwater Texas using a
+      Double Optimized MUSIC (DOPMUSIC) algorithm",
+      "authors": "Barman, Debajeet and Pulliam, Jay",
+      "journal": "AGU Fall Meeting Abstracts",
+      "year": 2023,
+      "link": ""
+      }
+      ]
+
+    </p>
+  </section>
+
+
   <div class="info-card">
     <a href="https://linkedin.com/in/debajeetbarman" target="_blank">LinkedIn</a> |
     <a href="https://scholar.google.com/citations?user=_i8vIAEAAAAJ" target="_blank">Google Scholar</a>
@@ -43,31 +147,32 @@
   <script src="earthquakeGlobe.js"></script>
 
   <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const tabLinks = document.querySelectorAll('.tab-link');
-    const tabSections = document.querySelectorAll('.tab-section');
+    document.addEventListener('DOMContentLoaded', () => {
+      const tabLinks = document.querySelectorAll('.tab-link');
+      const tabSections = document.querySelectorAll('.tab-section');
 
-    // Show home section by default
-    document.querySelector('#home').classList.add('active');
+      // Show home section by default
+      document.querySelector('#home').classList.add('active');
 
-    tabLinks.forEach(link => {
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const targetId = link.getAttribute('href').substring(1);
+      tabLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const targetId = link.getAttribute('href').substring(1);
 
-        // Hide all sections
-        tabSections.forEach(section => {
-          section.classList.remove('active');
+          // Hide all sections
+          tabSections.forEach(section => {
+            section.classList.remove('active');
+          });
+
+          // Show target section
+          const targetSection = document.getElementById(targetId);
+          if (targetSection) {
+            targetSection.classList.add('active');
+          }
         });
-
-        // Show target section
-        const targetSection = document.getElementById(targetId);
-        if (targetSection) {
-          targetSection.classList.add('active');
-        }
       });
     });
-  });
   </script>
 </body>
+
 </html>
