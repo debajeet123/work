@@ -1,4 +1,3 @@
-/* Base Styles */
 html,
 body {
   margin: 0;
@@ -11,7 +10,6 @@ body {
   overflow-x: hidden;
 }
 
-/* Background with back.png */
 body::before {
   content: '';
   position: fixed;
@@ -25,7 +23,6 @@ body::before {
   filter: brightness(1.3) contrast(1.1);
 }
 
-/* Stars Overlay */
 body::after {
   content: '';
   position: fixed;
@@ -62,7 +59,6 @@ body::after {
   }
 }
 
-/* Strata Layer */
 .strata-layer {
   position: fixed;
   top: 0;
@@ -74,7 +70,6 @@ body::after {
   backdrop-filter: blur(2px);
 }
 
-/* Corner Globe */
 #cornerGlobe {
   position: fixed;
   top: 20px;
@@ -93,7 +88,6 @@ body::after {
   transform: scale(1.05);
 }
 
-/* Top Right Globe */
 #topRightGlobe {
   position: fixed;
   top: 20px;
@@ -112,7 +106,6 @@ body::after {
   transform: scale(1.05);
 }
 
-/* Profile Photo */
 .profile-photo {
   position: fixed;
   top: 50px;
@@ -143,7 +136,6 @@ body::after {
   transform: scale(1.1);
 }
 
-/* Ricker Canvas */
 #rickerCanvas {
   position: fixed;
   bottom: 20px;
@@ -156,7 +148,6 @@ body::after {
   transform: scale(1.05);
 }
 
-/* Tabs Navigation */
 .tabs-wrapper {
   position: fixed;
   top: 50px;
@@ -209,7 +200,6 @@ body::after {
   transform: translateY(-2px);
 }
 
-/* Tab Sections */
 .tab-section {
   position: fixed;
   top: 50%;
@@ -257,14 +247,12 @@ body::after {
   text-shadow: 0 0 5px rgba(0, 255, 255, 0.3);
 }
 
-/* Typewriter Effect */
 .typewriter {
   border-right: 2px solid #0ff;
   animation: blink 0.75s step-end infinite;
 }
 
 @keyframes blink {
-
   from,
   to {
     border-color: transparent
@@ -275,7 +263,6 @@ body::after {
   }
 }
 
-/* Info Card */
 .info-card {
   position: fixed;
   bottom: 20px;
@@ -325,7 +312,6 @@ body::after {
   text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
   #cornerGlobe {
     width: 300px;
@@ -375,7 +361,6 @@ body::after {
   }
 }
 
-/* Loading Animation */
 .loading {
   position: fixed;
   top: 0;
@@ -412,7 +397,6 @@ body::after {
   width: 100%;
   height: 100%;
   z-index: -2;
-  /* Behind everything else */
   overflow: hidden;
 }
 
