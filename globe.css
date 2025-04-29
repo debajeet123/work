@@ -287,6 +287,28 @@ body::after {
   margin: 0 10px;
   transition: all 0.3s ease;
   position: relative;
+}.tabs-background {
+    position: relative;
+    background: url('back.png') no-repeat center center;
+    background-size: cover;
+    padding: 20px 0;
+}
+
+.strata-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('strata.png') no-repeat center center;
+    background-size: contain; /* or cover, based on preference */
+    z-index: 10; /* Higher z-index to ensure it's on top */
+}
+
+.tab-content {
+    position: relative;
+    z-index: 20; /* Ensure other content is above the background images */
+    /* Other styling for content */
 }
 
 .info-card a::after {
