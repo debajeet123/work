@@ -18,7 +18,7 @@ function createGlobe(containerId, size) {
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 1000); // square aspect for now
   camera.position.z = 4;
-
+}
   const renderer = new THREE.WebGLRenderer({
     antialias: true,
     alpha: true
