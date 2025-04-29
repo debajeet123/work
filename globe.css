@@ -403,7 +403,7 @@ body::after {
 .tabs {
   color: #333;
   padding: 10px;
-  background-image: url('path/to/strata.png');
+  background-image: url('strata.png');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
