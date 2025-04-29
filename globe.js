@@ -1,6 +1,6 @@
 // Constants - Adjust these values to modify the globe appearance
 const GLOBE_RADIUS = 1;                  // Size of the globe
-const ROTATION_SPEED = 0.002;             // Speed of rotation
+const ROTATION_SPEED = 0.002;           // Speed of rotation
 
 // Texture URLs
 const DAY_TEXTURE_URL = 'https://threejs.org/examples/textures/planets/earth_atmos_2048.jpg';
@@ -11,28 +11,47 @@ const SPECULAR_TEXTURE_URL = 'https://threejs.org/examples/textures/planets/eart
 
 document.addEventListener('DOMContentLoaded', () => {
   createGlobe('topRightGlobe', 300); // Initialize the globe inside the given div
+
+  // Tab behavior
+  const tabLinks = document.querySelectorAll('.tab-link');
+  const tabSections = document.querySelectorAll('.tab-section');
+
+  window.location.hash = "#home";
+  document.querySelector('.tab-link[href="#home"]').classList.add('active');
+
+  tabLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const targetId = link.getAttribute('href').substring(1);
+      const targetSection = document.getElementById(targetId);
+
+      if (targetSection) {
+        targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+
+      tabLinks.forEach(tab => tab.classList.remove('active'));
+      link.classList.add('active');
+    });
+  });
 });
 
 function createGlobe(containerId, size) {
-  // Scene setup
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 1000); // square aspect for now
+  const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 1000);
   camera.position.z = 4;
-}
+
   const renderer = new THREE.WebGLRenderer({
     antialias: true,
     alpha: true
   });
   renderer.setSize(size, size);
-  renderer.setClearColor(0x000000, 0); // transparent background
+  renderer.setClearColor(0x000000, 0);
   document.getElementById(containerId).appendChild(renderer.domElement);
 
-  // Light
   const light = new THREE.DirectionalLight(0xffffff, 1);
   light.position.set(5, 5, 5);
   scene.add(light);
 
-  // Texture loading
   const loader = new THREE.TextureLoader();
   loader.load(DAY_TEXTURE_URL, function (tex) {
     const geo = new THREE.SphereGeometry(GLOBE_RADIUS, 64, 64);
@@ -40,26 +59,23 @@ function createGlobe(containerId, size) {
     const mesh = new THREE.Mesh(geo, mat);
     scene.add(mesh);
 
-    // 🌎 Fetch Earthquake data and plot on the globe
+    // 🌍 Earthquake markers
     fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson')
       .then(response => response.json())
       .then(data => {
         console.log('Earthquake data loaded:', data);
-
-        const earthquakes = data.features.slice(0, 10); // latest 10 events
+        const earthquakes = data.features.slice(0, 10);
         earthquakes.forEach(eq => {
           if (eq.geometry && eq.geometry.coordinates && eq.geometry.coordinates.length >= 2) {
             const lon = eq.geometry.coordinates[0];
             const lat = eq.geometry.coordinates[1];
+            const pos = latLonToVector3(lat, lon, GLOBE_RADIUS + 0.05);
 
-            const pos = latLonToVector3(lat, lon, GLOBE_RADIUS + 0.05); // Slightly above surface
-
-            const markerGeometry = new THREE.SphereGeometry(0.03, 12, 12);
-            const markerMaterial = new THREE.MeshBasicMaterial({ color: 0xff3333 });
-            const marker = new THREE.Mesh(markerGeometry, markerMaterial);
-
+            const markerGeo = new THREE.SphereGeometry(0.03, 12, 12);
+            const markerMat = new THREE.MeshBasicMaterial({ color: 0xff3333 });
+            const marker = new THREE.Mesh(markerGeo, markerMat);
             marker.position.copy(pos);
-            mesh.add(marker); // Attach marker to rotating globe
+            mesh.add(marker);
             console.log(`Marker plotted at lat: ${lat}, lon: ${lon}`);
           }
         });
@@ -68,41 +84,27 @@ function createGlobe(containerId, size) {
         console.error('Error fetching earthquake data:', err);
       });
 
-    // Animate
+    // Animate globe
     function animate() {
       requestAnimationFrame(animate);
       mesh.rotation.y += ROTATION_SPEED;
       renderer.render(scene, camera);
     }
     animate();
+  });
 
-    document.addEventListener('DOMContentLoaded', () => {
-      const tabLinks = document.querySelectorAll('.tab-link');
-      const tabSections = document.querySelectorAll('.tab-section');
-    
-      // Set home section active on load
-      window.location.hash = "#home";
-      document.querySelector('.tab-link[href="#home"]').classList.add('active');
-    
-      tabLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-          e.preventDefault();
-          const targetId = link.getAttribute('href').substring(1);
-          const targetSection = document.getElementById(targetId);
-    
-          if (targetSection) {
-            targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }
-    
-          // Update active tab highlight
-          tabLinks.forEach(tab => tab.classList.remove('active'));
-          link.classList.add('active');
-        });
-      });
-    });
-    
+  // Resize handling
+  window.addEventListener('resize', () => {
+    const container = document.getElementById(containerId);
+    const width = container.clientWidth;
+    const height = container.clientHeight;
+    renderer.setSize(width, height);
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
+  });
+}
 
-// Helper to convert latitude, longitude to 3D coordinates
+// Helper: Convert lat/lon to 3D coordinates
 function latLonToVector3(lat, lon, radius) {
   const phi = (90 - lat) * (Math.PI / 180);
   const theta = (lon + 180) * (Math.PI / 180);
