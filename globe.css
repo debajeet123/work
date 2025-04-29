@@ -288,48 +288,67 @@ body::after {
   transition: all 0.3s ease;
   position: relative;
 }
+:root {
+  /* GLOBAL VARIABLES */
+  --tabs-width: 1200px;         /* Width of the tabs container */
+  --tabs-height: 300px;          /* Height of the tabs background area */
+  --tabs-padding-top-bottom: 40px; /* Top and bottom padding for the tabs */
+  --tab-link-width: auto;        /* Width of each tab link - can be 'auto' or '16%' */
+  --tab-link-padding: 12px 20px; /* Tab link padding */
+  --background-back: url('back.png');
+  --background-strata: url('strata.png');
+}
+
+/* Body background */
+body {
+  margin: 0;
+  background: var(--background-back) no-repeat center center fixed;
+  background-size: cover;
+  font-family: 'Segoe UI', sans-serif;
+  color: #ddd;
+}
+
+/* Tabs background (layered images) */
 .tabs-background {
   position: relative;
-  padding: 30px 0;
-
+  width: 100%;
+  height: var(--tabs-height);
+  padding: var(--tabs-padding-top-bottom) 0;
+  
   background-image: 
-    url('strata.png'),   /* top layer */
-    url('back.png');     /* bottom layer */
-
+    var(--background-strata),
+    var(--background-back);
   background-repeat: no-repeat, no-repeat;
   background-position: center center, center center;
   background-size: cover, cover;
+  z-index: 1;
 }
 
+/* Tab wrapper controls tab content width */
 .tabs-wrapper {
+  max-width: var(--tabs-width);
+  margin: 0 auto;
   text-align: center;
 }
 
+/* Individual tab links */
 .tab-link {
-  padding: 12px 20px;
+  display: inline-block;
+  width: var(--tab-link-width);
+  padding: var(--tab-link-padding);
   color: #fff;
   text-decoration: none;
   font-weight: bold;
-  transition: background 0.3s;
-  background-color: rgba(0, 0, 0, 0.4);
-  margin: 0 5px;
+  background-color: rgba(0,0,0,0.4);
   border-radius: 6px;
-}
-;
-    background-size: contain; /* or cover, based on preference */
-    z-index: 10; /* Higher z-index to ensure it's on top */
-    height: 50%; /* Only cover the top half */
-    background: url('https://yourdomain.com/strata.png') no-repeat center top; /* Align to top */
-    background-size: cover; /* Adjust if 'cover' or 'contain' is needed */
-    z-index: 10;
+  transition: background 0.3s;
 }
 
-.tab-content {
-    position: relative;
-    z-index: 20; /* Ensure other content is above the background images */
-    z-index: 20;
-    /* Other styling for content */
+.tab-link:hover {
+  background-color: rgba(255,255,255,0.2);
 }
+
+
 
 .info-card a::after {
   content: '';
