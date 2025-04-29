@@ -288,38 +288,14 @@ body::after {
   transition: all 0.3s ease;
   position: relative;
 }.tabs-background {
-.tabs-background {
-    position: relative;
-    background: url('back.png') no-repeat center center;
-    background: url('https://yourdomain.com/back.png') no-repeat center center;
-    background-size: cover;
-    padding: 20px 0;
-}
-
-.strata-layer {
-    position: absolute;
-    top: 0;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url('strata.png') no-repeat body {
-  margin: 0;
-  background: url('https://yourdomain.com/back.png') no-repeat center center fixed;
-  background-size: cover;
-  font-family: 'Segoe UI', sans-serif;
-  color: #ddd;
-}
-
-/* Only the tab bar shows both images */
-.tabs-background {
   background: 
-    url('https://yourdomain.com/strata.png') no-repeat center 20px,
-    url('https://yourdomain.com/back.png') no-repeat center center;
+    url('strata.png') no-repeat center 20px,
+    url('back.png') no-repeat center center;
   background-size: cover, cover;
-  padding: 20px 0;
+  padding: 40px 0;
+  position: relative;
+  z-index: 1;
 }
-
 .tabs-wrapper {
   text-align: center;
 }
