@@ -1,185 +1,367 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <!-- Basic Metadata -->
   <meta charset="UTF-8" />
   <title>Debajeet Barman – Geophysicist</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <!-- External Styles and Libraries -->
-  <link rel="stylesheet" href="globe.css" />
-  <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
-
-  <!-- Inline Styles for Additional Elements -->
   <style>
-    html {
-      scroll-behavior: smooth;
+    .strata-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--strata-height);
+  background-image: var(--background-strata);
+  background-size: 100% auto;
+  background-repeat: repeat-x;
+  background-position: center -150px;
+  z-index: 1;
+  opacity: 0.9;
+
+  -webkit-mask-image: url('./mask-pattern.svg');
+  mask-image: url('./mask-pattern.svg');
+  mask-size: 100% 100%;
+  mask-repeat: no-repeat;
+}
+
+@keyframes windFlag {
+  0% { transform: translateY(0) skewY(0deg); }
+  25% { transform: translateY(2px) skewY(-1deg); }
+  50% { transform: translateY(0) skewY(1.5deg); }
+  75% { transform: translateY(-2px) skewY(-1deg); }
+  100% { transform: translateY(0) skewY(0deg); }
+}
+
+.tabs-wrapper {
+  position: relative;
+  z-index: 2;
+}
+
+
+    :root {
+      --background-back: url('./back.png');
+      --back-gradient: linear-gradient(to bottom, #000, #111);
+      --back-size: cover;
+      --back-position: center center;
+      --background-strata: url('./strata.png');
+      --strata-width: 100%;
+      --strata-height: 120px;
+      --strata-x: center;
+      --strata-y: top;
+      --tabs-width: 800px;
+      --tabs-height: 180px;
+      --tabs-padding-top-bottom: 30px;
+      --z-tabs-background: 2;
     }
 
-    /* Tab Link Styling */
+    body {
+      margin: 0;
+      padding: 0;
+      background: var(--background-back), var(--back-gradient);
+      background-position: var(--back-position);
+      background-size: var(--back-size);
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      overflow-x: hidden;
+    }
+
+    .profile-photo {
+      position: fixed;
+      top: 50px;
+      left: 50px;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid rgba(0,255,255,0.3);
+      box-shadow: 0 0 20px rgba(0,255,255,0.4);
+      z-index: 1003;
+    }
+    .profile-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s;
+    }
+    .profile-photo:hover img {
+      transform: scale(1.1);
+    }
+    @keyframes wave-flag {
+  0%   { background-position: 0% 0%; }
+  50%  { background-position: 50% 10px; }
+  100% { background-position: 100% 0%; }
+}
+    
+    .tabs-background {
+      position: relative;
+      height: var(--tabs-height);
+      padding: var(--tabs-padding-top-bottom) 0;
+      background-image: var(--background-strata);
+      background-repeat: no-repeat;
+      background-position: var(--strata-x) var(--strata-y);
+      background-size: var(--strata-width) var(--strata-height);
+      z-index: var(--z-tabs-background);
+    }
+    .tabs-background::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 30px;
+      background: url('torn-edge.png') repeat-x;
+      background-size: contain;
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    .tabs-wrapper { max-width: var(--tabs-width); margin:0 auto; }
+    .tabs-nav {
+      display: flex; justify-content:center; gap:30px;
+      background: rgba(0,0,0,0.7);
+      padding:12px 24px; border-radius:30px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 0 20px rgba(0,255,255,0.3);
+    }
     .tab-link {
-      padding: 8px 16px;
-      display: inline-block;
-      color: #ccc;
-      text-decoration: none;
-      font-weight: 500;
-      transition: color 0.3s;
+      color:#fff; text-decoration:none; padding:8px 16px;
+      border-radius:20px; transition: background 0.3s;
+      position: relative; border: 2px solid transparent;
+      cursor: pointer; color: inherit;
     }
-
-    .tab-link:hover {
-      color: #8ab4f8;
-    }
-
+    .tab-link:hover { background: rgba(255,255,255,0.2); color:#0ff; }
     .tab-link.active {
-      border-bottom: 2px solid #8ab4f8;
-      color: #8ab4f8;
+      background: rgba(0,255,255,0.3);
+      color: #fff; border-color: #0ff;
     }
 
-    /* Section Styling */
     .tab-section {
-      padding-top: 250px;
-      scroll-margin-top: 70px;
+      display:none; position: fixed;
+      top:55%; left:50%; transform:translate(-50%,-50%);
+      width:80%; max-width:800px;
+      background: rgba(0,0,0,0.7); padding:40px;
+      border-radius:20px; backdrop-filter:blur(10px);
+      box-shadow:0 0 30px rgba(0,255,255,0.3);
+    }
+    .tab-section.active { display:block; }
+
+    .typewriter {
+      overflow: hidden;
+      border-right: .15em solid #0ff;
+      white-space: nowrap;
+      animation: typing 3s steps(30, end), blink-caret .75s step-end infinite;
+    }
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+    @keyframes blink-caret {
+      from, to { border-color: transparent }
+      50% { border-color: #0ff; }
     }
 
-    /* Preformatted Text Styling */
-    pre {
-      background-color: #222;
-      color: #0f0;
-      padding: 12px;
-      border-radius: 8px;
-      overflow-x: auto;
-      font-family: monospace;
-      font-size: 14px;
+    .info-card {
+      position: fixed;
+      bottom:20px;
+      right:20px;
+      background: rgba(0,0,0,0.7);
+      padding:15px 25px;
+      border-radius:15px;
+      z-index:1005;
+      box-shadow:0 0 20px rgba(0,255,255,0.2);
+    }
+    .info-card a {
+      color:#0ff; text-decoration:none; margin:0 10px;
+    }
+    .info-card a:hover {
+      color:#fff;
+      text-shadow:0 0 10px #0ff;
     }
 
-    /* Publications Display Area */
-    #bibtex_display {
-      font-family: 'Segoe UI', sans-serif;
-      color: #ddd;
-      font-size: 15px;
-      margin-top: 20px;
-      line-height: 1.6;
+    .github-corner {
+      position: fixed;
+      top: 0;
+      right: 0;
+      fill: cyan;
+      color: black;
+      transition: transform 0.3s ease;
     }
+    .github-corner:hover .octo-arm {
+      animation: octocat-wave 560ms ease-in-out;
+    }
+    @keyframes octocat-wave {
+      0%, 100% { transform: rotate(0); }
+      20%, 60% { transform: rotate(-25deg); }
+      40%, 80% { transform: rotate(10deg); }
+    }
+    @media (max-width: 500px) {
+      .github-corner:hover .octo-arm {
+        animation: none;
+      }
+    }
+    #globe-container {
+  position: fixed;
+  background: transparent !important;
+  top: 20px;
+  right: 20px;
+  width: 350px;
+  height: 350px;
+  z-index: 1002;
+  pointer-events: none; /* makes it non-clickable so your UI stays usable */
+}
 
-    #bibtex_display div {
-      margin-bottom: 18px;
-    }
-
-    #bibtex_display em {
-      color: #8ab4f8;
-    }
   </style>
 </head>
 
 <body>
+  <a href="https://github.com/debajeet123/Geological_feature_tool" class="github-corner" aria-label="View source on GitHub">
+    <svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true">
+      <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z" fill="#0ff"/>
+      <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,79.2 125.5,84.4 125.5,84.4 C122.9,93.1 130.6,98.9 134.4,100.9" fill="black" style="transform-origin: 130px 106px;" class="octo-arm"/>
+      <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.5 142.2,98.2 C133.8,88.0 127.8,91.8 127.8,91.8 C122.3,91.6 120.3,88.1 120.3,88.1 C119.0,82.0 123.4,81.0 123.4,81.0 C127.2,80.4 129.9,83.9 129.9,83.9 C133.0,89.1 130.4,94.1 130.4,94.1 C124.9,103.1 134.7,108.4 139.1,109.9" fill="black" class="octo-body"/>
+    </svg>
+  </a>
 
-  <!-- Background and Globe -->
-  <div class="strata-layer"></div>
-  <div id="earthquakeGlobe"></div>
-  <div id="topRightGlobe"></div>
-
-  <!-- Profile Photo Section with Background Adjustment Slider -->
   <div class="profile-photo">
-    <div class="controls">
-      <label for="slider">Adjust Background:</label>
-      <input type="range" id="slider" min="0" max="100" value="50">
-    </div>
     <img src="profile.jpg" alt="Debajeet Barman">
   </div>
-
-  <!-- Canvas for additional drawings or Ricker Wavelet -->
-  <canvas id="rickerCanvas"></canvas>
-
-  <!-- Tabs Navigation -->
+  <div id="globe-container"></div>
+  
   <div class="tabs-background">
+    <div class="strata-layer"></div> <!-- ✅ Add this line for waving effect -->
     <div class="tabs-wrapper">
       <nav class="tabs-nav">
-        <a class="tab-link" href="#home">Home</a>
+        <a class="tab-link active" href="#home">Home</a>
         <a class="tab-link" href="#about">About</a>
         <a class="tab-link" href="#projects">Projects</a>
-        <a class="tab-link" href="#publications">Publications</a>
-        <a class="tab-link" href="#resume">Resume</a>
         <a class="tab-link" href="#contact">Contact</a>
       </nav>
     </div>
   </div>
+  
 
-  <!-- Main Content Sections -->
-  <section id="home" class="tab-section">
+  <section id="home" class="tab-section active">
     <h1>Welcome</h1>
     <p><span class="typewriter">Exploring the geophysical cosmos...</span></p>
   </section>
-
   <section id="about" class="tab-section">
     <h1>About</h1>
-    <p>Highly motivated geophysicist with extensive expertise in seismic processing, ambient noise tomography, and inverse modeling...</p>
+    <div style="display: flex; gap: 30px; align-items: center; flex-wrap: wrap;">
+      <img src="desert.jpg" alt="Debajeet in the field" style="
+        width: 250px;
+        border-radius: 12px;
+        box-shadow: 0 0 15px rgba(0,255,255,0.3);
+        border: 2px solid rgba(0,255,255,0.4);
+        max-width: 100%;
+      ">
+    <div style="flex: 2; min-width: 280px;">
+    
+  </p><p style="line-height: 1.6; font-size: 1.05em;">
+    I'm a geophysicist exploring Earth's interior using seismic imaging, ambient noise tomography, and AI-powered inversion techniques.  
+    With a Ph.D. from Baylor University and field collaborations across Texas and beyond, I bridge theory and fieldwork.  
+    My research blends high-performance computing, machine learning, and seismic wave modeling to extract structure from noise.  
+    I believe science is most powerful when shared—through tools, open data, and visual storytelling.
+  </p>
+</div>
   </section>
-
   <section id="projects" class="tab-section">
     <h1>Projects</h1>
-    <p>Projects section coming soon...</p>
+    <p>Interactive tools and HPC-based seismic workflows.</p>
   </section>
-
-  <section id="publications" class="tab-section">
-    <h1>Publications</h1>
-    <div id="bibtex_display">
-      <!-- List of Publications -->
-      <div><strong>Barman, D and Ojha, M</strong> (2016). New Two Steps Finite Difference Scheme...</div>
-      <div><strong>Barman, Debajeet and Pulliam, Jay...</strong></div>
-      <!-- (More entries continue) -->
-    </div>
-  </section>
-
-  <section id="resume" class="tab-section">
-    <h1>Resume</h1>
-    <p>Resume section coming soon...</p>
-  </section>
-
   <section id="contact" class="tab-section">
     <h1>Contact</h1>
-    <p>Email: debajeet123@gmail.com</p>
-    <p>Email: Debajeet_Barman1@baylor.edu</p>
+    <pre style="
+    background: rgba(0,0,0,0.6);
+    padding: 20px;
+    border-radius: 10px;
+    color: #0ff;
+    font-family: 'Courier New', monospace;
+    font-size: 1em;
+    line-height: 1.8;
+    overflow-x: auto;
+    box-shadow: 0 0 15px rgba(0,255,255,0.2);
+  ">
+  [Email]     ▶ <a href="mailto:debajeet123@gmail.com" style="color:#0ff;text-decoration:none;">debajeet123@gmail.com</a>
+  [AltMail]   ▶ <a href="mailto:Debajeet_Barman1@baylor.edu" style="color:#0ff;text-decoration:none;">Debajeet_Barman1@baylor.edu</a>
+  [LinkedIn]  ▶ <a href="https://www.linkedin.com/in/debajeet-barman" target="_blank" style="color:#0ff;text-decoration:none;">linkedin.com/in/debajeet-barman</a>
+  [Website]   ▶ <a href="https://debajeetbarmanseismology.space" target="_blank" style="color:#0ff;text-decoration:none;">debajeetbarmanseismology.space</a>
+  </pre>
   </section>
 
-  <!-- Footer with Social Links -->
   <div class="info-card">
-    <a href="https://linkedin.com/in/debajeetbarman" target="_blank">LinkedIn</a> |
-    <a href="https://scholar.google.com/citations?user=_i8vIAEAAAAJ" target="_blank">Google Scholar</a>
+    <a href="https://www.linkedin.com/in/debajeetbarman" target="_blank">LinkedIn</a> |
+    <a href="https://scholar.google.com/citations?user=XXXXX" target="_blank">Google Scholar</a> |
+    <a href="https://github.com/debajeet123" target="_blank">GitHub</a>
   </div>
 
-  <!-- External JavaScript -->
-  <script src="globe.js"></script>
-  <script src="earthquakeGlobe.js"></script>
-
-  <!-- Tabs Interaction Logic -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const tabLinks = document.querySelectorAll('.tab-link');
-      const tabSections = document.querySelectorAll('.tab-section');
-
-      // Show 'Home' section by default
-      document.querySelector('#home').classList.add('active');
-
-      tabLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
+      document.querySelectorAll('.tab-link').forEach(link => {
+        link.addEventListener('click', e => {
           e.preventDefault();
-          const targetId = link.getAttribute('href').substring(1);
-
-          // Hide all sections
-          tabSections.forEach(section => {
-            section.classList.remove('active');
-          });
-
-          // Show target section
-          const targetSection = document.getElementById(targetId);
-          if (targetSection) {
-            targetSection.classList.add('active');
-          }
+          document.querySelectorAll('.tab-link').forEach(l => l.classList.remove('active'));
+          document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
+          link.classList.add('active');
+          document.getElementById(link.getAttribute('href').substring(1)).classList.add('active');
         });
       });
     });
   </script>
+  <!-- Globe.gl + Three.js -->
+<script src="https://unpkg.com/three"></script>
+<script src="https://unpkg.com/globe.gl"></script>
+
+<script>
+  const world = Globe()
+    .globeImageUrl('//unpkg.com/three-globe/example/img/earth-dark.jpg')
+    .bumpImageUrl('//unpkg.com/three-globe/example/img/earth-topology.png')
+    .showAtmosphere(true)
+    .atmosphereColor('#0ff')
+    .atmosphereAltitude(0.25)
+    .backgroundColor('rgba(0,0,0,0)')
+    .width(400)
+    .height(400)
+    (document.getElementById('globe-container'));
+
+  world.controls().autoRotate = true;
+  world.controls().autoRotateSpeed = 0.8;
+
+  // Load country borders
+  fetch('https://unpkg.com/world-atlas@2.0.2/countries-110m.json')
+    .then(res => res.json())
+    .then(countries => {
+      const countriesTopo = window.topojson.feature(countries, countries.objects.countries).features;
+      world
+        .polygonsData(countriesTopo)
+        .polygonCapColor(() => 'rgba(0,255,255,0.1)')
+        .polygonSideColor(() => 'rgba(0,255,255,0.05)')
+        .polygonStrokeColor(() => '#0ff')
+        .polygonAltitude(0.01);
+    });
+
+  // Load recent earthquake dots from USGS
+  fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson')
+    .then(res => res.json())
+    .then(data => {
+      const quakes = data.features.map(f => ({
+        lat: f.geometry.coordinates[1],
+        lng: f.geometry.coordinates[0],
+        size: Math.max(f.properties.mag / 10, 0.05),
+        mag: f.properties.mag
+      }));
+      world
+        .pointsData(quakes)
+        .pointAltitude('size')
+        .pointColor(() => '#ff8800')
+        .pointRadius('size');
+    });
+</script>
+
+<!-- Required for topojson -->
+<script src="https://unpkg.com/topojson@3"></script>
 
 </body>
 </html>
