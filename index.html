@@ -293,6 +293,15 @@
   pointer-events: none; /* makes it non-clickable so your UI stays usable */
 }
 
+.about-scroll {
+  overflow-y: auto; /* Enable vertical scrolling */
+  max-height: 80vh; /* Limit the height to allow scrolling */
+  padding: 20px; /* Add padding for better readability */
+  background: rgba(0, 0, 0, 0.6); /* Ensure consistent background styling */
+  border-radius: 12px; /* Rounded corners */
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.3); /* Add shadow for aesthetics */
+}
+
   </style>
 </head>
 
@@ -323,7 +332,7 @@
   </div>
   
   <section id="about" class="tab-section">
-    <div class="about-scroll">
+    <div class="about-scroll" style="overflow-y: auto; max-height: 80vh;">
     <!-- <p><span class="typewriter">Exploring the geophysical cosmos...</span></p> -->
     <h1>About Me</h1>
   <div class="bio-container">
@@ -348,30 +357,14 @@
     <h1 style="font-size: 2em; color: #0ff; margin-bottom: 20px; text-shadow: 0 0 10px rgba(0,255,255,0.5);">
       Research Focus
     </h1>
-    <div style="background: rgba(0,0,0,0.6); padding: 20px; border-radius: 12px; box-shadow: 0 0 20px rgba(0,255,255,0.3);"></div>
-      <p style="margin-bottom: 20px; font-size: 1.2em; line-height: 1.8; color: #ddd;"></p>
-      I specialize in advanced seismic imaging and inversion methods that blend classical geophysics with cutting-edge computational tools. My work aims to push the boundaries of how we understand the Earth's subsurface using:
+    <div style="background: rgba(0,0,0,0.6); padding: 20px; border-radius: 12px; box-shadow: 0 0 20px rgba(0,255,255,0.3);">
+      <p style="margin-bottom: 20px; font-size: 1.2em; line-height: 1.8; color: #ddd;">
+        I specialize in advanced seismic imaging and inversion methods that blend classical geophysics with cutting-edge computational tools. My work aims to push the boundaries of how we understand the Earth's subsurface using:
       </p>
-      <ul style="list-style-type: circle; padding-left: 20px; color: #0ff; font-size: 1.1em;"></ul>
-      <li><strong>Ambient Noise and Active Seismic Tomography:</strong> Developed TensorFlow-based ambient noise tomography integrated with MUSIC algorithm, enhancing weak seismic source resolution.</li>
-      <li><strong>Full Waveform Inversion (FWI):</strong> Designed adjoint-free and Hamiltonian operator-based inversion methods that improve efficiency and model convergence.</li>
-      <li><strong>Machine Learning in Geophysics:</strong> Applied GANs, VAEs, deep reinforcement learning, and physics-informed neural networks to solve seismic inverse problems with reduced data dependency.</li>
-      </ul>
-      <h2 style="font-size: 1.8em; color: #0ff; margin-top: 30px; text-shadow: 0 0 8px rgba(0,255,255,0.5);">
-      Current Projects
-      </h2>
-      <ul style="list-style-type: square; padding-left: 20px; color: #0ff; font-size: 1.1em;">
-      <li><strong>High-Resolution Active Seismic Imaging:</strong> Employing controlled sources and machine learning at Baylor University to build improved seismic velocity models.</li>
-      <li><strong>Unsupervised Inversion Frameworks:</strong> Building scalable inversion pipelines using probabilistic and unsupervised learning approaches with HPC acceleration.</li>
-      <li><strong>Hybrid Inversion Models:</strong> Integrating physics-based inversion with deep learning to enable interpretable and automated seismic imaging workflows.</li>
-      </ul>
-      <h2 style="font-size: 1.8em; color: #0ff; margin-top: 30px; text-shadow: 0 0 8px rgba(0,255,255,0.5);"></h2>
-      🌍 Research Vision
-      </h2>
-      <ul style="list-style-type: disc; padding-left: 20px; color: #0ff; font-size: 1.1em;">
-      <li><strong>Scalable, Automated Seismic Imaging:</strong> Creating robust, HPC-enabled pipelines for real-time seismic analysis.</li>
-      <li><strong>Earthquake Hazard & Resource Assessment:</strong> Bridging academic innovation and societal impact through collaborations in geophysics, machine learning, and Earth sciences.</li>
-      <li><strong>Interdisciplinary Innovation:</strong> Partnering across domains to explore new computational geoscience frontiers—from earthquake forecasting to sustainable resource exploration.</li>
+      <ul style="list-style-type: circle; padding-left: 20px; color: #0ff; font-size: 1.1em;">
+        <li><strong>Ambient Noise and Active Seismic Tomography:</strong> Developed TensorFlow-based ambient noise tomography integrated with MUSIC algorithm, enhancing weak seismic source resolution.</li>
+        <li><strong>Full Waveform Inversion (FWI):</strong> Designed adjoint-free and Hamiltonian operator-based inversion methods that improve efficiency and model convergence.</li>
+        <li><strong>Machine Learning in Geophysics:</strong> Applied GANs, VAEs, deep reinforcement learning, and physics-informed neural networks to solve seismic inverse problems with reduced data dependency.</li>
       </ul>
     </div>
   </div>
@@ -381,14 +374,14 @@
     <pre style="
     background: rgba(0,0,0,0.6);
     padding: 20px;
-    border-radius</ul>: 10px;
+    border-radius: 10px;
     color: #0ff;
     font-family: 'Courier New', monospace;
     font-size: 1em;
     line-height: 1.8;
     overflow-x: auto;
     box-shadow: 0 0 15px rgba(0,255,255,0.2);
-  ">
+    ">
   [Email]     ▶ <a href="mailto:debajeet123@gmail.com" style="color:#0ff;text-decoration:none;">debajeet123@gmail.com</a>
   [AltMail]   ▶ <a href="mailto:Debajeet_Barman1@baylor.edu" style="color:#0ff;text-decoration:none;">Debajeet_Barman1@baylor.edu</a>
   [LinkedIn]  ▶ <a href="https://www.linkedin.com/in/debajeet-barman" target="_blank" style="color:#0ff;text-decoration:none;">linkedin.com/in/debajeet-barman</a>
