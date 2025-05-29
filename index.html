@@ -353,24 +353,48 @@
 </div>
   </section>
   <section id="projects" class="tab-section">
-    <div class="about-scroll">
-      <h1 style="font-size: 2em; color: #0ff; margin-bottom: 20px; text-shadow: 0 0 10px rgba(0,255,255,0.5);">
-        Research Focus
-      </h1>
-      <div style="background: rgba(0,0,0,0.6); padding: 20px; border-radius: 12px; box-shadow: 0 0 20px rgba(0,255,255,0.3);">
-        <p style="margin-bottom: 20px; font-size: 1.2em; line-height: 1.8; color: #ddd;">
-          My research integrates advanced geophysical modeling, high-performance computing, and AI-driven seismic workflows to decode the Earth's subsurface. Key contributions include:
-        </p>
-        <ul style="list-style-type: circle; padding-left: 20px; color: #0ff; font-size: 1.1em;">
-          <li><strong>TensorFlow-based Ambient Noise Tomography:</strong> Developed the first implementation combining ambient noise methods with the MUSIC algorithm, enabling superior resolution of weak seismic sources.</li>
-          <li><strong>Full Waveform Inversion Innovations:</strong> Introduced Hamiltonian-operator-based FWI that bypasses adjoint waveform calculations, improving convergence and computational efficiency.</li>
-          <li><strong>Unsupervised Machine Learning:</strong> Applied GANs, VAEs, and temporal CNNs for elastic seismic inversion and incorporated physics-informed neural networks to reduce data dependency.</li>
-          <li><strong>GPU and MPI Parallelization:</strong> Deployed CUDA/MPI to accelerate seismic simulations and inversion tasks on multi-GPU clusters.</li>
-          <li><strong>Field Campaigns & DAS:</strong> Led broadband/nodal deployments, integrated DAS processing, and executed hybrid seismic-gravity campaigns at sites including Monahans, Sweetwater, and Nevada geothermal fields.</li>
-        </ul>
+    <div class="timeline-container">
+      <h1>Research Timeline</h1>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-icon">💻</div>
+          <div class="timeline-content">
+            <h2>2020–2021</h2>
+            <p>Developed adjoint-free full waveform inversion (FWI) using Hamiltonian operator theory and matrix exponentials. Implemented elastic modeling via CUDA/MPI for scalable GPU performance.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-icon">📈</div>
+          <div class="timeline-content">
+            <h2>2021–2022</h2>
+            <p>Built a TensorFlow-based ambient noise tomography pipeline integrated with the MUSIC algorithm, boosting resolution of weak seismic sources.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-icon">🌐</div>
+          <div class="timeline-content">
+            <h2>2022</h2>
+            <p>Led field deployments in Monahans (TX), Sweetwater (TX), and Fallon geothermal (NV). Integrated DAS and microgravity data for joint inversions.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-icon">🤖</div>
+          <div class="timeline-content">
+            <h2>2023</h2>
+            <p>Applied GANs, VAEs, and temporal CNNs for unsupervised seismic inversion and physics-informed neural networks for enhanced generalization.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-icon">🛠️</div>
+          <div class="timeline-content">
+            <h2>2024–Present</h2>
+            <p>Developing real-time geospatial visualization tools with WebGL/Three.js and a browser-native seismic feature extraction toolkit.</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
+  
   
   <section id="contact" class="tab-section">
     <h1>Contact</h1>
