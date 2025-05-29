@@ -206,13 +206,25 @@
     }
 
     .tab-section {
-      display:none; position: fixed;
-      top:55%; left:50%; transform:translate(-50%,-50%);
-      width:80%; max-width:800px;
-      background: rgba(0,0,0,0.7); padding:70px;
-      border-radius:20px; backdrop-filter:blur(10px);
-      box-shadow:0 0 30px rgba(103, 191, 191, 0.3);
+      /* Hidden by default */
+      display: none; 
       
+      /* Positioning */
+      position: fixed;
+      top: 55%; 
+      left: 50%; 
+      transform: translate(-50%, -50%);
+      
+      /* Sizing */
+      width: 120%; 
+      max-width: 800px;
+      
+      /* Styling */
+      background: rgba(0, 0, 0, 0.7); 
+      padding: 70px;
+      border-radius: 20px; 
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 30px rgba(103, 191, 191, 0.3);
     }
     .tab-section.active { display:block; }
 
