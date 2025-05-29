@@ -6,31 +6,70 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <style>
-    .about-scroll {
-  max-height: 400px; /* adjust as needed */
+    .bio-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.bio-text {
+  flex: 2 1 300px;
+  font-size: 1.1em;
+  line-height: 1.6;
+  color: #ddd;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.15);
+  max-height: 250px;
   overflow-y: auto;
-  padding-right: 10px;
 }
 
-/* Scrollbar styling for WebKit (Chrome, Safari, Edge) */
-.about-scroll::-webkit-scrollbar {
-  width: 8px;
+/* Scrollbar */
+.bio-text::-webkit-scrollbar {
+  width: 6px;
 }
-.about-scroll::-webkit-scrollbar-track {
+.bio-text::-webkit-scrollbar-thumb {
+  background: #0ff;
+  border-radius: 3px;
+}
+.bio-text::-webkit-scrollbar-track {
   background: rgba(0, 0, 0, 0.2);
-  border-radius: 4px;
-}
-.about-scroll::-webkit-scrollbar-thumb {
-  background-color: #0ff;
-  border-radius: 4px;
-  border: 1px solid #000;
 }
 
-/* Firefox scrollbar */
-.about-scroll {
-  scrollbar-color: #0ff rgba(0, 0, 0, 0.2);
-  scrollbar-width: thin;
+.bio-photos {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  flex: 1 1 220px;
 }
+
+.bio-photos img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.25);
+  transition: transform 0.3s ease;
+}
+
+.bio-photos img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px rgba(0, 255, 255, 0.5);
+}
+
+@media (max-width: 768px) {
+  .bio-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .bio-text, .bio-photos {
+    width: 100%;
+  }
+}
+
 
 
     .strata-layer {
