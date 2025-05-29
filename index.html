@@ -292,6 +292,32 @@
   z-index: 1002;
   pointer-events: none; /* makes it non-clickable so your UI stays usable */
 }
+/* TIMELINE SCROLL CONTAINER */
+.timeline-scroll {
+  max-height: 70vh;       /* how tall before it scrolls */
+  overflow-y: auto;
+  padding-right: 10px;    /* so items don’t hide under the track */
+}
+
+/* WebKit browsers (Chrome, Safari, Edge) */
+.timeline-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+.timeline-scroll::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0.2);
+  border-radius: 4px;
+}
+.timeline-scroll::-webkit-scrollbar-thumb {
+  background-color: #0ff;
+  border-radius: 4px;
+  border: 2px solid rgba(0,0,0,0.3);
+}
+
+/* Firefox */
+.timeline-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #0ff rgba(0,0,0,0.2);
+}
 
 .about-scroll {
   overflow-y: auto; /* Enable vertical scrolling */
@@ -354,8 +380,9 @@
   </section>
   <section id="projects" class="tab-section">
     <div class="timeline-container">
-      <div class="timeline-scroll">
+      
       <h1>Research Timeline</h1>
+      <div class="timeline-scroll">
       <div class="timeline">
   
         <div class="timeline-item">
