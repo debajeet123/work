@@ -162,27 +162,15 @@
 }
     
     .tabs-background {
-      /* position: relative;
+      position: relative;
       height: var(--tabs-height);
       padding: var(--tabs-padding-top-bottom) 0;
       background-image: var(--background-strata);
       background-repeat: no-repeat;
       background-position: var(--strata-x) var(--strata-y);
       background-size: var(--strata-width) var(--strata-height);
-      z-index: var(--z-tabs-background); */
-      /* Remove or comment out this old panel style */
-  /* 
-  background: rgba(0,0,0,0.7);
-  padding: 40px;
-  border-radius: 20px;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 0 30px rgba(0,255,255,0.3);
-  */
-  
-  padding: 40px 20px;
-  width: 90%;
-  max-width: 1000px;
-  margin: 0 auto;
+      z-index: var(--z-tabs-background);
+      
     }
     .tabs-background::after {
       content: "";
@@ -404,11 +392,11 @@
   world.controls().autoRotate = true;
   world.controls().autoRotateSpeed = 0.8;
 
-  // Load country borders
+  
   fetch('https://unpkg.com/world-atlas@2.0.2/countries-110m.json')
     .then(res => res.json())
     .then(countries => {
-      const countriesTopo = window.topojson.feature(countries, countries.objects.countries).features;
+      const countriesTopo = topojson.feature(countries, countries.objects.countries).features;
       world
         .polygonsData(countriesTopo)
         .polygonCapColor(() => 'rgba(0,255,255,0.1)')
@@ -416,6 +404,7 @@
         .polygonStrokeColor(() => '#0ff')
         .polygonAltitude(0.01);
     });
+
 
   // Load recent earthquake dots from USGS
   fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson')
