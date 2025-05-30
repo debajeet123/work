@@ -579,7 +579,11 @@
     fetch('https://raw.githubusercontent.com/debajeet123/Geological_feature_tool/main/README.md')
   .then(res => res.text())
   .then(md => {
-    document.getElementById('readme-container').innerHTML = marked(md);
+    if (typeof marked !== 'undefined') {
+      document.getElementById('readme-container').innerHTML = marked(md);
+    } else {
+      console.error('Marked library is not loaded.');
+    }
   });
 
 </script>
