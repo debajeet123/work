@@ -336,59 +336,70 @@
   max-height: 300px;
   overflow-y: auto;
 }
-.projects-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 24px;
+.projects-carousel {
+  position: relative;
+  overflow: hidden;
+  width: 90%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 0;
+}
+
+.slides-container {
+  display: flex;
+  transition: transform 0.6s ease-in-out;
+  width: 100%;
+}
+
+.slide {
+  min-width: 100%;
+  box-sizing: border-box;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+  text-align: center;
+}
+
+.slide img {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.slide h3 {
+  color: #0ff;
+  margin: 10px 0;
+}
+
+.slide p {
+  color: #ccc;
+  font-size: 1em;
+  line-height: 1.5;
+}
+
+.carousel-controls {
+  text-align: center;
   margin-top: 20px;
 }
 
-.project-card {
-  position: relative;
-  background: rgba(0,0,0,0.6);
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 0 20px rgba(0,255,255,0.3);
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.project-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 0 30px rgba(0,255,255,0.5);
-}
-
-.project-card img {
-  width: 100%;
-  height: 140px;
-  object-fit: cover;
-}
-
-.project-card .card-content {
-  padding: 16px;
-}
-
-.project-card .card-content h3 {
-  margin: 0 0 8px;
-  color: #0ff;
-}
-
-.project-card .card-content p {
-  margin: 0 0 12px;
-  color: #ddd;
-  font-size: 0.95em;
-  line-height: 1.4;
-}
-
-.project-card .card-content a {
-  display: inline-block;
-  color: #000;
+.carousel-button {
   background: #0ff;
-  padding: 6px 12px;
-  border-radius: 6px;
-  text-decoration: none;
+  border: none;
+  padding: 8px 16px;
+  margin: 0 10px;
+  border-radius: 8px;
   font-weight: bold;
+  cursor: pointer;
   transition: background 0.3s;
 }
+
+.carousel-button:hover {
+  background: #0cc;
+}
+
 
 .project-card .card-content a:hover {
   background: #0cc;
