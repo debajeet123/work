@@ -463,7 +463,29 @@
     </div>
   </section>
   
+  <div id="github-updates">
+    <h2>Latest Commits</h2>
+    <ul id="commit-list"></ul>
+  </div>
   
+  <script>
+    fetch('https://api.github.com/repos/debajeet123/Geological_feature_tool/commits')
+      .then(response => response.json())
+      .then(data => {
+        const list = document.getElementById('commit-list');
+        data.slice(0, 5).forEach(commit => {
+          const item = document.createElement('li');
+          item.innerHTML = `
+            <a href="${commit.html_url}" target="_blank">
+              ${commit.commit.message.split('\n')[0]} – <em>${commit.commit.author.name}</em>
+            </a>
+          `;
+          list.appendChild(item);
+        });
+      });
+  </script>
+
+<div id="readme-container" style="background:#111;padding:20px;color:#ccc;"></div>
   
   <section id="contact" class="tab-section">
     <h1>Contact</h1>
@@ -553,6 +575,13 @@
         .pointColor(() => '#ff8800')
         .pointRadius('size');
     });
+
+    fetch('https://raw.githubusercontent.com/debajeet123/Geological_feature_tool/main/README.md')
+  .then(res => res.text())
+  .then(md => {
+    document.getElementById('readme-container').innerHTML = marked(md);
+  });
+
 </script>
 
 <!-- Required for topojson -->
