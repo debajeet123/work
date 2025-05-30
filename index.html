@@ -512,6 +512,28 @@
           list.appendChild(item);
         });
       });
+
+  
+  let currentSlide = 0;
+
+  function showSlide(index) {
+    const slides = document.getElementById('slides');
+    const totalSlides = slides.children.length;
+    currentSlide = (index + totalSlides) % totalSlides;
+    slides.style.transform = `translateX(-${currentSlide * 100}%)`;
+  }
+
+  function nextSlide() {
+    showSlide(currentSlide + 1);
+  }
+
+  function prevSlide() {
+    showSlide(currentSlide - 1);
+  }
+
+  document.addEventListener('DOMContentLoaded', () => showSlide(0));
+
+
   </script>
 
 <div id="readme-container" style="background:#111;padding:20px;color:#ccc;"></div>
