@@ -4,160 +4,602 @@
   <meta charset="UTF-8" />
   <title>Debajeet Barman – Geophysicist</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  
   <style>
+    .bio-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.bio-text {
+  flex: 2 1 300px;
+  font-size: 1.1em;
+  line-height: 1.6;
+  color: #ddd;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.15);
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+/* Scrollbar */
+.bio-text::-webkit-scrollbar {
+  width: 6px;
+}
+.bio-text::-webkit-scrollbar-thumb {
+  background: #0ff;
+  border-radius: 3px;
+}
+.bio-text::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.bio-photos {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  flex: 1 1 220px;
+}
+
+.bio-photos img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.25);
+  transition: transform 0.3s ease;
+}
+
+.bio-photos img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px rgba(0, 255, 255, 0.5);
+}
+
+@media (max-width: 768px) {
+  .bio-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .bio-text, .bio-photos {
+    width: 100%;
+  }
+}
+
+
+
+    .strata-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--strata-height);
+  background-image: var(--background-strata);
+  background-size: 100% auto;
+  background-repeat: repeat-x;
+  background-position: center -150px;
+  z-index: 1;
+  opacity: 0.9;
+
+  -webkit-mask-image: url('./mask-pattern.svg');
+  mask-image: url('./mask-pattern.svg');
+  mask-size: 100% 100%;
+  mask-repeat: no-repeat;
+}
+
+@keyframes windFlag {
+  0% { transform: translateY(0) skewY(0deg); }
+  25% { transform: translateY(2px) skewY(-1deg); }
+  50% { transform: translateY(0) skewY(1.5deg); }
+  75% { transform: translateY(-2px) skewY(-1deg); }
+  100% { transform: translateY(0) skewY(0deg); }
+}
+
+.tabs-wrapper {
+  position: relative;
+  z-index: 2;
+}
+
+
     :root {
-      --primary-color: #0ff;
-      --bg-gradient: linear-gradient(to bottom, #000, #111);
-      --text-color: #eee;
-      --accent-color: #0ff;
-      --card-bg: rgba(0, 0, 0, 0.6);
+      --background-back: url('./back.png');
+      --back-gradient: linear-gradient(to bottom, #000, #111);
+      --back-size: cover;
+      --back-position: center center;
+      --background-strata: url('./strata.png');
+      --strata-width: 100%;
+      --strata-height: 120px;
+      --strata-x: center;
+      --strata-y: top;
+      --tabs-width: 800px;
+      --tabs-height: 180px;
+      --tabs-padding-top-bottom: 30px;
+      --z-tabs-background: 2;
     }
 
     body {
       margin: 0;
-      font-family: 'JetBrains Mono', monospace;
-      background: var(--bg-gradient);
-      color: var(--text-color);
+      padding: 0;
+      background: var(--background-back), var(--back-gradient);
+      background-position: var(--back-position);
+      background-size: var(--back-size);
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      color: #fff;
+      font-family: Arial, sans-serif;
       overflow-x: hidden;
     }
 
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 2rem;
-      background-color: rgba(0, 0, 0, 0.5);
-      box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+    .profile-photo {
+      position: fixed;
+      top: 50px;
+      left: 50px;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid rgba(0,255,255,0.3);
+      box-shadow: 0 0 20px rgba(0,255,255,0.4);
+      z-index: 1003;
+    }
+    .profile-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s;
+    }
+    .profile-photo:hover img {
+      transform: scale(1.1);
+    }
+    @keyframes wave-flag {
+  0%   { background-position: 0% 0%; }
+  50%  { background-position: 50% 10px; }
+  100% { background-position: 100% 0%; }
+}
+    
+    .tabs-background {
+      position: relative;
+      height: var(--tabs-height);
+      padding: var(--tabs-padding-top-bottom) 0;
+      background-image: var(--background-strata);
+      background-repeat: no-repeat;
+      background-position: var(--strata-x) var(--strata-y);
+      background-size: var(--strata-width) var(--strata-height);
+      z-index: var(--z-tabs-background);
+      
+    }
+    .tabs-background::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 30px;
+      background: url('torn-edge.png') repeat-x;
+      background-size: contain;
+      pointer-events: none;
+      z-index: 3;
     }
 
-    header h1 {
-      font-size: 1.5rem;
-      color: var(--primary-color);
+    .tabs-wrapper { max-width: var(--tabs-width); margin:0 auto; }
+    .tabs-nav {
+      display: flex; justify-content:center; gap:30px;
+      background: rgba(0,0,0,0.7);
+      padding:12px 24px; border-radius:30px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 0 20px rgba(0,255,255,0.3);
+    }
+    .tab-link {
+      color:#fff; text-decoration:none; padding:8px 16px;
+      border-radius:20px; transition: background 0.3s;
+      position: relative; border: 2px solid transparent;
+      cursor: pointer; color: inherit;
+    }
+    .tab-link:hover { background: rgba(255,255,255,0.2); color:#0ff; }
+    .tab-link.active {
+      background: rgba(0,255,255,0.3);
+      color: #fff; border-color: #0ff;
     }
 
-    nav a {
-      margin: 0 1rem;
-      text-decoration: none;
-      color: var(--text-color);
-      border-bottom: 2px solid transparent;
+    .tab-section {
+      /* Hidden by default */
+      display: none; 
+      
+      /* Positioning */
+      position: fixed;
+      top: 55%; 
+      left: 50%; 
+      transform: translate(-50%, -50%);
+      
+      /* Sizing */
+      width: 120%; 
+      max-width: 800px;
+      
+      /* Styling */
+      background: rgba(0, 0, 0, 0.7); 
+      padding: 70px;
+      border-radius: 20px; 
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 30px rgba(103, 191, 191, 0.3);
+    }
+    .tab-section.active { display:block; }
+
+    .typewriter {
+      overflow: hidden;
+      border-right: .15em solid #0ff;
+      white-space: nowrap;
+      animation: typing 3s steps(30, end), blink-caret .75s step-end infinite;
+    }
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+    @keyframes blink-caret {
+      from, to { border-color: transparent }
+      50% { border-color: #0ff; }
     }
 
-    nav a:hover {
-      color: var(--accent-color);
-      border-color: var(--accent-color);
+    .info-card {
+      position: fixed;
+      bottom:20px;
+      right:20px;
+      background: rgba(0,0,0,0.7);
+      padding:15px 25px;
+      border-radius:15px;
+      z-index:1005;
+      box-shadow:0 0 20px rgba(0,255,255,0.2);
+    }
+    .info-card a {
+      color:#0ff; text-decoration:none; margin:0 10px;
+    }
+    .info-card a:hover {
+      color:#fff;
+      text-shadow:0 0 10px #0ff;
     }
 
-    .section {
-      padding: 3rem 2rem;
-      max-width: 1000px;
-      margin: auto;
+    .github-corner {
+      position: fixed;
+      top: 0;
+      right: 0;
+      fill: cyan;
+      color: black;
+      transition: transform 0.3s ease;
     }
+    .github-corner:hover .octo-arm {
+      animation: octocat-wave 560ms ease-in-out;
+    }
+    @keyframes octocat-wave {
+      0%, 100% { transform: rotate(0); }
+      20%, 60% { transform: rotate(-25deg); }
+      40%, 80% { transform: rotate(10deg); }
+    }
+    @media (max-width: 500px) {
+      .github-corner:hover .octo-arm {
+        animation: none;
+      }
+    }
+    #globe-container {
+  position: fixed;
+  background: transparent !important;
+  top: 20px;
+  right: 20px;
+  width: 350px;
+  height: 350px;
+  z-index: 1002;
+  pointer-events: none; /* makes it non-clickable so your UI stays usable */
+}
+/* TIMELINE SCROLL CONTAINER */
+.timeline-scroll {
+  max-height: 70vh;       /* how tall before it scrolls */
+  overflow-y: auto;
+  padding-right: 10px;    /* so items don’t hide under the track */
+}
 
-    .card {
-      background: var(--card-bg);
-      padding: 2rem;
-      border-radius: 1rem;
-      box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
-      margin-bottom: 2rem;
-    }
+/* WebKit browsers (Chrome, Safari, Edge) */
+.timeline-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+.timeline-scroll::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0.2);
+  border-radius: 4px;
+}
+.timeline-scroll::-webkit-scrollbar-thumb {
+  background-color: #0ff;
+  border-radius: 4px;
+  border: 2px solid rgba(0,0,0,0.3);
+}
 
-    .glow-title {
-      color: var(--primary-color);
-      text-shadow: 0 0 10px var(--primary-color);
-    }
+/* Firefox */
+.timeline-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #0ff rgba(0,0,0,0.2);
+}
 
-    .timeline {
-      border-left: 3px solid var(--accent-color);
-      padding-left: 1rem;
-    }
-
-    .timeline-item {
-      margin-bottom: 2rem;
-    }
-
-    .timeline-item h3 {
-      color: var(--accent-color);
-      margin: 0;
-    }
-
-    .contact {
-      background-color: var(--card-bg);
-      padding: 1rem;
-      border-radius: 0.5rem;
-      font-family: monospace;
-    }
-
-    footer {
-      text-align: center;
-      padding: 1rem;
-      font-size: 0.9rem;
-      background-color: rgba(0, 0, 0, 0.5);
-      border-top: 1px solid var(--accent-color);
-      color: var(--text-color);
-    }
+.about-scroll {
+  overflow-y: auto; /* Enable vertical scrolling */
+  max-height: 80vh; /* Limit the height to allow scrolling */
+  padding: 20px; /* Add padding for better readability */
+  background: rgba(0, 0, 0, 0.6); /* Ensure consistent background styling */
+  border-radius: 12px; /* Rounded corners */
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.3); /* Add shadow for aesthetics */
+}
 
   </style>
 </head>
+
 <body>
-  <header>
-    <h1>Debajeet Barman</h1>
-    <nav>
-      <a href="#about">About</a>
-      <a href="#projects">Projects</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </header>
+  <a href="https://github.com/debajeet123/Geological_feature_tool" class="github-corner" aria-label="View source on GitHub">
+    <svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true">
+      <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z" fill="#0ff"/>
+      <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,79.2 125.5,84.4 125.5,84.4 C122.9,93.1 130.6,98.9 134.4,100.9" fill="black" style="transform-origin: 130px 106px;" class="octo-arm"/>
+      <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.5 142.2,98.2 C133.8,88.0 127.8,91.8 127.8,91.8 C122.3,91.6 120.3,88.1 120.3,88.1 C119.0,82.0 123.4,81.0 123.4,81.0 C127.2,80.4 129.9,83.9 129.9,83.9 C133.0,89.1 130.4,94.1 130.4,94.1 C124.9,103.1 134.7,108.4 139.1,109.9" fill="black" class="octo-body"/>
+    </svg>
+  </a>
 
-  <section id="about" class="section">
-    <div class="card">
-      <h2 class="glow-title">About Me</h2>
-      <p>I am a geophysicist specializing in seismic imaging, ambient noise tomography, and machine learning. My PhD from Baylor University focused on developing computational models for subsurface exploration. I thrive in interdisciplinary environments where high-performance computing meets earth science. My research spans GPU-accelerated modeling, DAS, and AI-enhanced inversion workflows.</p>
+  <div class="profile-photo">
+    <img src="profile.jpg" alt="Debajeet Barman">
+  </div>
+  <div id="globe-container"></div>
+  <div style="
+  text-align: center;
+  margin-top: 10px;
+  font-size: 1.2em;
+  color: #0ff;
+  text-shadow: 0 0 10px rgba(0,255,255,0.5);
+">
+  Live Earthquake Events
+</div>
+  
+  <div class="tabs-background">
+    <div class="strata-layer"></div> <!-- ✅ Add this line for waving effect -->
+    <div class="tabs-wrapper">
+      <nav class="tabs-nav">
+        <!-- <a class="tab-link active" href="#home">Home</a> -->
+        <a class="tab-link" href="#about">About</a>
+        <a class="tab-link" href="#projects">Projects</a>
+        <a class="tab-link" href="#contact">Contact</a>
+      </nav>
     </div>
-  </section>
+  </div>
+  
+  <section id="about" class="tab-section">
+    <div class="about-scroll" style="overflow-y: auto; max-height: 80vh;">
+    <!-- <p><span class="typewriter">Exploring the geophysical cosmos...</span></p> -->
+    <h1>About Me</h1>
+  <div class="bio-container">
+    <div class="bio-text">
+      <p><strong>Debajeet Barman</strong> is a geophysicist exploring Earth's interior using seismic imaging, ambient noise tomography, and AI-powered inversion techniques.  
+        With a Ph.D. from Baylor University and field collaborations across Texas and beyond, I bridge theory and fieldwork.  
+        My research blends high-performance computing, machine learning, and seismic wave modeling to extract structure from noise.  
+        I believe science is most powerful when shared—through tools, open data, and visual storytelling.</p>
+          </div>
 
-  <section id="projects" class="section">
-    <div class="card">
-      <h2 class="glow-title">Research Timeline</h2>
+    <div class="bio-photos">
+      <img src="desert.jpg" alt="Debajeet in field" />
+      <img src="desert2.jpg" alt="Debajeet during seismic survey" />
+    </div>
+  </div>
+</div>
+  </p>
+</div>
+  </section>
+  <section id="projects" class="tab-section">
+    <div class="timeline-container">
+      
+      <h1>Research Timeline</h1>
+      <div class="timeline-scroll">
       <div class="timeline">
+  
         <div class="timeline-item">
-          <h3>2020–2021</h3>
-          <p>Adjoint-free FWI using Hamiltonian operator theory, CUDA/MPI for elastic modeling.</p>
+          <div class="timeline-icon">
+            <!-- Laptop / Compute Icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#000" viewBox="0 0 24 24">
+              <path d="M20 18H4v-7h16v7zm-1 2H5v2h14v-2zM3 4h18v10H3V4zm2 2v6h14V6H5z"/>
+            </svg>
+          </div>
+          <div class="timeline-content">
+            <h2>2020–2021</h2>
+            <p>Developed adjoint-free full waveform inversion (FWI) using Hamiltonian operator theory and matrix exponentials. Implemented elastic modeling via CUDA/MPI for scalable GPU performance.</p>
+          </div>
         </div>
+  
         <div class="timeline-item">
-          <h3>2021–2022</h3>
-          <p>TensorFlow pipeline for ambient noise tomography with the MUSIC algorithm.</p>
+          <div class="timeline-icon">
+            <!-- Chart / Analytics Icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#000" viewBox="0 0 24 24">
+              <path d="M3 13h2v-6H3v6zm4 4h2v-10H7v10zm4-4h2v-6h-2v6zm4-2h2V7h-2v4zm4 6h2v-14h-2v14z"/>
+            </svg>
+          </div>
+          <div class="timeline-content">
+            <h2>2021–2022</h2>
+            <p>Built a TensorFlow-based ambient noise tomography pipeline integrated with the MUSIC algorithm, boosting resolution of weak seismic sources.</p>
+          </div>
         </div>
+  
         <div class="timeline-item">
-          <h3>2022</h3>
-          <p>Fieldwork across Texas and Nevada using DAS and microgravity data.</p>
+          <div class="timeline-icon">
+            <!-- Map / Field Icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#000" viewBox="0 0 24 24">
+              <path d="M20.5 3l-5.5 2v15l5.5-2V3zM2 6.5l5.5-2v15l-5.5 2v-15zM9 4.5l6 2v14l-6-2v-14z"/>
+            </svg>
+          </div>
+          <div class="timeline-content">
+            <h2>2022</h2>
+            <p>Led field deployments in Monahans (TX), Sweetwater (TX), and Fallon geothermal (NV). Integrated DAS and microgravity data for joint inversions.</p>
+          </div>
         </div>
+  
         <div class="timeline-item">
-          <h3>2023</h3>
-          <p>Implemented GANs and physics-informed neural networks for inversion problems.</p>
+          <div class="timeline-icon">
+            <!-- Neural Network Icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#000" viewBox="0 0 24 24">
+              <path d="M5 3h4v2H5V3zm10 0h4v2h-4V3zM3 9h2v6H3V9zm18 0h2v6h-2V9zM7 7h10v2H7V7zm0 8h10v2H7v-2zM9 17h6v2H9v-2z"/>
+            </svg>
+          </div>
+          <div class="timeline-content">
+            <h2>2023</h2>
+            <p>Applied GANs, VAEs, and temporal CNNs for unsupervised seismic inversion and physics-informed neural networks for enhanced generalization.</p>
+          </div>
         </div>
+  
         <div class="timeline-item">
-          <h3>2024–Present</h3>
-          <p>Building browser-native seismic visualization tools using WebGL/Three.js.</p>
+          <div class="timeline-icon">
+            <!-- Tools / Development Icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#000" viewBox="0 0 24 24">
+              <path d="M22.7 19.3l-3-3c.6-1 .6-2.1.1-3.1l2.2-2.2-2.8-2.8-2.2 2.2c-1-.5-2.1-.5-3.1.1l-3-3L6 8.3l3 3c-.6 1-.6 2.1-.1 3.1l-2.2 2.2 2.8 2.8 2.2-2.2c1 .5 2.1.5 3.1-.1l3 3 3.6-3.6z"/>
+            </svg>
+          </div>
+          <div class="timeline-content">
+            <h2>2024–Present</h2>
+            <p>Developing real-time geospatial visualization tools with WebGL/Three.js and a browser-native seismic feature extraction toolkit.</p>
+          </div>
         </div>
+      </div>
       </div>
     </div>
   </section>
-
-  <section id="contact" class="section">
-    <div class="card contact">
-      <h2 class="glow-title">Contact</h2>
-      <pre>
-[Email]     ▶ debajeet123@gmail.com
-[AltMail]   ▶ Debajeet_Barman1@baylor.edu
-[LinkedIn]  ▶ linkedin.com/in/debajeet-barman
-[Website]   ▶ debajeetbarmanseismology.space
-      </pre>
+  <section id="github-readme" class="tab-section">
+    <div class="readme-wrapper">
+      <h1><span class="glow">📘 Project README</span></h1>
+      <div id="readme-container" class="glassy-readme"></div>
     </div>
   </section>
+  
+  <div id="github-updates">
+    <h2>Latest Commits</h2>
+    <ul id="commit-list"></ul>
+  </div>
+  
+  <script>
+    fetch('https://api.github.com/repos/debajeet123/Geological_feature_tool/commits')
+      .then(response => response.json())
+      .then(data => {
+        const list = document.getElementById('commit-list');
+        data.slice(0, 5).forEach(commit => {
+          const item = document.createElement('li');
+          item.innerHTML = `
+            <a href="${commit.html_url}" target="_blank">
+              ${commit.commit.message.split('\n')[0]} – <em>${commit.commit.author.name}</em>
+            </a>
+          `;
+          list.appendChild(item);
+        });
+      });
+  </script>
 
-  <footer>
-    &copy; 2025 Debajeet Barman • All rights reserved
-  </footer>
+<div id="readme-container" style="background:#111;padding:20px;color:#ccc;"></div>
+  
+  <section id="contact" class="tab-section">
+    <h1>Contact</h1>
+    <pre style="
+    background: rgba(0,0,0,0.6);
+    padding: 20px;
+    border-radius: 10px;
+    color: #0ff;
+    font-family: 'Courier New', monospace;
+    font-size: 1em;
+    line-height: 1.8;
+    overflow-x: auto;
+    box-shadow: 0 0 15px rgba(0,255,255,0.2);
+    ">
+  [Email]     ▶ <a href="mailto:debajeet123@gmail.com" style="color:#0ff;text-decoration:none;">debajeet123@gmail.com</a>
+  [AltMail]   ▶ <a href="mailto:Debajeet_Barman1@baylor.edu" style="color:#0ff;text-decoration:none;">Debajeet_Barman1@baylor.edu</a>
+  [LinkedIn]  ▶ <a href="https://www.linkedin.com/in/debajeet-barman" target="_blank" style="color:#0ff;text-decoration:none;">linkedin.com/in/debajeet-barman</a>
+  [Website]   ▶ <a href="https://debajeetbarmanseismology.space" target="_blank" style="color:#0ff;text-decoration:none;">debajeetbarmanseismology.space</a>
+  </pre>
+  </section>
+
+  <div class="info-card">
+    <a href="https://www.linkedin.com/in/debajeetbarman" target="_blank">LinkedIn</a> |
+    <a href="https://scholar.google.com/citations?user=XXXXX" target="_blank">Google Scholar</a> |
+    <a href="https://github.com/debajeet123" target="_blank">GitHub</a>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.tab-link').forEach(link => {
+        link.addEventListener('click', e => {
+          e.preventDefault();
+          document.querySelectorAll('.tab-link').forEach(l => l.classList.remove('active'));
+          document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
+          link.classList.add('active');
+          document.getElementById(link.getAttribute('href').substring(1)).classList.add('active');
+        });
+      });
+    });
+  </script>
+  <!-- Globe.gl + Three.js -->
+<script src="https://unpkg.com/three"></script>
+<script src="https://unpkg.com/globe.gl"></script>
+
+<script>
+  const world = Globe()
+    .globeImageUrl('//unpkg.com/three-globe/example/img/earth-dark.jpg')
+    .bumpImageUrl('//unpkg.com/three-globe/example/img/earth-topology.png')
+    .showAtmosphere(true)
+    .atmosphereColor('#0ff')
+    .atmosphereAltitude(0.25)
+    .backgroundColor('rgba(0,0,0,0)')
+    .width(400)
+    .height(400)
+    (document.getElementById('globe-container'));
+
+  world.controls().autoRotate = true;
+  world.controls().autoRotateSpeed = 0.8;
+
+  
+  fetch('https://unpkg.com/world-atlas@2.0.2/countries-110m.json')
+    .then(res => res.json())
+    .then(countries => {
+      const countriesTopo = topojson.feature(countries, countries.objects.countries).features;
+      world
+        .polygonsData(countriesTopo)
+        .polygonCapColor(() => 'rgba(0,255,255,0.1)')
+        .polygonSideColor(() => 'rgba(0,255,255,0.05)')
+        .polygonStrokeColor(() => '#0ff')
+        .polygonAltitude(0.01);
+    });
+
+
+  // Load recent earthquake dots from USGS
+  fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson')
+    .then(res => res.json())
+    .then(data => {
+      const quakes = data.features.map(f => ({
+        lat: f.geometry.coordinates[1],
+        lng: f.geometry.coordinates[0],
+        size: Math.max(f.properties.mag / 10, 0.05),
+        mag: f.properties.mag
+      }));
+      world
+        .pointsData(quakes)
+        .pointAltitude('size')
+        .pointColor(() => '#ff8800')
+        .pointRadius('size');
+    });
+  </script>
+
+    <!-- Load Marked.js FIRST -->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+<!-- THEN use it to render the README -->
+
+  <script>
+  fetch('https://raw.githubusercontent.com/debajeet123/Geological_feature_tool/main/README.md')
+    .then(res => res.text())
+    .then(md => {
+      document.getElementById('readme-container').innerHTML = marked(md);
+    });
+</script>
+
+
+<!-- Required for topojson -->
+<script src="https://unpkg.com/topojson@3"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script> -->
+
 </body>
 </html>
