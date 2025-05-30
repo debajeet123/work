@@ -261,27 +261,60 @@
       text-shadow:0 0 10px #0ff;
     }
 
-    .github-corner {
-      position: fixed;
-      top: 0;
-      right: 0;
-      fill: cyan;
-      color: black;
-      transition: transform 0.3s ease;
+    
+    .readme-wrapper, .commit-wrapper {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 30px;
+      border-radius: 18px;
+      background: rgba(0, 0, 0, 0.6);
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.3);
+      color: #ddd;
+      font-family: 'JetBrains Mono', monospace;
+      line-height: 1.65;
+      backdrop-filter: blur(10px);
     }
-    .github-corner:hover .octo-arm {
-      animation: octocat-wave 560ms ease-in-out;
+
+    .glassy-readme h1,
+    .glassy-readme h2,
+    .glassy-readme h3 {
+      color: #0ff;
+      border-bottom: 1px solid rgba(0,255,255,0.3);
+      padding-bottom: 5px;
     }
-    @keyframes octocat-wave {
-      0%, 100% { transform: rotate(0); }
-      20%, 60% { transform: rotate(-25deg); }
-      40%, 80% { transform: rotate(10deg); }
+    .glassy-readme pre,
+    .glassy-readme code {
+      background: #111;
+      color: #0f0;
+      padding: 10px;
+      border-radius: 10px;
+      overflow-x: auto;
     }
-    @media (max-width: 500px) {
-      .github-corner:hover .octo-arm {
-        animation: none;
-      }
+    .glassy-readme a {
+      color: #0ff;
+      text-decoration: underline;
     }
+
+    .commit-list {
+      list-style: none;
+      padding: 0;
+      margin: 20px 0 0;
+    }
+    .commit-list li {
+      margin: 10px 0;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border-left: 4px solid #0ff;
+    }
+    .commit-list a {
+      color: #0ff;
+      text-decoration: none;
+    }
+    .commit-list a:hover {
+      text-shadow: 0 0 8px #0ff;
+    }
+  
+
     #globe-container {
   position: fixed;
   background: transparent !important;
@@ -467,12 +500,11 @@
       <h1><span class="glow">📘 Project README</span></h1>
       <div id="readme-container" class="glassy-readme"></div>
     </div>
+    <div class="commit-wrapper">
+      <h2><span class="glow">🕒 Latest GitHub Commits</span></h2>
+      <ul id="commit-list" class="commit-list"></ul>
+    </div>
   </section>
-  
-  <div id="github-updates">
-    <h2>Latest Commits</h2>
-    <ul id="commit-list"></ul>
-  </div>
   
   <script>
     fetch('https://api.github.com/repos/debajeet123/Geological_feature_tool/commits')
