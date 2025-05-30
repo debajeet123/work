@@ -575,16 +575,20 @@
         .pointColor(() => '#ff8800')
         .pointRadius('size');
     });
+  </script>
 
-    fetch('https://raw.githubusercontent.com/debajeet123/Geological_feature_tool/main/README.md')
-  .then(res => res.text())
-  .then(md => {
-    if (typeof marked !== 'undefined') {
+    <!-- Load Marked.js FIRST -->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+<!-- THEN use it to render the README -->
+<script>
+  fetch('https://raw.githubusercontent.com/debajeet123/Geological_feature_tool/main/README.md')
+    .then(res => res.text())
+    .then(md => {
       document.getElementById('readme-container').innerHTML = marked(md);
-    } else {
-      console.error('Marked library is not loaded.');
-    }
-  });
+    })
+    .catch(() => console.error('Could not load README'));
+
 
 </script>
 
