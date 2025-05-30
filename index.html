@@ -582,19 +582,19 @@
 
 <!-- THEN use it to render the README -->
 <script>
+  
   fetch('https://raw.githubusercontent.com/debajeet123/Geological_feature_tool/main/README.md')
     .then(res => res.text())
     .then(md => {
       document.getElementById('readme-container').innerHTML = marked(md);
-    })
-    .catch(() => console.error('Could not load README'));
+    });
+
+
 
 
 </script>
 
-<!-- Required for topojson -->
-<script src="https://unpkg.com/topojson@3"></script>
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
 
 </body>
 </html>
