@@ -465,36 +465,62 @@
 </div>
   </section>
   <section id="projects" class="tab-section">
-    <h1 style="color:#0ff; text-align:center;">Projects</h1>
-    <div class="projects-grid">
-      <div class="project-card">
-        <img src="project1.png" alt="Project 1 Screenshot">
-        <div class="card-content">
-          <h3>Ambient Noise Tomography</h3>
-          <p>A TensorFlow & MUSIC-powered pipeline to map subsurface structures using passive seismic data.</p>
-          <a href="https://github.com/debajeet123/ambient-noise-tomography" target="_blank">View Repo</a>
-        </div>
+  <h1 style="text-align: center; color: #0ff;">Projects</h1>
+
+  <div class="projects-carousel">
+    <div class="slides-container" id="slides">
+      <div class="slide">
+        <img src="project1.png" alt="Project 1">
+        <h3>Ambient Noise Tomography</h3>
+        <p>Mapped crustal structures using TensorFlow & MUSIC algorithm on passive seismic data.</p>
       </div>
-      <div class="project-card">
-        <img src="project2.png" alt="Project 2 Screenshot">
-        <div class="card-content">
-          <h3>Adjoint-Free FWI</h3>
-          <p>High-performance inversion toolkit using Hamiltonian operators and GPU-accelerated solvers.</p>
-          <a href="https://github.com/debajeet123/adjoint-free-fwi" target="_blank">View Repo</a>
-        </div>
+      <div class="slide">
+        <img src="project2.png" alt="Project 2">
+        <h3>Adjoint-Free FWI</h3>
+        <p>Built GPU-accelerated elastic modeling and inversion using Hamiltonian operator techniques.</p>
       </div>
-      <div class="project-card">
-        <img src="project3.png" alt="Project 3 Screenshot">
-        <div class="card-content">
-          <h3>DAS Processing Suite</h3>
-          <p>Distributed Acoustic Sensing workflows for continuous fiber-optic seismic monitoring.</p>
-          <a href="https://github.com/debajeet123/das-processing" target="_blank">View Repo</a>
-        </div>
+      <div class="slide">
+        <img src="project3.png" alt="Project 3">
+        <h3>DAS + Microgravity</h3>
+        <p>Performed joint inversion of Distributed Acoustic Sensing and gravity anomaly data.</p>
       </div>
-      <!-- add more cards as needed -->
     </div>
-  </section>
-  
+
+    <div class="carousel-controls">
+      <button class="carousel-button" onclick="prevSlide()">◀ Prev</button>
+      <button class="carousel-button" onclick="nextSlide()">Next ▶</button>
+    </div>
+  </div>
+</section>
+<section id="projects" class="tab-section">
+  <h1 style="text-align: center; color: #0ff;">Projects</h1>
+
+  <div class="projects-carousel">
+    <div class="slides-container" id="slides">
+      <div class="slide">
+        <img src="project1.png" alt="Project 1">
+        <h3>Ambient Noise Tomography</h3>
+        <p>Mapped crustal structures using TensorFlow & MUSIC algorithm on passive seismic data.</p>
+      </div>
+      <div class="slide">
+        <img src="project2.png" alt="Project 2">
+        <h3>Adjoint-Free FWI</h3>
+        <p>Built GPU-accelerated elastic modeling and inversion using Hamiltonian operator techniques.</p>
+      </div>
+      <div class="slide">
+        <img src="project3.png" alt="Project 3">
+        <h3>DAS + Microgravity</h3>
+        <p>Performed joint inversion of Distributed Acoustic Sensing and gravity anomaly data.</p>
+      </div>
+    </div>
+
+    <div class="carousel-controls">
+      <button class="carousel-button" onclick="prevSlide()">◀ Prev</button>
+      <button class="carousel-button" onclick="nextSlide()">Next ▶</button>
+    </div>
+  </div>
+</section>
+
   
   
   <script>
