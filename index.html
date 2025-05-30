@@ -327,6 +327,15 @@
   border-radius: 12px; /* Rounded corners */
   box-shadow: 0 0 20px rgba(0, 255, 255, 0.3); /* Add shadow for aesthetics */
 }
+.github-panel {
+  flex: 1 1 200px;
+  background: rgba(0,0,0,0.6);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0,255,255,0.3);
+  max-height: 300px;
+  overflow-y: auto;
+}
 
   </style>
 </head>
@@ -377,7 +386,10 @@
         My research blends high-performance computing, machine learning, and seismic wave modeling to extract structure from noise.  
         I believe science is most powerful when shared—through tools, open data, and visual storytelling.</p>
           </div>
-
+    +  <div class="github-panel">
+      +    <h3>🕒 Latest Commits</h3>
+      +    <ul id="commit-list" class="commit-list"></ul>
+      +  </div>
     <div class="bio-photos">
       <img src="desert.jpg" alt="Debajeet in field" />
       <img src="desert2.jpg" alt="Debajeet during seismic survey" />
@@ -460,18 +472,13 @@
         </div>
       </div>
       </div>
+      <div class="commit-wrapper" style="margin-top: 20px;">
+        <h4>🕒 Latest Commits</h4>
+        <ul id="commit-list" class="commit-list"></ul>
+      </div>
     </div>
   </section>
-  <section id="github-readme" class="tab-section">
-    <div class="readme-wrapper">
-      <h1><span class="glow">📘 Project README</span></h1>
-      <div id="readme-container" class="glassy-readme"></div>
-    </div>
-    <div class="commit-wrapper">
-      <h2><span class="glow">🕒 Latest GitHub Commits</span></h2>
-      <ul id="commit-list" class="commit-list"></ul>
-    </div>
-  </section>
+  
   
   <script>
     fetch('https://api.github.com/repos/debajeet123/Geological_feature_tool/commits')
