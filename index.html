@@ -6,6 +6,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <style>
+
+.us-grid-map {
+  display: grid;
+  grid-template-columns: repeat(12, 20px);
+  grid-auto-rows: 20px;
+  gap: 4px;
+  margin: 20px auto;
+  max-width: 300px;
+}
+
+.state {
+  width: 20px;
+  height: 20px;
+  background: #333;
+  border-radius: 4px;
+  box-shadow: 0 0 3px rgba(0,255,255,0.3);
+}
+
+.state.active {
+  background: #0ff;
+}
+</style>
     .bio-container {
   display: flex;
   flex-wrap: wrap;
@@ -445,6 +467,16 @@
     </div>
   </div>
   
+  <div class="us-grid-map">
+    <div class="state AK" title="Alaska"></div>
+    <div class="state ME" title="Maine"></div>
+    <!-- ... insert 50+ state divs -->
+    <div class="state TX active" title="Texas"></div>
+    <div class="state CA active" title="California"></div>
+    <!-- Customize more -->
+  </div>
+
+
   <section id="about" class="tab-section">
     <div class="about-scroll">
       <h1 style="text-align: center; color: #0ff; margin-bottom: 30px;">About Me</h1>
