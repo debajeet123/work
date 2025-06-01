@@ -2,7 +2,7 @@ import json
 from scholarly import scholarly
 
 # Replace with your actual Google Scholar ID
-scholar_id = "https://scholar.google.com/citations?user=_i8vIAEAAAAJ&hl=en"
+scholar_id = "_i8vIAEAAAAJ&hl=en"
 
 # Retrieve the author's profile
 author = scholarly.search_author_id(scholar_id)
