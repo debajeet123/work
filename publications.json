@@ -1,0 +1,29 @@
+[
+  {
+    "authors": "Barman, D., Zhang, Y., & Chen, L.",
+    "year": 2024,
+    "title": "Adjoint-free inversion for passive seismic imaging using Hamiltonian dynamics",
+    "journal": "Seismological Research Letters",
+    "volume": "95",
+    "issue": "1",
+    "pages": "12–25"
+  },
+  {
+    "authors": "Barman, D., & Smith, R.",
+    "year": 2023,
+    "title": "Joint inversion of DAS and gravity data for near-surface structure delineation",
+    "journal": "Geophysics",
+    "volume": "88",
+    "issue": "4",
+    "pages": "B99–B115"
+  },
+  {
+    "authors": "Barman, D., & Thomas, P.",
+    "year": 2022,
+    "title": "Machine learning strategies for high-resolution ambient noise tomography",
+    "journal": "Computers & Geosciences",
+    "volume": "162",
+    "issue": "",
+    "pages": "104889"
+  }
+]

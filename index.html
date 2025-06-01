@@ -497,47 +497,9 @@
 </section>
 <section id="Publications" class="tab-section">
   <h1 style="text-align: center; color: #0ff;">Publications</h1>
-
-  <div class="about-scroll" style="max-height: 80vh;">
-    <ul style="list-style-type: none; padding: 0;">
-
-      <li style="margin-bottom: 25px;">
-        <strong style="color:#0ff;">Barman, D.</strong>, Zhang, Y., & Chen, L. (2024).<br/>
-        <em>Adjoint-free inversion for passive seismic imaging using Hamiltonian dynamics.</em><br/>
-        <span style="color:#aaa;">Seismological Research Letters, 95(1), 12–25.</span>
-      </li>
-
-      <li style="margin-bottom: 25px;">
-        <strong style="color:#0ff;">Barman, D.</strong>, & Smith, R. (2023).<br/>
-        <em>Joint inversion of DAS and gravity data for near-surface structure delineation.</em><br/>
-        <span style="color:#aaa;">Geophysics, 88(4), B99–B115.</span>
-      </li>
-
-      <li style="margin-bottom: 25px;">
-        <strong style="color:#0ff;">Barman, D.</strong>, & Thomas, P. (2022).<br/>
-        <em>Machine learning strategies for high-resolution ambient noise tomography.</em><br/>
-        <span style="color:#aaa;">Computers & Geosciences, 162, 104889.</span>
-      </li>
-
-      <li style="margin-bottom: 25px;">
-        <strong style="color:#0ff;">Barman, D.</strong>, et al. (2021).<br/>
-        <em>Seismic imaging of the Texas Gulf Coast using passive deployments and deep learning.</em><br/>
-        <span style="color:#aaa;">Bulletin of the Seismological Society of America, 111(3), 1355–1370.</span>
-      </li>
-
-      <li style="margin-bottom: 25px;">
-        <strong style="color:#0ff;">Barman, D.</strong>, & Roy, S. (2020).<br/>
-        <em>High-performance finite-element modeling for induced seismicity simulations.</em><br/>
-        <span style="color:#aaa;">Geophysical Journal International, 223(2), 998–1012.</span>
-      </li>
-
-    </ul>
-
-    <p style="text-align:center;">
-      📚 <a href="https://scholar.google.com/citations?user=XXXXXXX" target="_blank" style="color:#0ff; text-decoration:none;">View complete list on Google Scholar</a>
-    </p>
-  </div>
+  <div class="about-scroll" id="pub-list" style="max-height: 80vh;"></div>
 </section>
+
 
 
   
@@ -690,6 +652,35 @@
 <!-- Required for topojson -->
 <script src="https://unpkg.com/topojson@3"></script>
 <!-- <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script> -->
+
+<script>
+  fetch('publications.json')
+    .then(res => res.json())
+    .then(publications => {
+      const container = document.getElementById('pub-list');
+      const list = document.createElement('ul');
+      list.style.listStyleType = 'none';
+      list.style.padding = '0';
+
+      publications.forEach(pub => {
+        const item = document.createElement('li');
+        item.style.marginBottom = '25px';
+        item.innerHTML = `
+          <strong style="color:#0ff;">${pub.authors} (${pub.year}).</strong><br/>
+          <em>${pub.title}</em><br/>
+          <span style="color:#aaa;">${pub.journal}${pub.volume ? `, ${pub.volume}` : ''}${pub.issue ? `(${pub.issue})` : ''}${pub.pages ? `, ${pub.pages}` : ''}.</span>
+        `;
+        list.appendChild(item);
+      });
+
+      container.appendChild(list);
+
+      const more = document.createElement('p');
+      more.style.textAlign = 'center';
+      more.innerHTML = `📚 <a href="https://scholar.google.com/citations?user=XXXXXXX" target="_blank" style="color:#0ff; text-decoration:none;">View all on Google Scholar</a>`;
+      container.appendChild(more);
+    });
+</script>
 
 </body>
 </html>
