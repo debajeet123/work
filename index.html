@@ -705,6 +705,15 @@
       });
     });
   </script>
+  <script>
+    // Flip each card with a slight delay
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => document.getElementById('flip-rg-score').classList.add('flipped'), 200);
+      setTimeout(() => document.getElementById('flip-citations').classList.add('flipped'), 400);
+      setTimeout(() => document.getElementById('flip-reads').classList.add('flipped'), 600);
+    });
+  </script>
+  
   <!-- Globe.gl + Three.js -->
 <script src="https://unpkg.com/three"></script>
 <script src="https://unpkg.com/globe.gl"></script>
