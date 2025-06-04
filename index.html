@@ -2,50 +2,132 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Three.js Basic Scene</title>
+  <title>Texas 3D Topo Map from GRD</title>
   <style>
-    body { margin: 0; overflow: hidden; }
+    body { margin: 0; overflow: hidden; background: #000; }
     canvas { display: block; }
   </style>
 </head>
 <body>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.148.0/build/three.min.js"></script>
-  <script>
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(
-      75, window.innerWidth / window.innerHeight, 0.1, 1000
-    );
-    const renderer = new THREE.WebGLRenderer();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    document.body.appendChild(renderer.domElement);
+<!-- Include Three.js and OrbitControls -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.150.1/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.150.1/examples/js/controls/OrbitControls.js"></script>
+<!-- Include NetCDF.js to parse GRD (NetCDF) files -->
+<script src="https://cdn.jsdelivr.net/npm/netcdfjs@1.3.1/build/netcdfjs.min.js"></script>
 
-    // Add a cube
-    const geometry = new THREE.BoxGeometry();
-    const material = new THREE.MeshStandardMaterial({ color: 0x0077ff });
-    const cube = new THREE.Mesh(geometry, material);
-    scene.add(cube);
+<script>
+// Scene setup
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(60, window.innerWidth/window.innerHeight, 0.1, 1000);
+camera.position.set(0, 60, 100);
 
-    // Add light
-    const light = new THREE.PointLight(0xffffff, 1);
-    light.position.set(2, 3, 4);
-    scene.add(light);
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
 
-    camera.position.z = 5;
+const controls = new THREE.OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
 
-    function animate() {
-      requestAnimationFrame(animate);
-      cube.rotation.x += 0.01;
-      cube.rotation.y += 0.01;
-      renderer.render(scene, camera);
+scene.add(new THREE.AmbientLight(0x222222));
+const light = new THREE.DirectionalLight(0xffffff, 1);
+light.position.set(50, 100, 100);
+scene.add(light);
+
+// Variables for terrain and traffic
+let roadPoints = [];
+let car;
+let carProgress = 0;
+const clock = new THREE.Clock();
+
+// URL to the GRD (NetCDF) file hosted on a server (ensure CORS enabled)
+const grdURL = 'https://www.ngdc.noaa.gov/thredds/fileServer/regional/galveston_13_mhw_2007.nc';
+
+// Fetch and parse the GRD file
+fetch(grdURL)
+  .then(response => response.arrayBuffer())
+  .then(buffer => {
+    const reader = new NetCDFReader(buffer);
+    // Assuming variable name 'z' or 'elevation', adjust as needed
+    const zVar = reader.variables.find(v => /^(z|elevation)$/i.test(v.name));
+    const { dimensions, attributes } = reader;
+    const nx = dimensions.find(d => d.name === 'x' || d.name === 'lon').length;
+    const ny = dimensions.find(d => d.name === 'y' || d.name === 'lat').length;
+    const zData = reader.getDataVariable(zVar);
+
+    // Create geometry: plane size 200x200 with nx-1, ny-1 segments
+    const geo = new THREE.PlaneGeometry(200, 200, nx - 1, ny - 1);
+    const pos = geo.attributes.position;
+
+    // Iterate through grid and set Z based on elevation
+    for (let i = 0; i < pos.count; i++) {
+      // netCDF stores data in row-major: index = j * nx + i
+      const j = Math.floor(i / nx);
+      const k = i % nx;
+      const elev = zData[j * nx + k];
+      // Scale elevation: adjust factor as needed
+      pos.setZ(i, elev * 0.02);
     }
 
-    animate();
+    pos.needsUpdate = true;
+    geo.computeVertexNormals();
 
-    window.addEventListener('resize', () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    });
-  </script>
+    const mat = new THREE.MeshStandardMaterial({ color: 0x113355, flatShading: true, side: THREE.DoubleSide });
+    const mesh = new THREE.Mesh(geo, mat);
+    mesh.rotation.x = -Math.PI / 2;
+    scene.add(mesh);
+
+    // Create a sample road line (replace with real coordinates)
+    roadPoints = [];
+    for (let t = -90; t <= 90; t += 5) {
+      roadPoints.push(new THREE.Vector3(t, 1, t));
+    }
+    const roadGeo = new THREE.BufferGeometry().setFromPoints(roadPoints);
+    const roadMat = new THREE.LineBasicMaterial({ color: 0xff0000 });
+    const roadLine = new THREE.Line(roadGeo, roadMat);
+    scene.add(roadLine);
+
+    // Create a moving traffic marker (sphere)
+    const carGeo = new THREE.SphereGeometry(1, 16, 16);
+    const carMat = new THREE.MeshStandardMaterial({ color: 0xffff00, emissive: 0x333300 });
+    car = new THREE.Mesh(carGeo, carMat);
+    scene.add(car);
+  })
+  .catch(err => console.error('Error loading GRD:', err));
+
+// Update car position based on progress
+function updateCarPosition() {
+  if (roadPoints.length === 0 || !car) return;
+  const total = roadPoints.length;
+  const idx = Math.floor(carProgress * (total - 1));
+  const nextIdx = (idx + 1) % total;
+  const p1 = roadPoints[idx];
+  const p2 = roadPoints[nextIdx];
+  const frac = (carProgress * (total - 1)) % 1;
+  car.position.lerpVectors(p1, p2, frac);
+  const dir = new THREE.Vector3().subVectors(p2, p1).normalize();
+  const angle = Math.atan2(dir.z, dir.x);
+  car.rotation.y = -angle;
+}
+
+// Main animation loop
+function animate() {
+  requestAnimationFrame(animate);
+  const delta = clock.getDelta();
+  if (roadPoints.length > 0) {
+    carProgress = (carProgress + delta * 0.1) % 1;
+    updateCarPosition();
+  }
+  controls.update();
+  renderer.render(scene, camera);
+}
+animate();
+
+// Handle window resize
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth/window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+</script>
 </body>
 </html>
