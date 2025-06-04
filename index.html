@@ -193,6 +193,8 @@
       padding:12px 24px; border-radius:30px;
       backdrop-filter: blur(8px);
       box-shadow: 0 0 20px rgba(0,255,255,0.3);
+      <a class="tab-link" href="#readme-section">README</a>
+
 
     }
     .tab-link {
@@ -230,7 +232,7 @@
     }
     .tab-section.active { display:block; }
 
-    .tab-section {
+.tab-section {
   opacity: 0;
   transition: opacity 0.5s ease;
   pointer-events: none;
@@ -602,6 +604,18 @@
   <div class="about-scroll" id="pub-list" style="max-height: 80vh;"></div>
 </section>
 
+<section id="readme-section" class="tab-section">
+  <h1 style="text-align:center; color:#0ff;">📝 GitHub README</h1>
+  <div id="readme-container" class="about-scroll" style="
+    margin-top: 20px;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+    font-family: 'Courier New', monospace;
+    color: #ccc;
+  "></div>
+</section>
 
 
   
@@ -639,6 +653,13 @@
   function prevSlide() {
     showSlide(currentSlide - 1);
   }
+  function showSlide(index) {
+  const slides = document.getElementById('slides');
+  const totalSlides = slides.children.length;
+  currentSlide = (index + totalSlides) % totalSlides;
+  slides.style.transform = `translateX(-${currentSlide * 100}%)`;
+  slides.style.transition = 'transform 0.6s ease-in-out';
+}
 
   document.addEventListener('DOMContentLoaded', () => showSlide(0));
 
@@ -812,6 +833,29 @@
       container.appendChild(more);
     });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+<!-- Load Marked.js -->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+<!-- Fetch and render README -->
+<script>
+  const readmeURL = 'https://raw.githubusercontent.com/debajeet123/Geological_feature_tool/main/README.md';
+
+  fetch(`${readmeURL}?t=${Date.now()}`)
+    .then(res => {
+      if (!res.ok) throw new Error("Failed to load README.md");
+      return res.text();
+    })
+    .then(md => {
+      document.getElementById('readme-container').innerHTML = marked.parse(md);
+    })
+    .catch(err => {
+      document.getElementById('readme-container').innerHTML =
+        `<p style="color:red;">🚫 Could not load README.md: ${err.message}</p>`;
+    });
+</script>
+
 
 </body>
 </html>
