@@ -2,109 +2,806 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>ArcGIS JS: 3D Topographic Scene</title>
-  <!-- 1) Pull in the ArcGIS CSS -->
-  <link
-    rel="stylesheet"
-    href="https://js.arcgis.com/4.26/esri/themes/light/main.css"
-  />
+  <title>Debajeet Barman – Geophysicist</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
   <style>
-    html,
-    body,
-    #viewDiv {
-      padding: 0;
-      margin: 0;
-      height: 100%;
-      width: 100%;
-      overflow: hidden;
+
+    .bio-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.bio-text {
+  flex: 2 1 300px;
+  font-size: 1.1em;
+  line-height: 1.6;
+  color: #ddd;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.15);
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+/* Scrollbar */
+.bio-text::-webkit-scrollbar {
+  width: 6px;
+}
+.bio-text::-webkit-scrollbar-thumb {
+  background: #0ff;
+  border-radius: 3px;
+}
+.bio-text::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.bio-photos {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  flex: 1 1 220px;
+}
+
+.bio-photos img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.25);
+  transition: transform 0.3s ease;
+}
+
+.bio-photos img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px rgba(0, 255, 255, 0.5);
+}
+
+@media (max-width: 768px) {
+  .bio-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .bio-text, .bio-photos {
+    width: 100%;
+  }
+}
+
+
+
+    .strata-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--strata-height);
+  background-image: var(--background-strata);
+  background-size: 100% auto;
+  background-repeat: repeat-x;
+  background-position: center -150px;
+  z-index: 1;
+  opacity: 0.9;
+
+  -webkit-mask-image: url('./mask-pattern.svg');
+  mask-image: url('./mask-pattern.svg');
+  mask-size: 100% 100%;
+  mask-repeat: no-repeat;
+}
+
+@keyframes windFlag {
+  0% { transform: translateY(0) skewY(0deg); }
+  25% { transform: translateY(2px) skewY(-1deg); }
+  50% { transform: translateY(0) skewY(1.5deg); }
+  75% { transform: translateY(-2px) skewY(-1deg); }
+  100% { transform: translateY(0) skewY(0deg); }
+}
+
+.tabs-wrapper {
+  position: relative;
+  z-index: 2;
+}
+
+
+    :root {
+      --background-back: url('./back.png');
+      --back-gradient: linear-gradient(to bottom, #000, #111);
+      --back-size: cover;
+      --back-position: center center;
+      --background-strata: url('./strata.png');
+      --strata-width: 100%;
+      --strata-height: 120px;
+      --strata-x: center;
+      --strata-y: top;
+      --tabs-width: 800px;
+      --tabs-height: 180px;
+      --tabs-padding-top-bottom: 30px;
+      --z-tabs-background: 2;
     }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: var(--background-back), var(--back-gradient);
+      background-position: var(--back-position);
+      background-size: var(--back-size);
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      overflow-x: hidden;
+    }
+
+    .profile-photo {
+      position: fixed;
+      top: 50px;
+      left: 50px;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid rgba(0,255,255,0.3);
+      box-shadow: 0 0 20px rgba(0,255,255,0.4);
+      z-index: 1003;
+    }
+    .profile-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s;
+    }
+    .profile-photo:hover img {
+      transform: scale(1.1);
+    }
+    @keyframes wave-flag {
+  0%   { background-position: 0% 0%; }
+  50%  { background-position: 50% 10px; }
+  100% { background-position: 100% 0%; }
+}
+    
+    .tabs-background {
+      position: relative;
+      height: var(--tabs-height);
+      padding: var(--tabs-padding-top-bottom) 0;
+      background-image: var(--background-strata);
+      background-repeat: no-repeat;
+      background-position: var(--strata-x) var(--strata-y);
+      background-size: var(--strata-width) var(--strata-height);
+      z-index: var(--z-tabs-background);
+      
+    }
+    .tabs-background::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 30px;
+      background: url('torn-edge.png') repeat-x;
+      background-size: contain;
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    .tabs-wrapper { max-width: var(--tabs-width); margin:0 auto; }
+    .tabs-nav {
+      display: flex; justify-content:center; gap:30px;
+      background: rgba(0,0,0,0.7);
+      padding:12px 24px; border-radius:30px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 0 20px rgba(0,255,255,0.3);
+
+    }
+    .tab-link {
+      color:#fff; text-decoration:none; padding:8px 16px;
+      border-radius:20px; transition: background 0.3s;
+      position: relative; border: 2px solid transparent;
+      cursor: pointer; color: inherit;
+    }
+    .tab-link:hover { background: rgba(255,255,255,0.2); color:#0ff; }
+    .tab-link.active {
+      background: rgba(0,255,255,0.3);
+      color: #fff; border-color: #0ff;
+    }
+
+    .tab-section {
+      /* Hidden by default */
+      display: none; 
+      
+      /* Positioning */
+      position: fixed;
+      top: 55%; 
+      left: 50%; 
+      transform: translate(-50%, -50%);
+      
+      /* Sizing */
+      width: 120%; 
+      max-width: 800px;
+      
+      /* Styling */
+      background: rgba(0, 0, 0, 0.7); 
+      padding: 70px;
+      border-radius: 20px; 
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 30px rgba(103, 191, 191, 0.3);
+    }
+    .tab-section.active { display:block; }
+
+    .typewriter {
+      overflow: hidden;
+      border-right: .15em solid #0ff;
+      white-space: nowrap;
+      animation: typing 3s steps(30, end), blink-caret .75s step-end infinite;
+    }
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+    @keyframes blink-caret {
+      from, to { border-color: transparent }
+      50% { border-color: #0ff; }
+    }
+
+    .info-card {
+      position: fixed;
+      bottom:20px;
+      right:20px;
+      background: rgba(0,0,0,0.7);
+      padding:15px 25px;
+      border-radius:15px;
+      z-index:1005;
+      box-shadow:0 0 20px rgba(0,255,255,0.2);
+    }
+    .info-card a {
+      color:#0ff; text-decoration:none; margin:0 10px;
+    }
+    .info-card a:hover {
+      color:#fff;
+      text-shadow:0 0 10px #0ff;
+    }
+
+    .stats-info {
+      margin-top: 8px;
+      color: #ccc;
+      font-size: 0.85em;
+    }
+
+    .github-corner {
+      position: fixed;
+      top: 0;
+      right: 0;
+      fill: cyan;
+      color: black;
+      transition: transform 0.3s ease;
+    }
+    .github-corner:hover .octo-arm {
+      animation: octocat-wave 560ms ease-in-out;
+    }
+    @keyframes octocat-wave {
+      0%, 100% { transform: rotate(0); }
+      20%, 60% { transform: rotate(-25deg); }
+      40%, 80% { transform: rotate(10deg); }
+    }
+    @media (max-width: 500px) {
+      .github-corner:hover .octo-arm {
+        animation: none;
+      }
+    }
+    #globe-container {
+  position: fixed;
+  background: transparent !important;
+  top: 20px;
+  right: 20px;
+  width: 350px;
+  height: 350px;
+  z-index: 1002;
+  pointer-events: none; /* makes it non-clickable so your UI stays usable */
+}
+/* TIMELINE SCROLL CONTAINER */
+.timeline-scroll {
+  max-height: 70vh;       /* how tall before it scrolls */
+  overflow-y: auto;
+  padding-right: 10px;    /* so items don’t hide under the track */
+}
+
+/* WebKit browsers (Chrome, Safari, Edge) */
+.timeline-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+.timeline-scroll::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0.2);
+  border-radius: 4px;
+}
+.timeline-scroll::-webkit-scrollbar-thumb {
+  background-color: #0ff;
+  border-radius: 4px;
+  border: 2px solid rgba(0,0,0,0.3);
+}
+
+/* Firefox */
+.timeline-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #0ff rgba(0,0,0,0.2);
+}
+
+.about-scroll {
+  overflow-y: auto; /* Enable vertical scrolling */
+  max-height: 80vh; /* Limit the height to allow scrolling */
+  padding: 20px; /* Add padding for better readability */
+  background: rgba(0, 0, 0, 0.6); /* Ensure consistent background styling */
+  border-radius: 12px; /* Rounded corners */
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.3); /* Add shadow for aesthetics */
+}
+.github-panel {
+  flex: 1 1 200px;
+  background: rgba(0,0,0,0.6);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0,255,255,0.3);
+  max-height: 300px;
+  overflow-y: auto;
+}
+.projects-carousel {
+  position: relative;
+  overflow: hidden;
+  width: 90%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 0;
+}
+
+.slides-container {
+  display: flex;
+  transition: transform 0.6s ease-in-out;
+  width: 100%;
+}
+
+.slide {
+  min-width: 100%;
+  box-sizing: border-box;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+  text-align: center;
+}
+
+.slide img {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.slide h3 {
+  color: #0ff;
+  margin: 10px 0;
+}
+
+.slide p {
+  color: #ccc;
+  font-size: 1em;
+  line-height: 1.5;
+}
+
+.carousel-controls {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.carousel-button {
+  background: #0ff;
+  border: none;
+  padding: 8px 16px;
+  margin: 0 10px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.carousel-button:hover {
+  background: #0cc;
+}
+
+
+.project-card .card-content a:hover {
+  background: #0cc;
+}
+
+.stats-info {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.flip-card {
+  perspective: 600px;
+  width: 100px;
+  height: 40px;
+}
+
+.flap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease-in-out;
+}
+
+.flap .front,
+.flap .back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85em;
+  color: #fff;
+  padding: 4px;
+  box-sizing: border-box;
+}
+
+.flap .front {
+  background: rgba(0, 0, 0, 0.7);
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+}
+
+.flap .back {
+  background: rgba(0, 255, 255, 0.1);
+  color: #0ff;
+  transform: rotateX(180deg);
+  box-shadow: inset 0 0 8px rgba(0, 255, 255, 0.3);
+}
+
+.flipped .flap {
+  transform: rotateX(180deg);
+}
+
   </style>
 </head>
 
 <body>
-  <!-- 2) Container for the 3D view -->
-  <div id="viewDiv"></div>
+  <a href="https://github.com/debajeet123/Geological_feature_tool" class="github-corner" aria-label="View source on GitHub">
+    <svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true">
+      <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z" fill="#0ff"/>
+      <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,79.2 125.5,84.4 125.5,84.4 C122.9,93.1 130.6,98.9 134.4,100.9" fill="black" style="transform-origin: 130px 106px;" class="octo-arm"/>
+      <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.5 142.2,98.2 C133.8,88.0 127.8,91.8 127.8,91.8 C122.3,91.6 120.3,88.1 120.3,88.1 C119.0,82.0 123.4,81.0 123.4,81.0 C127.2,80.4 129.9,83.9 129.9,83.9 C133.0,89.1 130.4,94.1 130.4,94.1 C124.9,103.1 134.7,108.4 139.1,109.9" fill="black" class="octo-body"/>
+    </svg>
+  </a>
 
-  <!-- 3) Load the ArcGIS API for JavaScript -->
-  <script src="https://js.arcgis.com/4.26/"></script>
+  <div class="profile-photo">
+    <img src="profile.jpg" alt="Debajeet Barman">
+  </div>
+  <div id="globe-container"></div>
+  <div style="
+  text-align: center;
+  margin-top: 10px;
+  font-size: 1.2em;
+  color: #0ff;
+  text-shadow: 0 0 10px rgba(0,255,255,0.5);
+">
+    <span class="typewriter">Debajeet Barman – creating structure from noise</span>
+</div>
+  
+  <div class="tabs-background">
+    <div class="strata-layer"></div> <!-- ✅ Add this line for waving effect -->
+    <div class="tabs-wrapper">
+      <nav class="tabs-nav">
+        <!-- <a class="tab-link active" href="#home">Home</a> -->
+        <a class="tab-link" href="#about">About</a>
+        <a class="tab-link" href="#projects">Projects</a>
+        <a class="tab-link" href="#Publications">Publications</a>
+        <a class="tab-link" href="#contact">Contact</a>
+      </nav>
+    </div>
+  </div>
+  
+  <section id="about" class="tab-section">
+    <div class="about-scroll">
+      <h1 style="text-align: center; color: #0ff; margin-bottom: 30px;">About Me</h1>
+  
+      <!-- Combine text and photo into a single styled card -->
+      <div style="display: flex; flex-wrap: wrap; gap: 30px; background: rgba(0,0,0,0.5); padding: 20px; border-radius: 15px; box-shadow: 0 0 25px rgba(0,255,255,0.2);">
+        <div style="flex: 1 1 300px; color: #ddd; font-size: 1.1em; line-height: 1.6;">
+          <p><strong style="color:#0ff;">Debajeet Barman</strong> is a geophysicist decoding Earth’s interior through AI-powered seismic imaging and ambient noise tomography. With a Ph.D. from <strong>Baylor University</strong>, I integrate computational models, field deployments, and open-source tools.</p>
+          <p>My research spans <strong>adjoint-free inversion</strong>, <strong>machine learning</strong>, <strong>high-performance computing</strong>, and <strong>distributed acoustic sensing</strong> — combining physics with innovation to uncover the unseen.</p>
+          <p>I believe science should be <strong>transparent</strong>, <strong>collaborative</strong>, and <strong>visually engaging</strong>. From Python to the Permian Basin, I bridge data and discovery.</p>
+        </div>
+        <div style="flex: 1 1 220px; display: flex; flex-direction: column; gap: 15px;">
+          <img src="desert.jpg" alt="Debajeet in field" style="width: 100%; border-radius: 12px; box-shadow: 0 0 15px rgba(0, 255, 255, 0.25);">
+          <img src="desert2.jpg" alt="Debajeet during seismic survey" style="width: 100%; border-radius: 12px; box-shadow: 0 0 15px rgba(0, 255, 255, 0.25);">
+        </div>
+      </div>
+  
+      <!-- Info Panels -->
+      <div class="about-panels" style="margin-top: 40px;">
+        <div class="panel-card">
+          <h3>🎓 Education</h3>
+          <p>Ph.D. in Geophysics<br/>Baylor University</p>
+        </div>
+        <div class="panel-card">
+          <h3>🧠 Expertise</h3>
+          <p>Seismic Imaging<br/>Adjoint-Free Inversion<br/>Ambient Noise Tomography</p>
+        </div>
+        <div class="panel-card">
+          <h3>🛠 Tools</h3>
+          <p>Python, CUDA, MPI<br/>TensorFlow, ObsPy, Fortran</p>
+        </div>
+        <div class="panel-card">
+          <h3>🌍 Field Work</h3>
+          <p>Gulf Coast Surveys<br/>Gravity + DAS Projects<br/>TexNet Collaborations</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  
+  
+  
+<section id="projects" class="tab-section">
+  <h1 style="text-align: center; color: #0ff;">Projects</h1>
+
+  <div class="projects-carousel">
+    <div class="slides-container" id="slides">
+      <div class="slide">
+          <h3>U.S. Field Deployment Map</h3>
+        
+          <div class="us-grid-map">
+            <div class="state AK" title="Alaska" style="grid-column: 1; grid-row: 5;"></div>
+            <div class="state ME" title="Maine" style="grid-column: 12; grid-row: 1;"></div>
+            <div class="state TX active" title="Texas" style="grid-column: 6; grid-row: 5;"></div>
+            <div class="state CA active" title="California" style="grid-column: 2; grid-row: 5;"></div>
+            <!-- Add more states here -->
+          </div>
+        
+          <p>Visualizing seismic deployments across U.S. regions using a tile-based grid.</p>
+        </div>
+        
+        <img src="project1.png" alt="Project 1">
+        <h3>Ambient Noise Tomography</h3>
+        <p>Mapped crustal structures using TensorFlow & MUSIC algorithm on passive seismic data.</p>
+      </div>
+      <div class="slide">
+        <img src="project2.png" alt="Project 2">
+        <h3>Adjoint-Free FWI</h3>
+        <p>Built GPU-accelerated elastic modeling and inversion using Hamiltonian operator techniques.</p>
+      </div>
+      <div class="slide">
+        <img src="project3.png" alt="Project 3">
+        <h3>DAS + Microgravity</h3>
+        <p>Performed joint inversion of Distributed Acoustic Sensing and gravity anomaly data.</p>
+      </div>
+    </div>
+
+    <div class="carousel-controls">
+      <button class="carousel-button" onclick="prevSlide()">◀ Prev</button>
+      <button class="carousel-button" onclick="nextSlide()">Next ▶</button>
+    </div>
+  </div>
+</section>
+<section id="Publications" class="tab-section">
+  <h1 style="text-align: center; color: #0ff;">Publications</h1>
+  <div class="about-scroll" id="pub-list" style="max-height: 80vh;"></div>
+</section>
+
+
+
+  
+  
   <script>
-    require([
-      "esri/Map",
-      "esri/views/SceneView",
-      "esri/layers/ElevationLayer",
-      "esri/layers/ImageryLayer"
-    ], function (Map, SceneView, ElevationLayer, ImageryLayer) {
-      // ---------------------------------------------
-      // 1) Create an ElevationLayer (terrain service)
-      // ---------------------------------------------
-      // Esri’s World Elevation (Terrain3D) REST endpoint:
-      const elevation = new ElevationLayer({
-        url:
-          "https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
+    fetch('https://api.github.com/repos/debajeet123/Geological_feature_tool/commits')
+      .then(response => response.json())
+      .then(data => {
+        const list = document.getElementById('commit-list');
+        data.slice(0, 5).forEach(commit => {
+          const item = document.createElement('li');
+          item.innerHTML = `
+            <a href="${commit.html_url}" target="_blank">
+              ${commit.commit.message.split('\n')[0]} – <em>${commit.commit.author.name}</em>
+            </a>
+          `;
+          list.appendChild(item);
+        });
       });
 
-      // ---------------------------------------------
-      // 2) (Optional) Create an ImageryLayer to drape over terrain
-      //    – You could swap this for any raster/orthophoto/Tiles service
-      //    – If you don’t need a custom texture, you can skip this.
-      // ---------------------------------------------
-      const imagery = new ImageryLayer({
-        // Example: World Imagery REST endpoint
-        url:
-          "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer"
+  
+  let currentSlide = 0;
+
+  function showSlide(index) {
+    const slides = document.getElementById('slides');
+    const totalSlides = slides.children.length;
+    currentSlide = (index + totalSlides) % totalSlides;
+    slides.style.transform = `translateX(-${currentSlide * 100}%)`;
+  }
+
+  function nextSlide() {
+    showSlide(currentSlide + 1);
+  }
+
+  function prevSlide() {
+    showSlide(currentSlide - 1);
+  }
+
+  document.addEventListener('DOMContentLoaded', () => showSlide(0));
+
+
+  </script>
+
+<div id="readme-container" style="background:#111;padding:20px;color:#ccc;"></div>
+  
+  <section id="contact" class="tab-section">
+    <h1>Contact</h1>
+    <pre style="
+    background: rgba(0,0,0,0.6);
+    padding: 20px;
+    border-radius: 10px;
+    color: #0ff;
+    font-family: 'Courier New', monospace;
+    font-size: 1em;
+    line-height: 1.8;
+    overflow-x: auto;
+    box-shadow: 0 0 15px rgba(0,255,255,0.2);
+    ">
+  [Email]     ▶ <a href="mailto:debajeet123@gmail.com" style="color:#0ff;text-decoration:none;">debajeet123@gmail.com</a>
+  [AltMail]   ▶ <a href="mailto:Debajeet_Barman1@baylor.edu" style="color:#0ff;text-decoration:none;">Debajeet_Barman1@baylor.edu</a>
+  [LinkedIn]  ▶ <a href="https://www.linkedin.com/in/debajeet-barman" target="_blank" style="color:#0ff;text-decoration:none;">linkedin.com/in/debajeet-barman</a>
+  [Website]   ▶ <a href="https://debajeetbarmanseismology.space" target="_blank" style="color:#0ff;text-decoration:none;">debajeetbarmanseismology.space</a>
+  </pre>
+  </section>
+
+  <div class="info-card">
+    <a href="https://www.linkedin.com/in/debajeetbarman" target="_blank">LinkedIn</a> |
+    <a href="https://scholar.google.com/citations?user=XXXXX" target="_blank">Google Scholar</a> |
+    <a href="https://www.researchgate.net/profile/Debajeet-Barman" target="_blank">ResearchGate</a> |
+    <a href="https://github.com/debajeet123" target="_blank">GitHub</a>
+    <a href="https://www.researchgate.net/profile/Debajeet-Barman" target="_blank">ResearchGate</a>
+      <div id="rg-metrics" style="margin-top: 6px; display: flex; gap: 10px;"></div>
+  </div>
+  <div class="stats-info" role="contentinfo">
+    <div class="flip-card" id="flip-rg-score">
+      <div class="flap">
+        <div class="front">RG Score</div>
+        <div class="back">2</div>
+      </div>
+    </div>
+    <div class="flip-card" id="flip-citations">
+      <div class="flap">
+        <div class="front">Citations</div>
+        <div class="back">14</div>
+      </div>
+    </div>
+    <div class="flip-card" id="flip-reads">
+      <div class="flap">
+        <div class="front">Reads</div>
+        <div class="back">6.2k</div>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+  </div>
+  
+
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.tab-link').forEach(link => {
+        link.addEventListener('click', e => {
+          e.preventDefault();
+          document.querySelectorAll('.tab-link').forEach(l => l.classList.remove('active'));
+          document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
+          link.classList.add('active');
+          document.getElementById(link.getAttribute('href').substring(1)).classList.add('active');
+        });
       });
-
-      // ---------------------------------------------
-      // 3) Build the Map, specifying basemap & ground
-      // ---------------------------------------------
-      const map = new Map({
-        // You can use any 2D or 3D basemap. “topo-vector” is common for topo.
-        basemap: "topo-vector",
-        // The ground property tells ArcGIS which elevation to use.
-        ground: {
-          // Pass an array of ElevationLayer(s)
-          layers: [elevation]
-        }
-      });
-
-      // ---------------------------------------------
-      // 4) Create the SceneView for 3D
-      // ---------------------------------------------
-      const view = new SceneView({
-        container: "viewDiv",
-        map: map,
-        // We set a camera to look at a specific location (latitude, longitude, z)
-        camera: {
-          // For example, look at Mount Rainier (47.6062, –122.3321) from above:
-          position: {
-            // Coordinates in WGS84 (lon, lat, elevation in meters)
-            x: -122.3321,
-            y: 47.6062,
-            z: 2000 // in meters above ground
-          },
-          tilt: 65, // tilt the camera down so you see slope
-          heading: 0
-        }
-      });
-
-      // ---------------------------------------------
-      // 5) Once the view is ready, add the ImageryLayer draped on terrain
-      // ---------------------------------------------
-      view.when().then(function () {
-        // By default, 2D layers in a SceneView will drape onto the terrain.
-        // So we can just add the imagery layer to the map’s layer list:
-        map.add(imagery);
-
-        // (Optional) Adjust the renderer or transparency if desired:
-        imagery.opacity = 0.75;
-      });
-
-      // ---------------------------------------------
-      // 6) Add widgets or UI (optional)
-      // ---------------------------------------------
-      // For example, add a simple “Home” button in the top-left:
-      view.ui.add("homeWidget", "top-left");
     });
   </script>
+  <!-- Globe.gl + Three.js -->
+<script src="https://unpkg.com/three"></script>
+<script src="https://unpkg.com/globe.gl"></script>
+
+<script>
+  const world = Globe()
+    .globeImageUrl('//unpkg.com/three-globe/example/img/earth-dark.jpg')
+    .bumpImageUrl('//unpkg.com/three-globe/example/img/earth-topology.png')
+    .showAtmosphere(true)
+    .atmosphereColor('#0ff')
+    .atmosphereAltitude(0.25)
+    .backgroundColor('rgba(0,0,0,0)')
+    .width(400)
+    .height(400)
+    (document.getElementById('globe-container'));
+
+  world.controls().autoRotate = true;
+  world.controls().autoRotateSpeed = 0.8;
+
+  
+  fetch('https://unpkg.com/world-atlas@2.0.2/countries-110m.json')
+    .then(res => res.json())
+    .then(countries => {
+      const countriesTopo = topojson.feature(countries, countries.objects.countries).features;
+      world
+        .polygonsData(countriesTopo)
+        .polygonCapColor(() => 'rgba(0,255,255,0.1)')
+        .polygonSideColor(() => 'rgba(0,255,255,0.05)')
+        .polygonStrokeColor(() => '#0ff')
+        .polygonAltitude(0.01);
+    });
+
+
+  // Load recent earthquake dots from USGS
+  fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson')
+    .then(res => res.json())
+    .then(data => {
+      const quakes = data.features.map(f => ({
+        lat: f.geometry.coordinates[1],
+        lng: f.geometry.coordinates[0],
+        size: Math.max(f.properties.mag / 10, 0.05),
+        mag: f.properties.mag
+      }));
+      world
+        .pointsData(quakes)
+        .pointAltitude('size')
+        .pointColor(() => '#ff8800')
+        .pointRadius('size');
+    });
+  </script>
+
+    <!-- Load Marked.js FIRST -->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+<!-- THEN use it to render the README -->
+
+  <script>
+  fetch('https://raw.githubusercontent.com/debajeet123/Geological_feature_tool/main/README.md')
+    .then(res => res.text())
+    .then(md => {
+      document.getElementById('readme-container').innerHTML = marked(md);
+    });
+</script>
+
+
+<!-- Required for topojson -->
+<script src="https://unpkg.com/topojson@3"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script> -->
+
+<script>
+  fetch('publications.json')
+    .then(res => res.json())
+    .then(publications => {
+      const container = document.getElementById('pub-list');
+      const list = document.createElement('ul');
+      list.style.listStyleType = 'none';
+      list.style.padding = '0';
+
+      publications.forEach(pub => {
+        const item = document.createElement('li');
+        item.style.marginBottom = '25px';
+        item.innerHTML = `
+          <strong style="color:#0ff;">${pub.authors} (${pub.year}).</strong><br/>
+          <em>${pub.title}</em><br/>
+          <span style="color:#aaa;">${pub.journal}${pub.volume ? `, ${pub.volume}` : ''}${pub.issue ? `(${pub.issue})` : ''}${pub.pages ? `, ${pub.pages}` : ''}.</span>
+        `;
+        list.appendChild(item);
+      });
+
+      container.appendChild(list);
+
+      const more = document.createElement('p');
+      more.style.textAlign = 'center';
+      more.innerHTML = `📚 <a href="https://scholar.google.com/citations?user=XXXXXXX" target="_blank" style="color:#0ff; text-decoration:none;">View all on Google Scholar</a>`;
+      container.appendChild(more);
+    });
+</script>
+
 </body>
 </html>
