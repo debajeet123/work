@@ -2,90 +2,40 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Cool 3D Graphics</title>
+  <title>Three.js Basic Scene</title>
   <style>
-    body { margin: 0; overflow: hidden; background: black; font-family: sans-serif; }
-    #wave {
-      width: 100%;
-    }
+    body { margin: 0; overflow: hidden; }
+    canvas { display: block; }
   </style>
 </head>
 <body>
-  <canvas id="wave"></canvas>
-  <script type="module">
-    import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.148.0/build/three.module.js';
-    import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.148.0/examples/jsm/controls/OrbitControls.js';
+  <script src="https://cdn.jsdelivr.net/npm/three@0.148.0/build/three.min.js"></script>
+  <script>
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.set(0, 1.5, 4);
-
+    const camera = new THREE.PerspectiveCamera(
+      75, window.innerWidth / window.innerHeight, 0.1, 1000
+    );
     const renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
 
-    const controls = new OrbitControls(camera, renderer.domElement);
+    // Add a cube
+    const geometry = new THREE.BoxGeometry();
+    const material = new THREE.MeshStandardMaterial({ color: 0x0077ff });
+    const cube = new THREE.Mesh(geometry, material);
+    scene.add(cube);
 
-    // Base
-    const base = new THREE.Mesh(
-      new THREE.BoxGeometry(4, 0.2, 2),
-      new THREE.MeshStandardMaterial({ color: 0x333333 })
-    );
-    base.position.y = 0;
-    scene.add(base);
-
-    // Rotating drum
-    const drum = new THREE.Mesh(
-      new THREE.CylinderGeometry(0.5, 0.5, 2, 32),
-      new THREE.MeshStandardMaterial({ color: 0xffffff })
-    );
-    drum.rotation.x = Math.PI / 2; // lay horizontally
-    drum.position.y = 0.6;
-    scene.add(drum);
-
-    // Pen arm
-    const pen = new THREE.Mesh(
-      new THREE.BoxGeometry(0.05, 0.6, 0.05),
-      new THREE.MeshStandardMaterial({ color: 0xff0000 })
-    );
-    pen.position.set(0.55, 0.9, 0);
-    scene.add(pen);
-
+    // Add light
     const light = new THREE.PointLight(0xffffff, 1);
-    light.position.set(5, 5, 5);
+    light.position.set(2, 3, 4);
     scene.add(light);
 
-    const waveCanvas = document.getElementById('wave');
-    const waveCtx = waveCanvas.getContext('2d');
-    waveCanvas.width = window.innerWidth;
-    waveCanvas.height = 150;
-    waveCanvas.style.position = 'absolute';
-    waveCanvas.style.bottom = '0';
-    waveCanvas.style.left = '0';
-    waveCanvas.style.pointerEvents = 'none';
+    camera.position.z = 5;
 
-    let waveData = new Array(waveCanvas.width).fill(waveCanvas.height / 2);
-
-    function drawWave(value) {
-      waveData.push(waveCanvas.height / 2 - value * 100);
-      if (waveData.length > waveCanvas.width) waveData.shift();
-      waveCtx.fillStyle = '#000';
-      waveCtx.fillRect(0, 0, waveCanvas.width, waveCanvas.height);
-      waveCtx.beginPath();
-      for (let i = 0; i < waveData.length; i++) {
-        waveCtx.lineTo(i, waveData[i]);
-      }
-      waveCtx.strokeStyle = '#00ff00';
-      waveCtx.stroke();
-    }
-
-    function animate(t) {
+    function animate() {
       requestAnimationFrame(animate);
-      const time = t * 0.001;
-      const amp = Math.sin(time * 3) * 0.2 + (Math.random() - 0.5) * 0.05;
-      drum.rotation.z += 0.01;
-      pen.position.y = 0.9 + amp;
-      drawWave(amp);
-      controls.update();
+      cube.rotation.x += 0.01;
+      cube.rotation.y += 0.01;
       renderer.render(scene, camera);
     }
 
@@ -95,9 +45,6 @@
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
-      waveCanvas.width = window.innerWidth;
-      waveCanvas.height = 150;
-      waveData = new Array(waveCanvas.width).fill(waveCanvas.height / 2);
     });
   </script>
 </body>
