@@ -830,7 +830,40 @@
   
   </div>
   
-
+  <script>
+    const quakeList = document.getElementById('quake-list');
+    const quakeAPI = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson';
+  
+    fetch(quakeAPI)
+      .then(res => res.json())
+      .then(data => {
+        const quakes = data.features.slice(0, 10);
+        quakes.forEach(q => {
+          const { place, time, mag } = q.properties;
+          const depth = q.geometry.coordinates[2];
+          let magClass = 'mag-low';
+          if (mag >= 6) magClass = 'mag-severe';
+          else if (mag >= 5) magClass = 'mag-high';
+          else if (mag >= 3) magClass = 'mag-mid';
+  
+          const tooltip = `Time: ${new Date(time).toLocaleString()}\nDepth: ${depth.toFixed(1)} km`;
+  
+          const li = document.createElement('li');
+          li.innerHTML = `
+            <span class="quake-tooltip">
+              <strong class="${magClass}">M${mag.toFixed(1)}</strong>
+              <span class="tooltip-text">${tooltip}</span>
+            </span>
+            – ${place}
+          `;
+          quakeList.appendChild(li);
+        });
+      })
+      .catch(err => {
+        quakeList.innerHTML = `<li style="color:red;">Error loading earthquakes: ${err.message}</li>`;
+      });
+  </script>
+  
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
