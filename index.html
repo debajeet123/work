@@ -193,7 +193,7 @@
       padding:12px 24px; border-radius:30px;
       backdrop-filter: blur(8px);
       box-shadow: 0 0 20px rgba(0,255,255,0.3);
-      <a class="tab-link" href="#readme-section">README</a>
+      
 
 
     }
@@ -256,6 +256,90 @@
       from, to { border-color: transparent }
       50% { border-color: #0ff; }
     }
+    #quake-panel {
+  position: fixed;
+  top: 400px;
+  right: 20px;
+  width: 320px;
+  max-height: 340px;
+  overflow-y: auto;
+  background: rgba(0, 0, 0, 0.65);
+  border: 1px solid rgba(0, 255, 255, 0.15);
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 18px 20px;
+  z-index: 1003;
+  font-family: 'Courier New', monospace;
+  color: #ccc;
+}
+
+#quake-panel h3 {
+  margin-top: 0;
+  font-size: 1.1em;
+  color: #0ff;
+  margin-bottom: 12px;
+  text-shadow: 0 0 6px #0ff;
+}
+
+#quake-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#quake-list li {
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed rgba(0, 255, 255, 0.1);
+}
+
+#quake-list strong {
+  font-weight: bold;
+}
+
+.mag-low { color: #66ffff; }
+.mag-mid { color: #0ff; }
+.mag-high { color: #ffa500; }
+.mag-severe {
+  color: #ff4444;
+  animation: pulse-glow 1.5s infinite ease-in-out;
+}
+
+/* Tooltip */
+.quake-tooltip {
+  position: relative;
+  display: inline-block;
+  cursor: help;
+}
+.quake-tooltip .tooltip-text {
+  visibility: hidden;
+  width: 200px;
+  background-color: rgba(0,0,0,0.85);
+  color: #0ff;
+  text-align: left;
+  padding: 8px;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1005;
+  bottom: 130%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-size: 0.75em;
+  white-space: pre-line;
+}
+.quake-tooltip:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Pulse */
+@keyframes pulse-glow {
+  0%, 100% { text-shadow: 0 0 5px rgba(255, 68, 68, 0.6); }
+  50% { text-shadow: 0 0 20px rgba(255, 68, 68, 1); }
+}
 
     .info-card {
       position: fixed;
@@ -347,6 +431,30 @@
   border-radius: 12px; /* Rounded corners */
   box-shadow: 0 0 20px rgba(0, 255, 255, 0.3); /* Add shadow for aesthetics */
 }
+    .about-panels {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      margin-top: 40px;
+    }
+    .panel-card {
+      background: rgba(0, 0, 0, 0.5);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+      flex: 1 1 calc(25% - 20px);
+      min-width: 250px;
+    }
+    .panel-card h3 {
+      color: #0ff;
+      margin-bottom: 10px;
+    }
+    .panel-card p {
+      color: #ccc;
+      font-size: 1em;
+      line-height: 1.5;
+    }
 .github-panel {
   flex: 1 1 200px;
   background: rgba(0,0,0,0.6);
@@ -511,6 +619,7 @@
         <a class="tab-link" href="#about">About</a>
         <a class="tab-link" href="#projects">Projects</a>
         <a class="tab-link" href="#Publications">Publications</a>
+        <a class="tab-link" href="#readme-section">GitHub play</a>
         <a class="tab-link" href="#contact">Contact</a>
       </nav>
     </div>
@@ -788,17 +897,7 @@
   </script>
 
     <!-- Load Marked.js FIRST -->
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
-<!-- THEN use it to render the README -->
-
-  <script>
-  fetch('https://raw.githubusercontent.com/debajeet123/Geological_feature_tool/main/README.md')
-    .then(res => res.text())
-    .then(md => {
-      document.getElementById('readme-container').innerHTML = marked(md);
-    });
-</script>
 
 
 <!-- Required for topojson -->
