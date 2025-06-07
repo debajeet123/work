@@ -1081,7 +1081,7 @@
 </script>
 <script>
   function updateRGStats() {
-    fetch('rg.json?t=' + Date.now())
+    fetch('./rg.json?t=' + Date.now())
       .then(res => res.json())
       .then(data => {
         document.querySelector('#flip-rg-score .back').textContent = data.rg_score;
