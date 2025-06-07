@@ -1079,6 +1079,29 @@
         `<p style="color:red;">🚫 Could not load README.md: ${err.message}</p>`;
     });
 </script>
+<script>
+  function updateRGStats() {
+    fetch('rg.json?t=' + Date.now())
+      .then(res => res.json())
+      .then(data => {
+        document.querySelector('#flip-rg-score .back').textContent = data.rg_score;
+        document.querySelector('#flip-citations .back').textContent = data.citations;
+        document.querySelector('#flip-reads .back').textContent = data.reads;
+
+        // Optional: trigger flip animation
+        ['#flip-rg-score', '#flip-citations', '#flip-reads'].forEach(id => {
+          const el = document.querySelector(id + ' .flap');
+          el.classList.remove('flipped');
+          void el.offsetWidth; // Force reflow
+          el.classList.add('flipped');
+        });
+      });
+  }
+
+  // Initial + periodic updates
+  updateRGStats();
+  setInterval(updateRGStats, 60 * 1000); // every 60 seconds
+</script>
 
 
 </body>
