@@ -698,15 +698,8 @@
   <div class="projects-carousel">
     <div class="slides-container" id="slides">
       <div class="slide">
-          <h3>U.S. Field Deployment Map</h3>
-        
-          <div class="us-grid-map">
-            <div class="state AK" title="Alaska" style="grid-column: 1; grid-row: 5;"></div>
-            <div class="state ME" title="Maine" style="grid-column: 12; grid-row: 1;"></div>
-            <div class="state TX active" title="Texas" style="grid-column: 6; grid-row: 5;"></div>
-            <div class="state CA active" title="California" style="grid-column: 2; grid-row: 5;"></div>
-            <!-- Add more states here -->
-          </div>
+        <div id="texas-pixel-map" style="width:100%; margin-top: 30px;"></div>
+
         
           <p>Visualizing seismic deployments across U.S. regions using a tile-based grid.</p>
         </div>
@@ -1109,6 +1102,42 @@
   });
   </script>
   
-
+  <script>
+    const elevationURL = 'https://s3.amazonaws.com/elevation-tiles-prod/terrarium/12/1178/1573.png'; // sample tile near Texas
+    const canvas = document.createElement('canvas');
+    canvas.width = 256;
+    canvas.height = 256;
+  
+    const ctx = canvas.getContext('2d');
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.src = elevationURL;
+  
+    img.onload = () => {
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+  
+      const grid = document.createElement('div');
+      grid.style.display = 'grid';
+      grid.style.gridTemplateColumns = 'repeat(64, 5px)';
+      grid.style.gap = '1px';
+  
+      for (let i = 0; i < imageData.length; i += 4 * 4) { // skip 4 pixels for downsampling
+        const r = imageData[i], g = imageData[i+1], b = imageData[i+2];
+        const elevation = (r * 256 + g + b / 256) - 32768; // Terrarium format
+        const shade = Math.round(255 * (elevation + 100) / 600); // normalize
+        const cell = document.createElement('div');
+        cell.style.width = '5px';
+        cell.style.height = '5px';
+        cell.style.background = `rgb(${shade},${shade},${shade})`;
+        grid.appendChild(cell);
+      }
+  
+      const container = document.getElementById('texas-pixel-map');
+      container.innerHTML = '<h3 style="color:#0ff;">Texas Elevation Grid</h3>';
+      container.appendChild(grid);
+    };
+  </script>
+  
 </body>
 </html>
