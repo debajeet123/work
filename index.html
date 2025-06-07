@@ -940,12 +940,7 @@
   world.controls().autoRotate = true;
   world.controls().autoRotateSpeed = 0.8;
 
-  const spriteMaterial = new THREE.SpriteMaterial({
-  color: '#ff4444',
-  transparent: true,
-  opacity: 0.85,
-});
-
+  
   fetch('https://unpkg.com/world-atlas@2.0.2/countries-110m.json')
     .then(res => res.json())
     .then(countries => {
