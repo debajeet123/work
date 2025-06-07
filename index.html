@@ -1060,10 +1060,6 @@
 </script>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
-<!-- Load Marked.js -->
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-
-<!-- Fetch and render README -->
 <script>
   const readmeURL = 'https://raw.githubusercontent.com/debajeet123/Geological_feature_tool/main/README.md';
 
@@ -1073,6 +1069,7 @@
       return res.text();
     })
     .then(md => {
+      console.log('Fetched README markdown:', md);
       document.getElementById('readme-container').innerHTML = marked.parse(md);
     })
     .catch(err => {
@@ -1080,6 +1077,7 @@
         `<p style="color:red;">🚫 Could not load README.md: ${err.message}</p>`;
     });
 </script>
+
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     function updateRGStats() {
