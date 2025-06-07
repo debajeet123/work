@@ -6,6 +6,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <style>
+@keyframes flipDigits {
+  0% {
+    transform: rotateX(90deg);
+    opacity: 0;
+  }
+  50% {
+    transform: rotateX(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: rotateX(0deg);
+    opacity: 1;
+  }
+}
+
+.flip-number {
+  display: inline-block;
+  animation: flipDigits 0.8s ease-in-out;
+  font-family: 'Courier New', monospace;
+  font-size: 1.2em;
+  color: #0ff;
+  letter-spacing: 2px;
+  text-shadow: 0 0 6px rgba(0,255,255,0.4);
+}
+
 
     .bio-container {
   display: flex;
@@ -809,7 +834,7 @@
     <div class="flip-card" id="flip-rg-score">
       <div class="flap">
         <div class="front">RG Score</div>
-        <div class="back">2</div>
+        <div class="back flip-number">2</div>
       </div>
     </div>
     <div class="flip-card" id="flip-citations">
