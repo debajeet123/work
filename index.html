@@ -970,6 +970,30 @@
         .pointColor(() => '#ff8800')
         .pointRadius('size');
     });
+
+    fetch('https://raw.githubusercontent.com/opengeoscience/geo-data/main/volcanoes.json')
+  .then(res => res.json())
+  .then(data => {
+    const volcanoes = data.features.map(v => ({
+      lat: v.geometry.coordinates[1],
+      lng: v.geometry.coordinates[0],
+      name: v.properties.V_Name
+    }));
+
+    world
+      .customLayerData(volcanoes)
+      .customThreeObject(d => {
+        const sprite = new THREE.Sprite(new THREE.SpriteMaterial({
+          color: '#ff4444'
+        }));
+        sprite.scale.set(0.5, 0.5, 0.5); // Adjust size
+        return sprite;
+      })
+      .customThreeObjectUpdate((obj, d) => {
+        obj.position.copy(world.getCoords(d.lat, d.lng));
+      });
+  });
+
   </script>
 
     <!-- Load Marked.js FIRST -->
