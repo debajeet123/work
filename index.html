@@ -610,17 +610,142 @@
   transform: rotateX(180deg);
 }
 
+/* === Projects Presentation Section === */
+
+#projects .project-deck {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  margin-top: 30px;
+  max-height: 65vh;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+/* Custom scrollbar for projects list */
+#projects .project-deck::-webkit-scrollbar {
+  width: 8px;
+}
+#projects .project-deck::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0.2);
+  border-radius: 4px;
+}
+#projects .project-deck::-webkit-scrollbar-thumb {
+  background-color: #0ff;
+  border-radius: 4px;
+  border: 2px solid rgba(0,0,0,0.3);
+}
+
+.project-slide {
+  background: radial-gradient(circle at top left, rgba(0,255,255,0.2), rgba(0,0,0,0.8));
+  border-radius: 18px;
+  box-shadow: 0 0 25px rgba(0,255,255,0.25);
+  padding: 20px 24px;
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1.5fr);
+  gap: 18px;
+  border: 1px solid rgba(0,255,255,0.25);
+  position: relative;
+  overflow: hidden;
+}
+
+.project-slide::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, rgba(0,255,255,0.08), transparent, rgba(0,255,255,0.1));
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.project-slide:hover::before {
+  opacity: 1;
+}
+
+.project-meta h2 {
+  margin: 0 0 6px;
+  font-size: 1.2em;
+  color: #0ff;
+  text-shadow: 0 0 8px rgba(0,255,255,0.5);
+}
+
+.project-meta h4 {
+  margin: 0 0 10px;
+  font-weight: normal;
+  font-size: 0.9em;
+  color: #aaa;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.project-meta p {
+  margin: 0 0 8px;
+  color: #ddd;
+  font-size: 0.95em;
+  line-height: 1.5;
+}
+
+.project-tags {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.project-tag {
+  font-size: 0.75em;
+  padding: 4px 9px;
+  border-radius: 999px;
+  border: 1px solid rgba(0,255,255,0.4);
+  color: #0ff;
+  background: rgba(0,0,0,0.7);
+}
+
+.ascii-panel {
+  font-family: "Courier New", monospace;
+  font-size: 0.8em;
+  background: rgba(0,0,0,0.75);
+  border-radius: 12px;
+  padding: 10px 14px;
+  color: #0ff;
+  border: 1px solid rgba(0,255,255,0.35);
+  box-shadow: inset 0 0 10px rgba(0,255,255,0.15);
+  white-space: pre;
+  overflow-x: auto;
+}
+
+.ascii-title {
+  color: #fff;
+  margin-bottom: 6px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.project-step-label {
+  font-family: "Courier New", monospace;
+  font-size: 0.8em;
+  color: #aaa;
+  margin-top: 5px;
+}
+
+@media (max-width: 900px) {
+  .project-slide {
+    grid-template-columns: 1fr;
+  }
+}
+/* END Projects Presentation Section */
   </style>
 </head>
 
 <body>
-  <a href="https://github.com/debajeet123/Geological_feature_tool" class="github-corner" aria-label="View source on GitHub">
+  <!-- <a href="https://github.com/debajeet123/Geological_feature_tool" class="github-corner" aria-label="View source on GitHub">
     <svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true">
       <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z" fill="#0ff"/>
       <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,79.2 125.5,84.4 125.5,84.4 C122.9,93.1 130.6,98.9 134.4,100.9" fill="black" style="transform-origin: 130px 106px;" class="octo-arm"/>
       <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.5 142.2,98.2 C133.8,88.0 127.8,91.8 127.8,91.8 C122.3,91.6 120.3,88.1 120.3,88.1 C119.0,82.0 123.4,81.0 123.4,81.0 C127.2,80.4 129.9,83.9 129.9,83.9 C133.0,89.1 130.4,94.1 130.4,94.1 C124.9,103.1 134.7,108.4 139.1,109.9" fill="black" class="octo-body"/>
     </svg>
-  </a>
+  </a> -->
 
   <div class="profile-photo">
     <img src="profile.jpg" alt="Debajeet Barman">
