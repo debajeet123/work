@@ -815,30 +815,152 @@
   </section>
   
   
+  <section id="projects" class="tab-section">
+    <h1 style="text-align: center; color: #0ff; margin-bottom: 10px;">Projects</h1>
+    <p style="text-align:center; color:#ccc; font-size:0.95em; margin:0 0 20px;">
+      A mini slide-deck of how I use noise, physics, and AI to image Earth’s interior.
+    </p>
   
+    <div class="project-deck">
   
-<section id="projects" class="tab-section">
-  <h1 style="text-align: center; color: #0ff;">Projects</h1>
+      <!-- Slide 1 -->
+      <div class="project-slide">
+        <div class="project-meta">
+          <h4>SLIDE 01 · PASSIVE SEISMIC</h4>
+          <h2>Ambient Noise Tomography – Southeastern U.S.</h2>
+          <p>
+            Extracted Rayleigh-wave dispersion from continuous noise records using a
+            MUSIC-based workflow on TensorFlow, suppressing non-coherent arrivals and
+            stabilizing phase-velocity measurements.
+          </p>
+          <p>
+            Produced high-resolution crustal and upper-mantle structure beneath the
+            southeastern United States, with improved sensitivity to sedimentary basins
+            and Moho topography.
+          </p>
+          <div class="project-tags">
+            <span class="project-tag">MUSIC</span>
+            <span class="project-tag">TensorFlow</span>
+            <span class="project-tag">Ambient Noise</span>
+            <span class="project-tag">Crustal Imaging</span>
+          </div>
+        </div>
+        <div>
+          <div class="ascii-title">ASCII WAVEFORM PANEL</div>
+          <div class="ascii-panel">
+  ~ t →
+    amp
+     ^
+     |        .        .     .
+     |      .   .    .   .  .   .
+     |  . .      . .      .      . .
+     +--------------------------------
+        station A   station B   station C
+  
+    Cross-correlate ⟶   Clean waveforms
+    Stack          ⟶   Dispersion curves
+          </div>
+          <div class="project-step-label">
+            [noise ➜ cross-correlation ➜ dispersion ➜ tomography]
+          </div>
+        </div>
+      </div>
+  
+      <!-- Slide 2 -->
+      <div class="project-slide">
+        <div class="project-meta">
+          <h4>SLIDE 02 · INVERSE PROBLEMS</h4>
+          <h2>Dictionary Learning for Unsupervised Seismic Inversion</h2>
+          <p>
+            Learned sparse dictionaries directly from shot gathers to represent
+            coherent seismic energy while suppressing noise and acquisition footprints.
+          </p>
+          <p>
+            Used the learned basis as a prior in an adjoint-free inversion scheme,
+            recovering velocity structure without requiring labeled training models.
+          </p>
+          <div class="project-tags">
+            <span class="project-tag">Dictionary Learning</span>
+            <span class="project-tag">Sparse Coding</span>
+            <span class="project-tag">Unsupervised</span>
+            <span class="project-tag">Adjoint-Free Inversion</span>
+          </div>
+        </div>
+        <div>
+          <div class="ascii-title">ASCII MODEL / DATA GRID</div>
+          <div class="ascii-panel">
+    DATA SPACE (shot gathers)
+    +------------------------+
+    | ////  ..  ////   ..   |
+    | //// ////  ..   ////  |
+    |  ..  //// ////  ..    |
+    +------------------------+
+  
+    → Learn atoms Φₖ
+    → Represent data as  d ≈ Σ αₖ Φₖ
+  
+    MODEL SPACE (velocity)
+    +------------------------+
+    |  ░░░  ███  ███  ░░░   |
+    |  ░░░  ███  ███  ░░░   |
+    +------------------------+
+          </div>
+          <div class="project-step-label">
+            [data ➜ dictionary ➜ sparse coefficients ➜ structure]
+          </div>
+        </div>
+      </div>
+  
+      <!-- Slide 3 -->
+      <div class="project-slide">
+        <div class="project-meta">
+          <h4>SLIDE 03 · DAS + GRAVITY</h4>
+          <h2>Joint DAS & Micro-gravity Imaging</h2>
+          <p>
+            Combined distributed acoustic sensing (DAS) strain responses with
+            micro-gravity anomalies to constrain shallow subsurface structure in
+            environments where conventional receivers are sparse or impractical.
+          </p>
+          <p>
+            Designed joint objective functions that balance sensitivity to density
+            and elastic moduli, improving resolution of near-surface heterogeneity.
+          </p>
+          <div class="project-tags">
+            <span class="project-tag">DAS</span>
+            <span class="project-tag">Micro-gravity</span>
+            <span class="project-tag">Joint Inversion</span>
+            <span class="project-tag">Near-surface</span>
+          </div>
+        </div>
+        <div>
+          <div class="ascii-title">ASCII FIBER + ANOMALY MAP</div>
+          <div class="ascii-panel">
+  DAS fiber layout
+    +-----------------------------+
+    |  ⟂⟂⟂⟂⟂⟂⟂⟂⟂ fiber in trench |
+    +-----------------------------+
+  
+  Micro-gravity map
+    +----------------+
+    |  0  -1  -3  -2 |
+    |  1  -2  -4  -3 |  Δg
+    |  0  -1  -2  -1 |
+    +----------------+
+  
+  Joint objective:
+    Φ = Φ_DAS(m) + λ Φ_g(m)
+          </div>
+          <div class="project-step-label">
+            [fiber strain + Δg ➜ consistent shallow model]
+          </div>
+        </div>
+      </div>
+  
+    </div>
+  </section>
+  
 
-  <div class="projects-carousel">
-        <h3>Ambient Noise Tomography</h3>
-        <!-- <canvas id="trace" width="300" height="100"></canvas> -->
 
-        <p>Mapped crustal structures using TensorFlow & MUSIC algorithm on passive seismic data of Southeastern US.</p>
-        <h3>Dictionary learning for unsupervised seismic inverse problem</h3>
-        <!-- <p>Built GPU-accelerated elastic modeling and inversion using Hamiltonian operator techniques.</p> -->
-      
-      
-        <!-- <h3>DAS + Microgravity</h3> -->
-        <!-- <p>Performed joint inversion of Distributed Acoustic Sensing and gravity anomaly data.</p> -->
-    
-
-    <!-- <div class="carousel-controls">
-      <button class="carousel-button" onclick="prevSlide()">◀ Prev</button>
-      <button class="carousel-button" onclick="nextSlide()">Next ▶</button>
-    </div> -->
-  </div>
-</section>
 <section id="Publications" class="tab-section">
   <h1 style="text-align: center; color: #0ff;">Publications</h1>
   <div class="about-scroll" id="pub-list" style="max-height: 80vh;"></div>
