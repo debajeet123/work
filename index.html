@@ -716,21 +716,25 @@
   background: rgba(0,0,0,0.7);
 }
 
+/* Fix the right panel (ASCII area) */
 .ascii-panel {
-    width: 100%;
-    height: 480px;     /* perfect size for your layout */
-    padding: 0;
-    overflow: hidden;
-    background: rgba(0,0,0,0.3);
-    border: 1px solid rgba(0,255,255,0.35);
-    border-radius: 12px;
+  padding: 0 !important;
+  margin: 0 !important;
+  width: 100%;
+  height: 520px;  /* PERFECT HEIGHT FOR YOUR LAYOUT */
+  overflow: hidden;
+  background: rgba(0,0,0,0.35);
+  border: 1px solid rgba(0,255,255,0.3);
+  border-radius: 12px;
 }
 
+/* Canvas fills it exactly */
 #wave2d {
-    width: 100%;
-    height: 100%;
-    display: block;
+  width: 100%;
+  height: 100%;
+  display: block;
 }
+
 
 .ascii-title {
   color: #fff;
