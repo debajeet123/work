@@ -901,6 +901,11 @@
       [noise ➜ cross-correlation ➜ dispersion ➜ tomography]
     </div>
   </div>
+  <div class="ascii-panel" style="padding:0; overflow:hidden;">
+    <canvas id="wave2d" width="650" height="520"
+            style="width:100%; height:100%; display:block; border-radius:12px;">
+    </canvas>
+</div>
 
   <div>
     <div class="mini-3d-wrapper">
@@ -1415,80 +1420,79 @@
 </script>
 
 <script>
-const canvas = document.getElementById("wave2d");
-const ctx = canvas.getContext("2d");
-
-const W = canvas.width;
-const H = canvas.height;
-
-// Wave parameters
-const k = 0.20;      // wavenumber
-const c = 2.0;       // velocity
-const omega = c*k;   // angular frequency
-
-// 10 source locations on a circle
-const numSources = 10;
-const radius = 180;
-
-const cx = W/2;
-const cy = H/2;
-
-let sources = [];
-
-for (let i = 0; i < numSources; i++) {
-    let angle = (2 * Math.PI * i) / numSources;
-    sources.push({
-        x: cx + radius * Math.cos(angle),
-        y: cy + radius * Math.sin(angle)
-    });
-}
-
-// Analytic 2D wavefield from all sources
-function waveField(x, y, t) {
-    let total = 0;
-
-    for (let s of sources) {
-        const dx = x - s.x;
-        const dy = y - s.y;
-        const r = Math.sqrt(dx*dx + dy*dy) + 1e-6;
-
-        total += Math.sin(k*r - omega*t) / r;
-    }
-
-    return total;
-}
-
-let t = 0;
-
-function draw() {
-    t += 0.08;
-
-    const img = ctx.createImageData(W, H);
-    const data = img.data;
-
-    let i = 0;
-    for (let y = 0; y < H; y++) {
-        for (let x = 0; x < W; x++) {
-
-            const u = waveField(x, y, t);
-
-            // Normalize to 0-255 (cyan color)
-            let val = Math.floor((u * 40) + 128);
-            val = Math.max(0, Math.min(255, val));
-
-            data[i++] = 0;     // R
-            data[i++] = val;   // G
-            data[i++] = val;   // B
-            data[i++] = 255;   // A
-        }
-    }
-
-    ctx.putImageData(img, 0, 0);
-    requestAnimationFrame(draw);
-}
-
-draw();
-</script>
+  // ---- PANEL 2D WAVEFIELD (10 SOURCES) ----
+  document.addEventListener("DOMContentLoaded", () => {
+  
+      const canvas = document.getElementById("wave2d");
+      if (!canvas) return;  // panel not loaded yet
+  
+      const ctx = canvas.getContext("2d");
+  
+      const W = canvas.width;
+      const H = canvas.height;
+  
+      const k = 0.20;
+      const c = 2.0;
+      const omega = k * c;
+  
+      const numSources = 10;
+      const radius = 180;
+      const cx = W/2;
+      const cy = H/2;
+  
+      let sources = [];
+      for (let i = 0; i < numSources; i++) {
+          let angle = (2 * Math.PI * i) / numSources;
+          sources.push({
+              x: cx + radius * Math.cos(angle),
+              y: cy + radius * Math.sin(angle)
+          });
+      }
+  
+      function waveField(x, y, t) {
+          let u = 0;
+          for (let s of sources) {
+              const dx = x - s.x;
+              const dy = y - s.y;
+              const r = Math.sqrt(dx*dx + dy*dy) + 1e-6;
+              u += Math.sin(k*r - omega*t) / r;
+          }
+          return u;
+      }
+  
+      let t = 0;
+  
+      function draw() {
+          t += 0.08;
+  
+          const img = ctx.createImageData(W, H);
+          const data = img.data;
+  
+          let i = 0;
+          for (let y = 0; y < H; y++) {
+              for (let x = 0; x < W; x++) {
+  
+                  const u = waveField(x, y, t);
+  
+                  // ---- heatmap coloring ----
+                  const uNorm = Math.max(-1, Math.min(1, u / 5));
+                  const cval = Math.floor((uNorm + 1) * 127.5);
+  
+                  data[i++] = cval;          // R
+                  data[i++] = 255 - cval;    // G
+                  data[i++] = 128 - cval/2;  // B
+                  data[i++] = 255;           // A
+              }
+          }
+  
+          ctx.putImageData(img, 0, 0);
+          requestAnimationFrame(draw);
+      }
+  
+      draw();
+  });
+  </script>
+  
 
 
 
