@@ -877,7 +877,7 @@
       <!-- Slide 1 -->
 
       <div class="project-slide">
-        <!-- <div class="project-meta">
+        <div class="project-meta">
           <h4>SLIDE 01 · PASSIVE SEISMIC</h4>
           <h2>Ambient Noise Tomography – Southeastern U.S.</h2>
           <p>
@@ -896,37 +896,19 @@
             <span class="project-tag">Ambient Noise</span>
             <span class="project-tag">Crustal Imaging</span>
           </div>
-        </div>
-        <div>
-          <div class="ascii-title">ASCII WAVEFORM PANEL</div>
-          <div class="ascii-panel">
-  ~ t →
-    amp
-     ^
-     |        .        .     .
-     |      .   .    .   .  .   .
-     |  . .      . .      .      . .
-     +--------------------------------
-        station A   station B   station C
-  
-    Cross-correlate ⟶   Clean waveforms
-    Stack          ⟶   Dispersion curves
-          </div>
           <div class="project-step-label">
             [noise ➜ cross-correlation ➜ dispersion ➜ tomography]
           </div>
         </div>
-      </div> -->
-  
-      <div>
-        <div class="mini-3d-wrapper">
-          <canvas id="wave3d-canvas" class="mini-3d-canvas"></canvas>
-          <div class="mini-3d-caption">
-            3D noise-derived surface – animated wavefronts hinting at cross-correlated ambient noise.
+        <div>
+          <div class="mini-3d-wrapper">
+            <canvas id="wave3d-canvas" class="mini-3d-canvas"></canvas>
+            <div class="mini-3d-caption">
+              3D noise-derived surface – animated wavefronts hinting at cross-correlated ambient noise.
+            </div>
           </div>
         </div>
       </div>
-    </div>
       <!-- Slide 2 -->
       <div class="project-slide">
         <div class="project-meta">
@@ -1182,27 +1164,7 @@
         quakeList.innerHTML = `<li style="color:red;">Error loading earthquakes: ${err.message}</li>`;
       });
 
-      const ctx = document.getElementById('trace').getContext('2d');
-let t = 0;
-
-function draw() {
-  ctx.clearRect(0, 0, 300, 100);
-  ctx.beginPath();
-  ctx.moveTo(0, 50);
-
-  for (let x = 0; x < 300; x++) {
-    const y = 50 + Math.sin((x + t) * 0.1) * Math.sin(t * 0.05) * 20;
-    ctx.lineTo(x, y);
-  }
-
-  ctx.strokeStyle = '#0ff';
-  ctx.stroke();
-
-  t += 2;
-  requestAnimationFrame(draw);
-}
-
-draw();
+    
 
   </script>
   
@@ -1223,7 +1185,8 @@ draw();
   <!-- Globe.gl + Three.js -->
 <script src="https://unpkg.com/three"></script>
 <script src="https://unpkg.com/globe.gl"></script>
-
+<!-- Required for topojson -->
+<script src="https://unpkg.com/topojson@3"></script>
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const quakeList = document.getElementById('quake-list');
@@ -1337,8 +1300,7 @@ draw();
     <!-- Load Marked.js FIRST -->
 
 
-<!-- Required for topojson -->
-<script src="https://unpkg.com/topojson@3"></script>
+
 <!-- <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script> -->
 
 <script>
