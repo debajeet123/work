@@ -1420,80 +1420,91 @@
 </script>
 
 <script>
-  // ---- 2D SEISMIC WAVEFIELD INSIDE PROJECT PANEL ----
-  
   document.addEventListener("DOMContentLoaded", () => {
-      const canvas = document.getElementById("wave2d");
-      if (!canvas) return;
   
-      const ctx = canvas.getContext("2d");
+    const canvas = document.getElementById("wave2d");
+    if (!canvas) { console.warn("wave2d not found"); return; }
+  
+    const ctx = canvas.getContext("2d");
+  
+    function resize() {
+      canvas.width = canvas.clientWidth;
+      canvas.height = canvas.clientHeight;
+    }
+  
+    resize();
+    window.addEventListener("resize", resize);
+  
+    const k = 0.22;
+    const c = 2.0;
+    const omega = k * c;
+  
+    const numSources = 10;
+    const radius = 160;
+  
+    function makeSources() {
+      const W = canvas.width;
+      const H = canvas.height;
+      const cx = W/2;
+      const cy = H/2;
+  
+      let src = [];
+      for (let i=0;i<numSources;i++) {
+        const angle = 2*Math.PI*i/numSources;
+        src.push({ x: cx + radius*Math.cos(angle),
+                   y: cy + radius*Math.sin(angle) });
+      }
+      return src;
+    }
+  
+    let sources = makeSources();
+    window.addEventListener("resize", () => sources = makeSources());
+  
+    function wave(x,y,t) {
+      let u = 0;
+      for (const s of sources) {
+        const dx = x-s.x, dy=y-s.y;
+        const r = Math.sqrt(dx*dx + dy*dy) + 1e-6;
+        u += Math.sin(k*r - omega*t) / r;
+      }
+      return u;
+    }
+  
+    let t = 0;
+  
+    function animate() {
+      t += 0.08;
   
       const W = canvas.width;
       const H = canvas.height;
   
-      // wave parameters
-      const k = 0.20;
-      const c = 2.0;
-      const omega = k * c;
+      const img = ctx.createImageData(W, H);
+      const d = img.data;
   
-      // circle array with 10 sources
-      const numSources = 10;
-      const radius = 180;
-      const cx = W / 2;
-      const cy = H / 2;
+      let i=0;
+      for (let y=0;y<H;y++) {
+        for (let x=0;x<W;x++) {
+          let u = wave(x,y,t);
   
-      let sources = [];
-      for (let i = 0; i < numSources; i++) {
-          let angle = (2 * Math.PI * i) / numSources;
-          sources.push({
-              x: cx + radius * Math.cos(angle),
-              y: cy + radius * Math.sin(angle)
-          });
+          let amp = Math.abs(u * 250);
+          amp = Math.min(255, amp);
+  
+          d[i++] = 0;      // R
+          d[i++] = amp;    // G
+          d[i++] = 255;    // B
+          d[i++] = 255;    // A
+        }
       }
   
-      function waveField(x, y, t) {
-          let u = 0;
-          for (let s of sources) {
-              const dx = x - s.x;
-              const dy = y - s.y;
-              const r = Math.sqrt(dx*dx + dy*dy) + 1e-6;
-              u += Math.sin(k * r - omega * t) / r;
-          }
-          return u;
-      }
+      ctx.putImageData(img,0,0);
+      requestAnimationFrame(animate);
+    }
   
-      let t = 0;
+    animate();
   
-      function draw() {
-          t += 0.08;
-  
-          const img = ctx.createImageData(W, H);
-          const data = img.data;
-  
-          let p = 0;
-          for (let y = 0; y < H; y++) {
-              for (let x = 0; x < W; x++) {
-  
-                  const u = waveField(x, y, t);
-  
-                  // ---- COLORING: blue->cyan->green->yellow->red heatmap ----
-                  const uNorm = Math.max(-1, Math.min(1, u / 5));
-                  const col = Math.floor((uNorm + 1) * 127.5);  // 0..255
-  
-                  data[p++] = col;          // R
-                  data[p++] = 255 - col;    // G
-                  data[p++] = 128 - col/2;  // B
-                  data[p++] = 255;          // A
-              }
-          }
-  
-          ctx.putImageData(img, 0, 0);
-          requestAnimationFrame(draw);
-      }
-  
-      draw();
   });
   </script>
+  
   
 
 
