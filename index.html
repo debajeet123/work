@@ -1415,97 +1415,84 @@
 </script>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const canvas = document.getElementById('wave3d-canvas');
-    if (!canvas || typeof THREE === 'undefined') return;
-  
-    const scene = new THREE.Scene();
-    scene.background = null;
-  
-    const targetHeight = 220;
-    const width = canvas.clientWidth || 300;
-    const height = targetHeight;
-  
-    const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
-    camera.position.set(0, 2.0, 5.0);
-    camera.lookAt(0, 0, 0);
-  
-    const renderer = new THREE.WebGLRenderer({
-      canvas: canvas,
-      antialias: true,
-      alpha: true
+const canvas = document.getElementById("wave2d");
+const ctx = canvas.getContext("2d");
+
+const W = canvas.width;
+const H = canvas.height;
+
+// Wave parameters
+const k = 0.20;      // wavenumber
+const c = 2.0;       // velocity
+const omega = c*k;   // angular frequency
+
+// 10 source locations on a circle
+const numSources = 10;
+const radius = 180;
+
+const cx = W/2;
+const cy = H/2;
+
+let sources = [];
+
+for (let i = 0; i < numSources; i++) {
+    let angle = (2 * Math.PI * i) / numSources;
+    sources.push({
+        x: cx + radius * Math.cos(angle),
+        y: cy + radius * Math.sin(angle)
     });
-    renderer.setPixelRatio(window.devicePixelRatio || 1);
-    renderer.setSize(width, height, false);
-  
-    const keyLight = new THREE.DirectionalLight(0x00ffff, 1.1);
-    keyLight.position.set(3, 5, 6);
-    scene.add(keyLight);
-  
-    const rimLight = new THREE.DirectionalLight(0x00aaff, 0.6);
-    rimLight.position.set(-4, -3, -4);
-    scene.add(rimLight);
-  
-    const ambient = new THREE.AmbientLight(0x202020);
-    scene.add(ambient);
-  
-    const geo = new THREE.PlaneGeometry(5, 3, 80, 40);
-    geo.rotateX(-Math.PI / 2.4);
-  
-    const mat = new THREE.MeshStandardMaterial({
-      color: 0x00ffff,
-      metalness: 0.3,
-      roughness: 0.25,
-      emissive: new THREE.Color(0x00ffff).multiplyScalar(0.35),
-      side: THREE.DoubleSide
-    });
-  
-    const waveMesh = new THREE.Mesh(geo, mat);
-    scene.add(waveMesh);
-  
-    const pos = geo.attributes.position;
-    const baseY = new Float32Array(pos.count);
-    for (let i = 0; i < pos.count; i++) {
-      baseY[i] = pos.getY(i);
+}
+
+// Analytic 2D wavefield from all sources
+function waveField(x, y, t) {
+    let total = 0;
+
+    for (let s of sources) {
+        const dx = x - s.x;
+        const dy = y - s.y;
+        const r = Math.sqrt(dx*dx + dy*dy) + 1e-6;
+
+        total += Math.sin(k*r - omega*t) / r;
     }
-  
-    const clock = new THREE.Clock();
-  
-    function animate() {
-      requestAnimationFrame(animate);
-      const t = clock.getElapsedTime();
-  
-      for (let i = 0; i < pos.count; i++) {
-        const x = pos.getX(i);
-        const z = pos.getZ(i);
-  
-        const yWave1 = 0.25 * Math.sin(2.0 * x - 2.5 * t) * Math.exp(-0.1 * z * z);
-        const yWave2 = 0.15 * Math.cos(1.7 * z + 1.8 * t) * Math.exp(-0.08 * x * x);
-  
-        pos.setY(i, baseY[i] + yWave1 + yWave2);
-      }
-      pos.needsUpdate = true;
-  
-      waveMesh.rotation.y = 0.3 * Math.sin(t * 0.3);
-  
-      renderer.render(scene, camera);
+
+    return total;
+}
+
+let t = 0;
+
+function draw() {
+    t += 0.08;
+
+    const img = ctx.createImageData(W, H);
+    const data = img.data;
+
+    let i = 0;
+    for (let y = 0; y < H; y++) {
+        for (let x = 0; x < W; x++) {
+
+            const u = waveField(x, y, t);
+
+            // Normalize to 0-255 (cyan color)
+            let val = Math.floor((u * 40) + 128);
+            val = Math.max(0, Math.min(255, val));
+
+            data[i++] = 0;     // R
+            data[i++] = val;   // G
+            data[i++] = val;   // B
+            data[i++] = 255;   // A
+        }
     }
-  
-    animate();
-  
-    function onResize() {
-      const w = canvas.clientWidth || width;
-      const h = targetHeight;
-      camera.aspect = w / h;
-      camera.updateProjectionMatrix();
-      renderer.setSize(w, h, false);
-    }
-  
-    window.addEventListener('resize', onResize);
-  });
-  </script>
-  
-  
+
+    ctx.putImageData(img, 0, 0);
+    requestAnimationFrame(draw);
+}
+
+draw();
+</script>
+
+
+
+
   
 </body>
 </html>
