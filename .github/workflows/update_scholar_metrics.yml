@@ -1,5 +1,6 @@
 name: Update Google Scholar Metrics
 
+
 on:
   schedule:
     - cron: "0 0 * * *"
