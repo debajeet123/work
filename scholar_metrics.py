@@ -1,16 +1,13 @@
 from scholarly import scholarly, ProxyGenerator
-import json
-import time
+import json, time
 
 SCHOLAR_ID = "_i8vIAEAAAAJ"
 
 def fetch_scholar_metrics():
-    # Use free rotating proxies
     pg = ProxyGenerator()
-    pg.FreeProxies()
+    pg.FreeProxies()  # THIS IS THE FIX
     scholarly.use_proxy(pg)
 
-    # Retry up to 5 times to avoid rate limiting
     for attempt in range(5):
         try:
             print(f"Attempt {attempt+1}...")
@@ -30,9 +27,9 @@ def fetch_scholar_metrics():
             return
         except Exception as e:
             print("Error:", e)
-            time.sleep(5)
+            time.sleep(3)
 
-    raise Exception("Failed to fetch metrics after retries.")
+    raise Exception("FAILED: Could not fetch Google Scholar metrics.")
 
 
 if __name__ == "__main__":
