@@ -1,9 +1,13 @@
-from scholarly import scholarly
+from scholarly import scholarly, ProxyGenerator
 import json
 
-SCHOLAR_ID = "_i8vIAEAAAAJ"   # Debajeet Barman
+SCHOLAR_ID = "_i8vIAEAAAAJ"
 
 def fetch_scholar_metrics():
+    pg = ProxyGenerator()
+    pg.Tor_Internal(tor_cmd = "tor")
+    scholarly.use_proxy(pg)
+
     author = scholarly.search_author_id(SCHOLAR_ID)
     author = scholarly.fill(author, sections=['indices'])
 
@@ -17,6 +21,7 @@ def fetch_scholar_metrics():
         json.dump(metrics, f, indent=2)
 
     print("✔ Updated Google Scholar metrics:", metrics)
+
 
 if __name__ == "__main__":
     fetch_scholar_metrics()
