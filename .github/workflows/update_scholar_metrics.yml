@@ -2,33 +2,52 @@ name: Update Google Scholar Metrics
 
 on:
   schedule:
-    - cron: "0 0 * * *"   # runs daily at midnight UTC
-  workflow_dispatch:       # allow manual run
+    - cron: "0 0 * * *"  # Auto-run daily at midnight UTC
+  workflow_dispatch:      # Allow manual test in Actions tab
 
 jobs:
   update-metrics:
     runs-on: ubuntu-latest
 
     steps:
+      # -------------------------------------------
+      # 1. Checkout repository
+      # -------------------------------------------
       - name: Checkout repo
         uses: actions/checkout@v4
 
+      # -------------------------------------------
+      # 2. Python environment
+      # -------------------------------------------
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: "3.10"
 
-      - name: Install dependencies
+      # -------------------------------------------
+      # 3. Install scholarly + TOR
+      # -------------------------------------------
+      - name: Install dependencies (Scholarly + TOR)
         run: |
-          pip install scholarly bs4 requests
+          pip install scholarly
+          sudo apt-get update
+          sudo apt-get install -y tor
+          sudo systemctl start tor
 
+      # -------------------------------------------
+      # 4. Run your Google Scholar metrics script
+      # -------------------------------------------
       - name: Run Scholar Metrics Script
-        run: python scholar_metrics.py
+        run: |
+          python scholar_metrics.py
 
+      # -------------------------------------------
+      # 5. Commit updated metrics JSON file
+      # -------------------------------------------
       - name: Commit updated metrics
         run: |
           git config user.name "GitHub Action"
           git config user.email "actions@github.com"
           git add rg_stats.json
-          git commit -m "Auto-update Google Scholar metrics" || echo "No changes"
+          git commit -m "Auto-update Google Scholar metrics" || echo "No changes to commit"
           git push
