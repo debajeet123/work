@@ -1,0 +1,1515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Debajeet Barman – Geophysicist</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <style>
+@keyframes flipDigits {
+  0% {
+    transform: rotateX(90deg);
+    opacity: 0;
+  }
+  50% {
+    transform: rotateX(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: rotateX(0deg);
+    opacity: 1;
+  }
+}
+
+.flip-number {
+  display: inline-block;
+  animation: flipDigits 0.8s ease-in-out;
+  font-family: 'Courier New', monospace;
+  font-size: 1.2em;
+  color: #0ff;
+  letter-spacing: 2px;
+  text-shadow: 0 0 6px rgba(0,255,255,0.4);
+}
+
+
+    .bio-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.bio-text {
+  flex: 2 1 300px;
+  font-size: 1.1em;
+  line-height: 1.6;
+  color: #ddd;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.15);
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+/* Scrollbar */
+.bio-text::-webkit-scrollbar {
+  width: 6px;
+}
+.bio-text::-webkit-scrollbar-thumb {
+  background: #0ff;
+  border-radius: 3px;
+}
+.bio-text::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.bio-photos {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  flex: 1 1 220px;
+}
+
+.bio-photos img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.25);
+  transition: transform 0.3s ease;
+}
+
+.bio-photos img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px rgba(0, 255, 255, 0.5);
+}
+
+@media (max-width: 768px) {
+  .bio-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .bio-text, .bio-photos {
+    width: 100%;
+  }
+}
+
+
+
+    .strata-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--strata-height);
+  background-image: var(--background-strata);
+  background-size: 100% auto;
+  background-repeat: repeat-x;
+  background-position: center -150px;
+  z-index: 1;
+  opacity: 0.9;
+
+  -webkit-mask-image: url('./mask-pattern.svg');
+  mask-image: url('./mask-pattern.svg');
+  mask-size: 100% 100%;
+  mask-repeat: no-repeat;
+}
+
+@keyframes windFlag {
+  0% { transform: translateY(0) skewY(0deg); }
+  25% { transform: translateY(2px) skewY(-1deg); }
+  50% { transform: translateY(0) skewY(1.5deg); }
+  75% { transform: translateY(-2px) skewY(-1deg); }
+  100% { transform: translateY(0) skewY(0deg); }
+}
+
+.tabs-wrapper {
+  position: relative;
+  z-index: 2;
+}
+
+
+    :root {
+      --background-back: url('./back.png');
+      --back-gradient: linear-gradient(to bottom, #000, #111);
+      --back-size: cover;
+      --back-position: center center;
+      --background-strata: url('./strata.png');
+      --strata-width: 100%;
+      --strata-height: 120px;
+      --strata-x: center;
+      --strata-y: top;
+      --tabs-width: 800px;
+      --tabs-height: 180px;
+      --tabs-padding-top-bottom: 30px;
+      --z-tabs-background: 2;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: var(--background-back), var(--back-gradient);
+      background-position: var(--back-position);
+      background-size: var(--back-size);
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      overflow-x: hidden;
+    }
+
+    .profile-photo {
+      position: fixed;
+      top: 50px;
+      left: 50px;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid rgba(0,255,255,0.3);
+      box-shadow: 0 0 20px rgba(0,255,255,0.4);
+      z-index: 1003;
+    }
+    .profile-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s;
+    }
+    .profile-photo:hover img {
+      transform: scale(1.1);
+    }
+    @keyframes wave-flag {
+  0%   { background-position: 0% 0%; }
+  50%  { background-position: 50% 10px; }
+  100% { background-position: 100% 0%; }
+}
+    
+    .tabs-background {
+      position: relative;
+      height: var(--tabs-height);
+      padding: var(--tabs-padding-top-bottom) 0;
+      background-image: var(--background-strata);
+      background-repeat: no-repeat;
+      background-position: var(--strata-x) var(--strata-y);
+      background-size: var(--strata-width) var(--strata-height);
+      z-index: var(--z-tabs-background);
+      
+    }
+    .tabs-background::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 30px;
+      background: url('torn-edge.png') repeat-x;
+      background-size: contain;
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    .tabs-wrapper { max-width: var(--tabs-width); margin:0 auto; }
+    .tabs-nav {
+      display: flex; justify-content:center; gap:30px;
+      background: rgba(0,0,0,0.7);
+      padding:12px 24px; border-radius:30px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 0 20px rgba(0,255,255,0.3);
+      
+
+
+    }
+    .tab-link {
+      color:#fff; text-decoration:none; padding:8px 16px;
+      border-radius:20px; transition: background 0.3s;
+      position: relative; border: 2px solid transparent;
+      cursor: pointer; color: inherit;
+    }
+    .tab-link:hover { background: rgba(255,255,255,0.2); color:#0ff; }
+    .tab-link.active {
+      background: rgba(0,255,255,0.3);
+      color: #fff; border-color: #0ff;
+    }
+
+    .tab-section {
+      /* Hidden by default */
+      display: none; 
+      
+      /* Positioning */
+      position: fixed;
+      top: 55%; 
+      left: 50%; 
+      transform: translate(-50%, -50%);
+      
+      /* Sizing */
+      width: 120%; 
+      max-width: 800px;
+      
+      /* Styling */
+      background: rgba(0, 0, 0, 0.7); 
+      padding: 70px;
+      border-radius: 20px; 
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 30px rgba(103, 191, 191, 0.3);
+    }
+    .tab-section.active { display:block; }
+
+.tab-section {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+.tab-section.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+    .typewriter {
+      overflow: hidden;
+      border-right: .15em solid #0ff;
+      white-space: nowrap;
+      animation: typing 3s steps(30, end), blink-caret .75s step-end infinite;
+    }
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+    @keyframes blink-caret {
+      from, to { border-color: transparent }
+      50% { border-color: #0ff; }
+    }
+    #quake-panel {
+  position: fixed;
+  top: 400px;
+  right: 20px;
+  width: 250px;
+  max-height: 340px;
+  overflow-y: auto;
+  background: rgba(0, 0, 0, 0.65);
+  border: 1px solid rgba(0, 255, 255, 0.15);
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 18px 20px;
+  z-index: 1003;
+  font-family: 'Courier New', monospace;
+  color: #ccc;
+}
+
+#quake-panel h3 {
+  margin-top: 0;
+  font-size: 1.1em;
+  color: #0ff;
+  margin-bottom: 12px;
+  text-shadow: 0 0 6px #0ff;
+}
+
+#quake-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#quake-list li {
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed rgba(0, 255, 255, 0.1);
+}
+
+#quake-list strong {
+  font-weight: bold;
+}
+
+.mag-low { color: #66ffff; }
+.mag-mid { color: #0ff; }
+.mag-high { color: #ffa500; }
+.mag-severe {
+  color: #ff4444;
+  animation: pulse-glow 1.5s infinite ease-in-out;
+}
+
+/* Tooltip */
+.quake-tooltip {
+  position: relative;
+  display: inline-block;
+  cursor: help;
+}
+.quake-tooltip .tooltip-text {
+  visibility: hidden;
+  width: 200px;
+  background-color: rgba(0,0,0,0.85);
+  color: #0ff;
+  text-align: left;
+  padding: 8px;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1005;
+  bottom: 130%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-size: 0.75em;
+  white-space: pre-line;
+}
+.quake-tooltip:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Pulse */
+@keyframes pulse-glow {
+  0%, 100% { text-shadow: 0 0 5px rgba(255, 68, 68, 0.6); }
+  50% { text-shadow: 0 0 20px rgba(255, 68, 68, 1); }
+}
+
+    .info-card {
+      position: fixed;
+      bottom:20px;
+      right:20px;
+      background: rgba(0,0,0,0.7);
+      padding:15px 25px;
+      border-radius:15px;
+      z-index:1005;
+      box-shadow:0 0 20px rgba(0,255,255,0.2);
+    }
+    .info-card a {
+      color:#0ff; text-decoration:none; margin:0 10px;
+    }
+    .info-card a:hover {
+      color:#fff;
+      text-shadow:0 0 10px #0ff;
+    }
+
+    .stats-info {
+      margin-top: 8px;
+      color: #ccc;
+      font-size: 0.85em;
+    }
+
+    .github-corner {
+      position: fixed;
+      top: 0;
+      right: 0;
+      fill: cyan;
+      color: black;
+      transition: transform 0.3s ease;
+    }
+    .github-corner:hover .octo-arm {
+      animation: octocat-wave 560ms ease-in-out;
+    }
+    @keyframes octocat-wave {
+      0%, 100% { transform: rotate(0); }
+      20%, 60% { transform: rotate(-25deg); }
+      40%, 80% { transform: rotate(10deg); }
+    }
+    @media (max-width: 500px) {
+      .github-corner:hover .octo-arm {
+        animation: none;
+      }
+    }
+    #globe-container {
+  position: fixed;
+  background: transparent !important;
+  top: 20px;
+  right: 20px;
+  width: 350px;
+  height: 350px;
+  z-index: 1002;
+  pointer-events: none; /* makes it non-clickable so your UI stays usable */
+}
+/* TIMELINE SCROLL CONTAINER */
+.timeline-scroll {
+  max-height: 70vh;       /* how tall before it scrolls */
+  overflow-y: auto;
+  padding-right: 10px;    /* so items don’t hide under the track */
+}
+
+/* WebKit browsers (Chrome, Safari, Edge) */
+.timeline-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+.timeline-scroll::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0.2);
+  border-radius: 4px;
+}
+.timeline-scroll::-webkit-scrollbar-thumb {
+  background-color: #0ff;
+  border-radius: 4px;
+  border: 2px solid rgba(0,0,0,0.3);
+}
+
+/* Firefox */
+.timeline-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #0ff rgba(0,0,0,0.2);
+}
+
+.about-scroll {
+  overflow-y: auto; /* Enable vertical scrolling */
+  max-height: 80vh; /* Limit the height to allow scrolling */
+  padding: 20px; /* Add padding for better readability */
+  background: rgba(0, 0, 0, 0.6); /* Ensure consistent background styling */
+  border-radius: 12px; /* Rounded corners */
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.3); /* Add shadow for aesthetics */
+}
+    .about-panels {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      margin-top: 40px;
+    }
+    .panel-card {
+      background: rgba(0, 0, 0, 0.5);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+      flex: 1 1 calc(25% - 20px);
+      min-width: 250px;
+    }
+    .panel-card h3 {
+      color: #0ff;
+      margin-bottom: 10px;
+    }
+    .panel-card p {
+      color: #ccc;
+      font-size: 1em;
+      line-height: 1.5;
+    }
+.github-panel {
+  flex: 1 1 200px;
+  background: rgba(0,0,0,0.6);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0,255,255,0.3);
+  max-height: 300px;
+  overflow-y: auto;
+}
+.projects-carousel {
+  position: relative;
+  overflow: hidden;
+  width: 90%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 0;
+}
+
+.slides-container {
+  display: flex;
+  transition: transform 0.6s ease-in-out;
+  width: 100%;
+}
+
+.slide {
+  min-width: 100%;
+  box-sizing: border-box;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+  text-align: center;
+}
+
+.slide img {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.slide h3 {
+  color: #0ff;
+  margin: 10px 0;
+}
+
+.slide p {
+  color: #ccc;
+  font-size: 1em;
+  line-height: 1.5;
+}
+
+.carousel-controls {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.carousel-button {
+  background: #0ff;
+  border: none;
+  padding: 8px 16px;
+  margin: 0 10px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.carousel-button:hover {
+  background: #0cc;
+}
+
+
+.project-card .card-content a:hover {
+  background: #0cc;
+}
+
+.stats-info {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.flip-card {
+  perspective: 600px;
+  width: 100px;
+  height: 40px;
+}
+
+.flap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease-in-out;
+}
+
+.flap .front,
+.flap .back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85em;
+  color: #fff;
+  padding: 4px;
+  box-sizing: border-box;
+}
+
+.flap .front {
+  background: rgba(0, 0, 0, 0.7);
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+}
+
+.flap .back {
+  background: rgba(0, 255, 255, 0.1);
+  color: #0ff;
+  transform: rotateX(180deg);
+  box-shadow: inset 0 0 8px rgba(0, 255, 255, 0.3);
+}
+
+.flipped .flap {
+  transform: rotateX(180deg);
+}
+
+/* === Projects Presentation Section === */
+
+#projects .project-deck {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  margin-top: 30px;
+  max-height: 65vh;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+/* Custom scrollbar for projects list */
+#projects .project-deck::-webkit-scrollbar {
+  width: 8px;
+}
+#projects .project-deck::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0.2);
+  border-radius: 4px;
+}
+#projects .project-deck::-webkit-scrollbar-thumb {
+  background-color: #0ff;
+  border-radius: 4px;
+  border: 2px solid rgba(0,0,0,0.3);
+}
+
+.project-slide {
+  width: 95%;                   /* panel width */
+  max-width: 1050px;            /* max width */
+  min-height: 500px;            /* panel height */
+  margin: 0 auto 30px;          /* center + spacing */
+  
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(0,255,255,0.35);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 0 30px rgba(0,255,255,0.25);
+
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;  /* bigger text area, smaller ASCII */
+  gap: 25px;
+
+  backdrop-filter: blur(8px);
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.project-slide:hover {
+  transform: scale(1.015);
+  box-shadow: 0 0 40px rgba(0,255,255,0.45);
+}
+
+
+.project-slide::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, rgba(0,255,255,0.08), transparent, rgba(0,255,255,0.1));
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.project-slide:hover::before {
+  opacity: 1;
+}
+
+.project-meta h2 {
+  margin: 0 0 6px;
+  font-size: 1.2em;
+  color: #0ff;
+  text-shadow: 0 0 8px rgba(0,255,255,0.5);
+}
+
+.project-meta h4 {
+  margin: 0 0 10px;
+  font-weight: normal;
+  font-size: 0.9em;
+  color: #aaa;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.project-meta p {
+  margin: 0 0 8px;
+  color: #ddd;
+  font-size: 0.95em;
+  line-height: 1.5;
+}
+
+.project-tags {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.project-tag {
+  font-size: 0.75em;
+  padding: 4px 9px;
+  border-radius: 999px;
+  border: 1px solid rgba(0,255,255,0.4);
+  color: #0ff;
+  background: rgba(0,0,0,0.7);
+}
+
+/* Fix the right panel (ASCII area) */
+.ascii-panel {
+  padding: 0 !important;
+  margin: 0 !important;
+  width: 100%;
+  height: 520px;  /* PERFECT HEIGHT FOR YOUR LAYOUT */
+  overflow: hidden;
+  background: rgba(0,0,0,0.35);
+  border: 1px solid rgba(0,255,255,0.3);
+  border-radius: 12px;
+}
+
+/* Canvas fills it exactly */
+#wave2d {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+
+.ascii-title {
+  color: #fff;
+  margin-bottom: 6px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.project-step-label {
+  font-family: "Courier New", monospace;
+  font-size: 0.8em;
+  color: #aaa;
+  margin-top: 5px;
+}
+
+@media (max-width: 900px) {
+  .project-slide {
+    grid-template-columns: 1fr;
+  }
+}
+/* === Mini 3D panels inside project slides === */
+
+.mini-3d-wrapper {
+  position: relative;
+  border-radius: 14px;
+  border: 1px solid rgba(0,255,255,0.35);
+  padding: 10px 12px 26px;
+  background: radial-gradient(circle at top, rgba(0,255,255,0.18), rgba(0,0,0,0.9));
+  box-shadow: 0 0 18px rgba(0,255,255,0.35);
+  overflow: hidden;
+}
+
+.mini-3d-canvas {
+  width: 100%;
+  height: 220px;      /* change this height if you want bigger/smaller */
+  display: block;
+}
+
+.mini-3d-caption {
+  margin-top: 8px;
+  text-align: center;
+  font-size: 0.8em;
+  color: #ccc;
+  font-family: "Courier New", monospace;
+}
+
+/* optional: subtle glow on hover */
+.mini-3d-wrapper:hover {
+  box-shadow: 0 0 26px rgba(0,255,255,0.6);
+}
+
+/* END Projects Presentation Section */
+  </style>
+</head>
+
+<body>
+  <!-- <a href="https://github.com/debajeet123/Geological_feature_tool" class="github-corner" aria-label="View source on GitHub">
+    <svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true">
+      <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z" fill="#0ff"/>
+      <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,79.2 125.5,84.4 125.5,84.4 C122.9,93.1 130.6,98.9 134.4,100.9" fill="black" style="transform-origin: 130px 106px;" class="octo-arm"/>
+      <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.5 142.2,98.2 C133.8,88.0 127.8,91.8 127.8,91.8 C122.3,91.6 120.3,88.1 120.3,88.1 C119.0,82.0 123.4,81.0 123.4,81.0 C127.2,80.4 129.9,83.9 129.9,83.9 C133.0,89.1 130.4,94.1 130.4,94.1 C124.9,103.1 134.7,108.4 139.1,109.9" fill="black" class="octo-body"/>
+    </svg>
+  </a> -->
+
+  <div class="profile-photo">
+    <img src="profile.jpg" alt="Debajeet Barman">
+  </div>
+  <div id="globe-container"></div>
+  <div style="
+  text-align: center;
+  margin-top: 10px;
+  font-size: 1.2em;
+  color: #0ff;
+  text-shadow: 0 0 10px rgba(0,255,255,0.5);
+">
+    <span class="typewriter">Debajeet Barman – creating structure from noise</span>
+</div>
+  
+  <div class="tabs-background">
+    <div class="strata-layer"></div> <!-- ✅ Add this line for waving effect -->
+    <div class="tabs-wrapper">
+      <nav class="tabs-nav">
+        <!-- <a class="tab-link active" href="#home">Home</a> -->
+        <a class="tab-link" href="#about">About</a>
+        <a class="tab-link" href="#projects">Projects</a>
+        <a class="tab-link" href="#Publications">Publications</a>
+        <a class="tab-link" href="#readme-section">GitHub play</a>
+        <a class="tab-link" href="#contact">Contact</a>
+      </nav>
+    </div>
+  </div>
+  
+  <section id="about" class="tab-section">
+    <div class="about-scroll">
+      <h1 style="text-align: center; color: #0ff; margin-bottom: 30px;">About Me</h1>
+  
+      <!-- Combine text and photo into a single styled card -->
+      <div style="display: flex; flex-wrap: wrap; gap: 30px; background: rgba(0,0,0,0.5); padding: 20px; border-radius: 15px; box-shadow: 0 0 25px rgba(0,255,255,0.2);">
+        <div style="flex: 1 1 300px; color: #ddd; font-size: 1.1em; line-height: 1.6;">
+          <p><strong style="color:#0ff;">Debajeet Barman</strong> is a geophysicist decoding Earth’s interior through AI-powered seismic imaging and ambient noise tomography. With a Ph.D. from <strong>Baylor University</strong>, I integrate computational models, field deployments, and open-source tools.</p>
+          <p>My research spans <strong>adjoint-free inversion</strong>, <strong>machine learning</strong>, <strong>high-performance computing</strong>, and <strong>distributed acoustic sensing</strong> — combining physics with innovation to uncover the unseen.</p>
+          <p>I believe science should be <strong>transparent</strong>, <strong>collaborative</strong>, and <strong>visually engaging</strong>. From Python to the Permian Basin, I bridge data and discovery.</p>
+        </div>
+        <div style="flex: 1 1 220px; display: flex; flex-direction: column; gap: 15px;">
+          <img src="desert.jpg" alt="Debajeet in field" style="width: 100%; border-radius: 12px; box-shadow: 0 0 15px rgba(0, 255, 255, 0.25);">
+          <img src="desert2.jpg" alt="Debajeet during seismic survey" style="width: 100%; border-radius: 12px; box-shadow: 0 0 15px rgba(0, 255, 255, 0.25);">
+        </div>
+      </div>
+  
+      <!-- Info Panels -->
+      <div class="about-panels" style="margin-top: 40px;">
+        <div class="panel-card">
+          <h3>🎓 Education</h3>
+          <p>Ph.D. in Geophysics<br/>Baylor University</p>
+        </div>
+        <div class="panel-card">
+          <h3>🧠 Expertise</h3>
+          <p>Seismic Imaging<br/>Adjoint-Free Inversion<br/>Ambient Noise Tomography</p>
+        </div>
+        <div class="panel-card">
+          <h3>🛠 Tools</h3>
+          <p>Python, CUDA, MPI<br/>TensorFlow, ObsPy, Fortran</p>
+        </div>
+        <div class="panel-card">
+          <h3>🌍 Field Work</h3>
+          <p>Gulf Coast Surveys<br/>Gravity + DAS Projects<br/>TexNet Collaborations</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  
+  <section id="projects" class="tab-section">
+    <h1 style="text-align: center; color: #0ff; margin-bottom: 10px;">Projects</h1>
+    <p style="text-align:center; color:#ccc; font-size:0.95em; margin:0 0 20px;">
+      A mini slide-deck of how I use noise, physics, and AI to image Earth’s interior.
+    </p>
+  
+    <div class="project-deck">
+  
+      <!-- Slide 1 -->
+<!-- Slide 1 -->
+<div class="project-slide">
+
+  <div class="project-meta">
+    <h4>SLIDE 01 · PASSIVE SEISMIC</h4>
+    <h2>Ambient Noise Tomography – Southeastern U.S.</h2>
+    <p>
+      Extracted Rayleigh-wave dispersion from continuous noise records using a
+      MUSIC-based workflow on TensorFlow, suppressing non-coherent arrivals and
+      stabilizing phase-velocity measurements.
+    </p>
+    <p>
+      Produced high-resolution crustal and upper-mantle structure beneath the
+      southeastern United States, with improved sensitivity to sedimentary basins
+      and Moho topography.
+    </p>
+    <div class="project-tags">
+      <span class="project-tag">MUSIC</span>
+      <span class="project-tag">TensorFlow</span>
+      <span class="project-tag">Ambient Noise</span>
+      <span class="project-tag">Crustal Imaging</span>
+    </div>
+    <div class="project-step-label">
+      [noise ➜ cross-correlation ➜ dispersion ➜ tomography]
+    </div>
+  </div>
+  <div class="ascii-panel" id="wave-panel">
+    <canvas id="wave2d"></canvas>
+</div>
+
+
+  <div>
+    <div class="mini-3d-wrapper">
+      <canvas id="wave3d-canvas" class="mini-3d-canvas"></canvas>
+      <div class="mini-3d-caption">
+        3D noise-derived surface – animated wavefronts hinting at ambient noise cross-correlation.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+      
+      <!-- Slide 2 -->
+      <div class="project-slide">
+        <div class="project-meta">
+          <h4>SLIDE 02 · INVERSE PROBLEMS</h4>
+          <h2>Dictionary Learning for Unsupervised Seismic Inversion</h2>
+          <p>
+            Learned sparse dictionaries directly from shot gathers to represent
+            coherent seismic energy while suppressing noise and acquisition footprints.
+          </p>
+          <p>
+            Used the learned basis as a prior in an adjoint-free inversion scheme,
+            recovering velocity structure without requiring labeled training models.
+          </p>
+          <div class="project-tags">
+            <span class="project-tag">Dictionary Learning</span>
+            <span class="project-tag">Sparse Coding</span>
+            <span class="project-tag">Unsupervised</span>
+            <span class="project-tag">Adjoint-Free Inversion</span>
+          </div>
+        </div>
+        <div>
+          <div class="ascii-title">ASCII MODEL / DATA GRID</div>
+          <div class="ascii-panel">
+    DATA SPACE (shot gathers)
+    +------------------------+
+    | ////  ..  ////   ..   |
+    | //// ////  ..   ////  |
+    |  ..  //// ////  ..    |
+    +------------------------+
+  
+    → Learn atoms Φₖ
+    → Represent data as  d ≈ Σ αₖ Φₖ
+  
+    MODEL SPACE (velocity)
+    +------------------------+
+    |  ░░░  ███  ███  ░░░   |
+    |  ░░░  ███  ███  ░░░   |
+    +------------------------+
+          </div>
+          <div class="project-step-label">
+            [data ➜ dictionary ➜ sparse coefficients ➜ structure]
+          </div>
+        </div>
+      </div>
+  
+      <!-- Slide 3 -->
+      <div class="project-slide">
+        <div class="project-meta">
+          <h4>SLIDE 03 · DAS + GRAVITY</h4>
+          <h2>Joint DAS & Micro-gravity Imaging</h2>
+          <p>
+            Combined distributed acoustic sensing (DAS) strain responses with
+            micro-gravity anomalies to constrain shallow subsurface structure in
+            environments where conventional receivers are sparse or impractical.
+          </p>
+          <p>
+            Designed joint objective functions that balance sensitivity to density
+            and elastic moduli, improving resolution of near-surface heterogeneity.
+          </p>
+          <div class="project-tags">
+            <span class="project-tag">DAS</span>
+            <span class="project-tag">Micro-gravity</span>
+            <span class="project-tag">Joint Inversion</span>
+            <span class="project-tag">Near-surface</span>
+          </div>
+        </div>
+        <div>
+          <div class="ascii-title">ASCII FIBER + ANOMALY MAP</div>
+          <div class="ascii-panel">
+  DAS fiber layout
+    +-----------------------------+
+    |  ⟂⟂⟂⟂⟂⟂⟂⟂⟂ fiber in trench |
+    +-----------------------------+
+  
+  Micro-gravity map
+    +----------------+
+    |  0  -1  -3  -2 |
+    |  1  -2  -4  -3 |  Δg
+    |  0  -1  -2  -1 |
+    +----------------+
+  
+  Joint objective:
+    Φ = Φ_DAS(m) + λ Φ_g(m)
+          </div>
+          <div class="project-step-label">
+            [fiber strain + Δg ➜ consistent shallow model]
+          </div>
+        </div>
+      </div>
+  
+    </div>
+  </section>
+  
+
+
+<section id="Publications" class="tab-section">
+  <h1 style="text-align: center; color: #0ff;">Publications</h1>
+  <div class="about-scroll" id="pub-list" style="max-height: 80vh;"></div>
+</section>
+
+<section id="readme-section" class="tab-section">
+  <h1 style="text-align:center; color:#0ff;">📝 GitHub README</h1>
+  <div id="readme-container" class="about-scroll" style="
+    margin-top: 20px;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+    font-family: 'Courier New', monospace;
+    color: #ccc;
+  "></div>
+</section>
+
+
+  
+  
+  <script>
+    fetch('https://api.github.com/repos/debajeet123/Geological_feature_tool/commits')
+      .then(response => response.json())
+      .then(data => {
+        const list = document.getElementById('commit-list');
+        data.slice(0, 5).forEach(commit => {
+          const item = document.createElement('li');
+          item.innerHTML = `
+            <a href="${commit.html_url}" target="_blank">
+              ${commit.commit.message.split('\n')[0]} – <em>${commit.commit.author.name}</em>
+            </a>
+          `;
+          list.appendChild(item);
+        });
+      });
+
+  
+  let currentSlide = 0;
+
+  function showSlide(index) {
+    const slides = document.getElementById('slides');
+    const totalSlides = slides.children.length;
+    currentSlide = (index + totalSlides) % totalSlides;
+    slides.style.transform = `translateX(-${currentSlide * 100}%)`;
+  }
+
+  function nextSlide() {
+    showSlide(currentSlide + 1);
+  }
+
+  function prevSlide() {
+    showSlide(currentSlide - 1);
+  }
+  function showSlide(index) {
+  const slides = document.getElementById('slides');
+  const totalSlides = slides.children.length;
+  currentSlide = (index + totalSlides) % totalSlides;
+  slides.style.transform = `translateX(-${currentSlide * 100}%)`;
+  slides.style.transition = 'transform 0.6s ease-in-out';
+}
+
+  document.addEventListener('DOMContentLoaded', () => showSlide(0));
+
+
+  </script>
+
+<div id="readme-container" style="background:#111;padding:20px;color:#ccc;"></div>
+  
+  <section id="contact" class="tab-section">
+    <h1>Contact</h1>
+    <pre style="
+    background: rgba(0,0,0,0.6);
+    padding: 20px;
+    border-radius: 10px;
+    color: #0ff;
+    font-family: 'Courier New', monospace;
+    font-size: 1em;
+    line-height: 1.8;
+    overflow-x: auto;
+    box-shadow: 0 0 15px rgba(0,255,255,0.2);
+    ">
+  [Email]     ▶ <a href="mailto:debajeet123@gmail.com" style="color:#0ff;text-decoration:none;">debajeet123@gmail.com</a>
+  [AltMail]   ▶ <a href="mailto:Debajeet_Barman1@baylor.edu" style="color:#0ff;text-decoration:none;">Debajeet_Barman1@baylor.edu</a>
+  [LinkedIn]  ▶ <a href="https://www.linkedin.com/in/debajeet-barman" target="_blank" style="color:#0ff;text-decoration:none;">linkedin.com/in/debajeet-barman</a>
+  [Website]   ▶ <a href="https://debajeetbarmanseismology.space" target="_blank" style="color:#0ff;text-decoration:none;">debajeetbarmanseismology.space</a>
+  </pre>
+  </section>
+
+  <div class="info-card">
+    <a href="https://www.linkedin.com/in/debajeetbarman" target="_blank">LinkedIn</a> |
+    <a href="https://scholar.google.com/citations?user=XXXXX" target="_blank">Google Scholar</a> |
+    <a href="https://www.researchgate.net/profile/Debajeet-Barman" target="_blank">ResearchGate</a> |
+    <a href="https://github.com/debajeet123" target="_blank">GitHub</a>
+    <!-- <a href="https://www.researchgate.net/profile/Debajeet-Barman" target="_blank">ResearchGate</a> -->
+      <div id="rg-metrics" style="margin-top: 6px; display: flex; gap: 10px;"></div>
+  </div>
+  <div class="stats-info" role="contentinfo">
+    <div class="flip-card" id="flip-rg-score">
+      <div class="flap">
+        <div class="front">RG Score</div>
+        <div class="back flip-number">?</div>  <!-- ✔️ this gets updated -->
+      </div>
+    </div>
+    <div class="flip-card" id="flip-citations">
+      <div class="flap">
+        <div class="front">Citations</div>
+        <div class="back">?</div>              <!-- ✔️ this gets updated -->
+      </div>
+    </div>
+    <div class="flip-card" id="flip-reads">
+      <div class="flap">
+        <div class="front">Reads</div>
+        <div class="back">?</div>              <!-- ✔️ this gets updated -->
+      </div>
+    </div>
+    
+  </div>
+  
+  
+  
+  </div>
+  <div id="quake-panel">
+    <h3>🌍 Earthquakes (24h)</h3>
+    <ul id="quake-list"></ul>
+  </div>
+  
+  <script>
+    const quakeList = document.getElementById('quake-list');
+    const quakeAPI = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson';
+  
+    fetch(quakeAPI)
+      .then(res => res.json())
+      .then(data => {
+        const quakes = data.features.slice(0, 10);
+        quakes.forEach(q => {
+          const { place, time, mag } = q.properties;
+          const depth = q.geometry.coordinates[2];
+          let magClass = 'mag-low';
+          if (mag >= 6) magClass = 'mag-severe';
+          else if (mag >= 5) magClass = 'mag-high';
+          else if (mag >= 3) magClass = 'mag-mid';
+  
+          const tooltip = `Time: ${new Date(time).toLocaleString()}\nDepth: ${depth.toFixed(1)} km`;
+  
+          const li = document.createElement('li');
+          li.innerHTML = `
+            <span class="quake-tooltip">
+              <strong class="${magClass}">M${mag.toFixed(1)}</strong>
+              <span class="tooltip-text">${tooltip}</span>
+            </span>
+            – ${place}
+          `;
+          quakeList.appendChild(li);
+        });
+      })
+      .catch(err => {
+        quakeList.innerHTML = `<li style="color:red;">Error loading earthquakes: ${err.message}</li>`;
+      });
+
+    
+
+  </script>
+  
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.tab-link').forEach(link => {
+        link.addEventListener('click', e => {
+          e.preventDefault();
+          document.querySelectorAll('.tab-link').forEach(l => l.classList.remove('active'));
+          document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
+          link.classList.add('active');
+          document.getElementById(link.getAttribute('href').substring(1)).classList.add('active');
+        });
+      });
+    });
+  </script>
+  <!-- Globe.gl + Three.js -->
+<script src="https://unpkg.com/three"></script>
+<script src="https://unpkg.com/globe.gl"></script>
+<!-- Required for topojson -->
+<script src="https://unpkg.com/topojson@3"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const quakeList = document.getElementById('quake-list');
+    const quakeAPI = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson';
+
+    if (!quakeList) return console.error('Missing #quake-list in DOM');
+
+    fetch(quakeAPI)
+      .then(res => res.json())
+      .then(data => {
+        const quakes = data.features.slice(0, 10);
+        quakes.forEach(q => {
+          const { place, time, mag } = q.properties;
+          const depth = q.geometry.coordinates[2];
+          let magClass = 'mag-low';
+          if (mag >= 6) magClass = 'mag-severe';
+          else if (mag >= 5) magClass = 'mag-high';
+          else if (mag >= 3) magClass = 'mag-mid';
+
+          const tooltip = `Time: ${new Date(time).toLocaleString()}\nDepth: ${depth.toFixed(1)} km`;
+
+          const li = document.createElement('li');
+          li.innerHTML = `
+            <span class="quake-tooltip">
+              <strong class="${magClass}">M${mag.toFixed(1)}</strong>
+              <span class="tooltip-text">${tooltip}</span>
+            </span>
+            – ${place}
+          `;
+          quakeList.appendChild(li);
+        });
+      })
+      .catch(err => {
+        quakeList.innerHTML = `<li style="color:red;">Error loading earthquakes: ${err.message}</li>`;
+      });
+  });
+</script>
+
+
+<script>
+  const world = Globe()
+    .globeImageUrl('//unpkg.com/three-globe/example/img/earth-dark.jpg')
+    .bumpImageUrl('//unpkg.com/three-globe/example/img/earth-topology.png')
+    .showAtmosphere(true)
+    .atmosphereColor('#0ff')
+    .atmosphereAltitude(0.25)
+    .backgroundColor('rgba(0,0,0,0)')
+    .width(400)
+    .height(400)
+    (document.getElementById('globe-container'));
+
+  world.controls().autoRotate = true;
+  world.controls().autoRotateSpeed = 0.8;
+
+  
+  fetch('https://unpkg.com/world-atlas@2.0.2/countries-110m.json')
+    .then(res => res.json())
+    .then(countries => {
+      const countriesTopo = topojson.feature(countries, countries.objects.countries).features;
+      world
+        .polygonsData(countriesTopo)
+        .polygonCapColor(() => 'rgba(0,255,255,0.1)')
+        .polygonSideColor(() => 'rgba(0,255,255,0.05)')
+        .polygonStrokeColor(() => '#0ff')
+        .polygonAltitude(0.01);
+    });
+
+
+  // Load recent earthquake dots from USGS
+  fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson')
+    .then(res => res.json())
+    .then(data => {
+      const quakes = data.features.map(f => ({
+        lat: f.geometry.coordinates[1],
+        lng: f.geometry.coordinates[0],
+        size: Math.max(f.properties.mag / 10, 0.05),
+        mag: f.properties.mag
+      }));
+      world
+        .pointsData(quakes)
+        .pointAltitude('size')
+        .pointColor(() => '#ff8800')
+        .pointRadius('size');
+    });
+
+    fetch('https://raw.githubusercontent.com/opengeoscience/geo-data/main/volcanoes.json')
+  .then(res => res.json())
+  .then(data => {
+    const volcanoes = data.features.map(v => ({
+      lat: v.geometry.coordinates[1],
+      lng: v.geometry.coordinates[0],
+      name: v.properties.V_Name
+    }));
+
+    world
+      .customLayerData(volcanoes)
+      .customThreeObject(d => {
+        const sprite = new THREE.Sprite(new THREE.SpriteMaterial({
+          color: '#ff4444'
+        }));
+        sprite.scale.set(0.5, 0.5, 0.5); // Adjust size
+        return sprite;
+      })
+      .customThreeObjectUpdate((obj, d) => {
+        obj.position.copy(world.getCoords(d.lat, d.lng));
+      });
+  });
+
+  </script>
+
+    <!-- Load Marked.js FIRST -->
+
+
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script> -->
+
+<script>
+  fetch('publications.json')
+    .then(res => res.json())
+    .then(publications => {
+      const container = document.getElementById('pub-list');
+      const list = document.createElement('ul');
+      list.style.listStyleType = 'none';
+      list.style.padding = '0';
+
+      publications.forEach(pub => {
+        const item = document.createElement('li');
+        item.style.marginBottom = '25px';
+        item.innerHTML = `
+          <strong style="color:#0ff;">${pub.authors} (${pub.year}).</strong><br/>
+          <em>${pub.title}</em><br/>
+          <span style="color:#aaa;">${pub.journal}${pub.volume ? `, ${pub.volume}` : ''}${pub.issue ? `(${pub.issue})` : ''}${pub.pages ? `, ${pub.pages}` : ''}.</span>
+        `;
+        list.appendChild(item);
+      });
+
+      container.appendChild(list);
+
+      const more = document.createElement('p');
+      more.style.textAlign = 'center';
+      more.innerHTML = `📚 <a href="https://scholar.google.com/citations?user=XXXXXXX" target="_blank" style="color:#0ff; text-decoration:none;">View all on Google Scholar</a>`;
+      container.appendChild(more);
+    });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+<script>
+  const readmeURL = 'https://raw.githubusercontent.com/debajeet123/Geological_feature_tool/main/README.md';
+
+  fetch(`${readmeURL}?t=${Date.now()}`)
+    .then(res => {
+      if (!res.ok) throw new Error("Failed to load README.md");
+      return res.text();
+    })
+    .then(md => {
+      console.log('Fetched README markdown:', md);
+      document.getElementById('readme-container').innerHTML = marked.parse(md);
+    })
+    .catch(err => {
+      document.getElementById('readme-container').innerHTML =
+        `<p style="color:red;">🚫 Could not load README.md: ${err.message}</p>`;
+    });
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    function updateRGStats() {
+      fetch('./rg_stats.json?t=' + Date.now())
+        .then(res => {
+          if (!res.ok) throw new Error(res.statusText);
+          return res.json();
+        })
+        .then(data => {
+          document.querySelector('#flip-rg-score .back').textContent = data.rg_score;
+          document.querySelector('#flip-citations .back').textContent = data.citations;
+          document.querySelector('#flip-reads .back').textContent = data.reads;
+  
+          // Optional: trigger animation
+          ['#flip-rg-score', '#flip-citations', '#flip-reads'].forEach(id => {
+            const el = document.querySelector(id + ' .flap');
+            el.classList.remove('flipped');
+            void el.offsetWidth; // Force reflow
+            el.classList.add('flipped');
+          });
+        })
+        .catch(err => {
+          console.error('Failed to update RG stats:', err);
+        });
+    }
+  
+    updateRGStats();                 // initial
+    setInterval(updateRGStats, 60000); // every 60 seconds
+  });
+  </script>
+
+<script>
+  const traceCanvas = document.getElementById('trace');
+  if (traceCanvas) {
+    const ctx = traceCanvas.getContext('2d');
+    let t = 0;
+
+    function draw() {
+      ctx.clearRect(0, 0, 300, 100);
+      ctx.beginPath();
+      ctx.moveTo(0, 50);
+
+      for (let x = 0; x < 300; x++) {
+        const y = 50 + Math.sin((x + t) * 0.1) * Math.sin(t * 0.05) * 20;
+        ctx.lineTo(x, y);
+      }
+
+      ctx.strokeStyle = '#0ff';
+      ctx.stroke();
+
+      t += 2;
+      requestAnimationFrame(draw);
+    }
+
+    draw();
+  }
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+  
+    const canvas = document.getElementById("wave2d");
+    if (!canvas) { console.warn("wave2d not found"); return; }
+  
+    const ctx = canvas.getContext("2d");
+  
+    function resize() {
+      canvas.width = canvas.clientWidth;
+      canvas.height = canvas.clientHeight;
+    }
+  
+    resize();
+    window.addEventListener("resize", resize);
+  
+    const k = 0.22;
+    const c = 2.0;
+    const omega = k * c;
+  
+    const numSources = 10;
+    const radius = 160;
+  
+    function makeSources() {
+      const W = canvas.width;
+      const H = canvas.height;
+      const cx = W/2;
+      const cy = H/2;
+  
+      let src = [];
+      for (let i=0;i<numSources;i++) {
+        const angle = 2*Math.PI*i/numSources;
+        src.push({ x: cx + radius*Math.cos(angle),
+                   y: cy + radius*Math.sin(angle) });
+      }
+      return src;
+    }
+  
+    let sources = makeSources();
+    window.addEventListener("resize", () => sources = makeSources());
+  
+    function wave(x,y,t) {
+      let u = 0;
+      for (const s of sources) {
+        const dx = x-s.x, dy=y-s.y;
+        const r = Math.sqrt(dx*dx + dy*dy) + 1e-6;
+        u += Math.sin(k*r - omega*t) / r;
+      }
+      return u;
+    }
+  
+    let t = 0;
+  
+    function animate() {
+      t += 0.08;
+  
+      const W = canvas.width;
+      const H = canvas.height;
+  
+      const img = ctx.createImageData(W, H);
+      const d = img.data;
+  
+      let i=0;
+      for (let y=0;y<H;y++) {
+        for (let x=0;x<W;x++) {
+          let u = wave(x,y,t);
+  
+          let amp = Math.abs(u * 250);
+          amp = Math.min(255, amp);
+  
+          d[i++] = 0;      // R
+          d[i++] = amp;    // G
+          d[i++] = 255;    // B
+          d[i++] = 255;    // A
+        }
+      }
+  
+      ctx.putImageData(img,0,0);
+      requestAnimationFrame(animate);
+    }
+  
+    animate();
+  
+  });
+  </script>
+  
+  
+
+
+
+
+  
+</body>
+</html>
