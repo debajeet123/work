@@ -1,9 +1,10 @@
 name: Update Google Scholar Metrics
 
+
 on:
   schedule:
-    - cron: "0 0 * * *"   # runs daily at midnight UTC
-  workflow_dispatch:       # allow manual run
+    - cron: "0 0 * * *"
+  workflow_dispatch:
 
 jobs:
   update-metrics:
@@ -18,9 +19,9 @@ jobs:
         with:
           python-version: "3.10"
 
-      - name: Install dependencies
+      - name: Install Scholarly
         run: |
-          pip install scholarly bs4 requests
+          pip install scholarly
 
       - name: Run Scholar Metrics Script
         run: python scholar_metrics.py
