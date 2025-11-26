@@ -1137,6 +1137,39 @@
   </div>
 
   <style>
+    #metrics-left-panel {
+  position: fixed;
+  top: 270px;     /* directly under the 200px profile photo */
+  left: 50px;     /* aligns with left edge of the photo */
+  width: 200px;   /* same width as profile photo for symmetry */
+  padding: 20px;
+  border-radius: 16px;
+  background: rgba(0,0,0,0.55);
+  border: 1px solid rgba(0,255,255,0.25);
+  box-shadow: 0 0 25px rgba(0,255,255,0.25);
+  font-family: 'Courier New', monospace;
+  z-index: 1004;
+}
+
+#metrics-left-panel .metric-item {
+  margin-bottom: 16px;
+}
+
+#metrics-left-panel .metric-label {
+  font-size: 0.75em;
+  color: #aaa;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+#metrics-left-panel .metric-value {
+  font-size: 1.6em;
+  color: #0ff;
+  text-shadow: 0 0 8px rgba(0,255,255,0.4);
+  margin-top: 4px;
+  text-align: left;
+}
+
   .metric-vertical-box {
   margin: 25px auto;            /* centers horizontally */
   padding: 25px;
