@@ -28,30 +28,24 @@ jobs:
           SERPAPI_KEY: ${{ secrets.SERPAPI_KEY }}
         run: python scholar_metrics.py
 
-      ########################################################
-      # FIXED GIT LOGIC — NO MORE ERRORS, ALWAYS WORKS
-      ########################################################
-
+      # -------------------------
+      # FIXED GIT LOGIC
+      # -------------------------
       - name: Commit updated metrics
         run: |
           git config user.name "GitHub Action"
           git config user.email "actions@github.com"
 
-          # Add all changes BEFORE pulling
+          # Stage the updated file BEFORE pulling
           git add rg_stats.json || true
           git commit -m "Auto-update Scholar metrics" || true
 
-          # Ensure we are on correct branch
-          git branch -a
+          # Detect correct branch (main or master)
+          BRANCH=$(git rev-parse --abbrev-ref HEAD)
+          echo "Current branch: $BRANCH"
 
-          # Switch to 'main' (GitHub’s real default)
-          git checkout main || git checkout master
+          # Pull latest changes WITHOUT rebase to avoid conflict
+          git pull origin $BRANCH --no-rebase || true
 
-          # Pull remote changes WITHOUT rebase (safe)
-          git pull origin main --no-rebase || true
-
-          # Merge our local commit
-          git merge --no-edit || true
-
-          # Push changes safely
-          git push origin main || git push origin master
+          # Push the update
+          git push origin $BRANCH || true
