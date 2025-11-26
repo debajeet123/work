@@ -1400,10 +1400,10 @@
           return res.json();
         })
         .then(data => {
-          document.querySelector('#flip-rg-score .back').textContent = data.rg_score;
-          document.querySelector('#flip-citations .back').textContent = data.citations;
-          document.querySelector('#flip-reads .back').textContent = data.reads;
-  
+          document.getElementById('hindex-val').textContent = data.rg_score;
+          document.getElementById('citation-val').textContent = data.citations;
+          document.getElementById('i10-val').textContent = data.reads;
+
           // Optional: trigger animation
           ['#flip-rg-score', '#flip-citations', '#flip-reads'].forEach(id => {
             const el = document.querySelector(id + ' .flap');
