@@ -793,51 +793,50 @@
   top: 330px;
   left: 50px;
 
-  width: 120px;
-  padding: 35px 32px;
+  width: 350px;
+  padding: 35px 35px;
 
-  background: rgba(0,0,0,0.60);
-  border: 1px solid rgba(0,255,255,0.28);
+  background: rgba(0,0,0,0.55);
+  border: 1px solid rgba(0,255,255,0.25);
   border-radius: 22px;
-  box-shadow: 0 0 45px rgba(0,255,255,0.45);
+  box-shadow: 0 0 45px rgba(0,255,255,0.40);
 
-  font-family: 'Courier New', monospace;
+  font-family: "Courier New", monospace;
   z-index: 2000;
   transform: none !important;
 
   display: flex;
   flex-direction: column;
-  justify-content: space-between;   /* 🔥 even spacing */
-  height: 260px;                     /* 🔥 perfect visual proportion */
+  gap: 40px;                  /* 💡 perfect even spacing */
 }
 
-/* Each metric row */
+
+/* EACH ROW — side-by-side alignment */
 .scholar-item {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;  /* label left, number right */
+  align-items: center;
 }
 
-/* Labels (H-index, Citations, i10-index) */
+
+/* LABELS */
 .scholar-label {
-  color: #b5ffff;
+  color: #9fe8ff;
   font-size: 1.05em;
-  letter-spacing: 2px;
   text-transform: uppercase;
+  letter-spacing: 2px;
   font-weight: 600;
   opacity: 0.9;
-  margin-bottom: 6px;
 }
 
-/* Values (the numbers) */
+
+/* VALUES */
 .scholar-value {
   color: #5efbff;
   font-size: 2.6em;
   font-weight: bold;
-  text-shadow: 0 0 14px rgba(0,255,255,0.55);
-  text-align: left;
-  padding-left: 2px;
+  text-shadow: 0 0 12px rgba(0,255,255,0.55);
 }
-
 
 
   </style>
