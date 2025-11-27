@@ -790,10 +790,10 @@
 /* === GOOGLE SCHOLAR METRICS BOX === */
 #scholar-box {
   position: fixed;
-  top: 280px;               /* directly under photo */
-  left: 50px;               /* aligned with photo */
-  width: 260px;
-  padding: 25px;
+  top: 265px;               /* slightly higher = perfect alignment */
+  left: 50px;               /* same as photo */
+  width: 240px;             /* matches photo's visual width */
+  padding: 22px;
   background: rgba(0,0,0,0.55);
   border: 1px solid rgba(0,255,255,0.25);
   border-radius: 18px;
@@ -801,6 +801,7 @@
   font-family: 'Courier New', monospace;
   z-index: 1100;
 }
+
 
 .scholar-item {
   margin-bottom: 22px;
@@ -1151,8 +1152,6 @@
 
 
   </script>
-
-<div id="readme-container" style="background:#111;padding:20px;color:#ccc;"></div>
   
   <section id="contact" class="tab-section">
     <h1>Contact</h1>
@@ -1182,25 +1181,7 @@
     <!-- <a href="https://www.researchgate.net/profile/Debajeet-Barman" target="_blank">ResearchGate</a> -->
       <div id="rg-metrics" style="margin-top: 6px; display: flex; gap: 10px;"></div>
   </div>
-  <div class="stats-info" role="contentinfo">
-    <div class="flip-card" id="flip-rg-score">
-      <div class="flap">
-        <div class="front">RG Score</div>
-        <div class="back flip-number">?</div>  <!-- ✔️ this gets updated -->
-      </div>
-    </div>
-    <div class="flip-card" id="flip-citations">
-      <div class="flap">
-        <div class="front">Citations</div>
-        <div class="back">?</div>              <!-- ✔️ this gets updated -->
-      </div>
-    </div>
-    <div class="flip-card" id="flip-reads">
-      <div class="flap">
-        <div class="front">Reads</div>
-        <div class="back">?</div>              <!-- ✔️ this gets updated -->
-      </div>
-    </div>
+  
     
   </div>
   
