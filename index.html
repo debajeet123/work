@@ -194,7 +194,7 @@
       background-image: var(--background-strata);
       background-repeat: no-repeat;
       background-position: var(--strata-x) var(--strata-y);
-      background-size: var(--strata-width) var(--strata-height);
+      background-size: var(--strata-width, var(--strata-height));
       z-index: var(--z-tabs-background);
       
     }
@@ -802,6 +802,23 @@
   <div class="profile-photo">
     <img src="profile.jpg" alt="Debajeet Barman">
   </div>
+  <div id="metrics-left-panel">
+    <div class="metric-item">
+      <div class="metric-label">H–Index</div>
+      <div class="metric-value" id="hindex-val">?</div>
+    </div>
+  
+    <div class="metric-item">
+      <div class="metric-label">Citations</div>
+      <div class="metric-value" id="citation-val">?</div>
+    </div>
+  
+    <div class="metric-item">
+      <div class="metric-label">i10–Index</div>
+      <div class="metric-value" id="i10-val">?</div>
+    </div>
+  </div>
+  
   <div id="globe-container"></div>
   <div style="
   text-align: center;
@@ -811,6 +828,8 @@
   text-shadow: 0 0 10px rgba(0,255,255,0.5);
 ">
     <span class="typewriter">Debajeet Barman – creating structure from noise</span>
+    <!-- === CENTERED GOOGLE SCHOLAR METRICS === -->
+
 </div>
   
   <div class="tabs-background">
@@ -1111,28 +1130,76 @@
     <!-- <a href="https://www.researchgate.net/profile/Debajeet-Barman" target="_blank">ResearchGate</a> -->
       <div id="rg-metrics" style="margin-top: 6px; display: flex; gap: 10px;"></div>
   </div>
-  <div class="stats-info" role="contentinfo">
-    <div class="flip-card" id="flip-rg-score">
-      <div class="flap">
-        <div class="front">RG Score</div>
-        <div class="back flip-number">?</div>  <!-- ✔️ this gets updated -->
-      </div>
-    </div>
-    <div class="flip-card" id="flip-citations">
-      <div class="flap">
-        <div class="front">Citations</div>
-        <div class="back">?</div>              <!-- ✔️ this gets updated -->
-      </div>
-    </div>
-    <div class="flip-card" id="flip-reads">
-      <div class="flap">
-        <div class="front">Reads</div>
-        <div class="back">?</div>              <!-- ✔️ this gets updated -->
-      </div>
-    </div>
-    
-  </div>
-  
+
+  <style>
+    #metrics-left-panel {
+  position: fixed;
+  top: 270px;     /* directly under the 200px profile photo */
+  left: 50px;     /* aligns with left edge of the photo */
+  width: 200px;   /* same width as profile photo for symmetry */
+  padding: 20px;
+  border-radius: 16px;
+  background: rgba(0,0,0,0.55);
+  border: 1px solid rgba(0,255,255,0.25);
+  box-shadow: 0 0 25px rgba(0,255,255,0.25);
+  font-family: 'Courier New', monospace;
+  z-index: 1004;
+}
+
+#metrics-left-panel .metric-item {
+  margin-bottom: 16px;
+}
+
+#metrics-left-panel .metric-label {
+  font-size: 0.75em;
+  color: #aaa;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+#metrics-left-panel .metric-value {
+  font-size: 1.6em;
+  color: #0ff;
+  text-shadow: 0 0 8px rgba(0,255,255,0.4);
+  margin-top: 4px;
+  text-align: left;
+}
+
+  .metric-vertical-box {
+  margin: 25px auto;            /* centers horizontally */
+  padding: 25px;
+  background: rgba(0,0,0,0.55);
+  border: 1px solid rgba(0,255,255,0.25);
+  border-radius: 18px;
+  width: 260px;                 /* wider and perfectly centered */
+  box-shadow: 0 0 30px rgba(0,255,255,0.25);
+  font-family: 'Courier New', monospace;
+  text-align: left;             /* keep text aligned nicely */
+}
+
+.metric-value {
+  text-align: center;
+}
+  .metric-item {
+    margin-bottom: 14px;
+  }
+
+  .metric-label {
+    color: #aaa;
+    font-size: 0.75em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .metric-value {
+    color: #0ff;
+    font-size: 1.6em;
+    font-weight: bold;
+    padding-top: 2px;
+    text-shadow: 0 0 8px rgba(0,255,255,0.4);
+  }
+</style>
+
   
   
   </div>
@@ -1359,64 +1426,6 @@
       document.getElementById('readme-container').innerHTML =
         `<p style="color:red;">🚫 Could not load README.md: ${err.message}</p>`;
     });
-</script>
-
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    function updateRGStats() {
-      fetch('./rg_stats.json?t=' + Date.now())
-        .then(res => {
-          if (!res.ok) throw new Error(res.statusText);
-          return res.json();
-        })
-        .then(data => {
-          document.querySelector('#flip-rg-score .back').textContent = data.rg_score;
-          document.querySelector('#flip-citations .back').textContent = data.citations;
-          document.querySelector('#flip-reads .back').textContent = data.reads;
-  
-          // Optional: trigger animation
-          ['#flip-rg-score', '#flip-citations', '#flip-reads'].forEach(id => {
-            const el = document.querySelector(id + ' .flap');
-            el.classList.remove('flipped');
-            void el.offsetWidth; // Force reflow
-            el.classList.add('flipped');
-          });
-        })
-        .catch(err => {
-          console.error('Failed to update RG stats:', err);
-        });
-    }
-  
-    updateRGStats();                 // initial
-    setInterval(updateRGStats, 60000); // every 60 seconds
-  });
-  </script>
-
-<script>
-  const traceCanvas = document.getElementById('trace');
-  if (traceCanvas) {
-    const ctx = traceCanvas.getContext('2d');
-    let t = 0;
-
-    function draw() {
-      ctx.clearRect(0, 0, 300, 100);
-      ctx.beginPath();
-      ctx.moveTo(0, 50);
-
-      for (let x = 0; x < 300; x++) {
-        const y = 50 + Math.sin((x + t) * 0.1) * Math.sin(t * 0.05) * 20;
-        ctx.lineTo(x, y);
-      }
-
-      ctx.strokeStyle = '#0ff';
-      ctx.stroke();
-
-      t += 2;
-      requestAnimationFrame(draw);
-    }
-
-    draw();
-  }
 </script>
 
 <script>
