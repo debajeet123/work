@@ -790,43 +790,47 @@
 /* === GOOGLE SCHOLAR METRICS BOX === */
 #scholar-box {
   position: absolute;
-  top: 330px;               /* directly under photo */
-  left: 50px;               /* aligns with photo left edge */
+  top: 330px;               /* directly under the photo */
+  left: 50px;               /* aligned with photo */
   width: 300px;
-  padding: 30px;
-  
+  padding: 28px 32px;
+
   background: rgba(0,0,0,0.55);
   border: 1px solid rgba(0,255,255,0.25);
-  border-radius: 20px;
-  box-shadow: 0 0 40px rgba(0,255,255,0.35);
-  
+  border-radius: 18px;
+  box-shadow: 0 0 35px rgba(0,255,255,0.35);
+
   font-family: 'Courier New', monospace;
   z-index: 2000;
-  
-  transform: none !important;  /* 🟢 critical override */
+  transform: none !important;
 }
 
-
-
-.scholar-item {
-  margin-bottom: 22px;
-}
-
+/* label text (e.g., H-index, Citations) */
 .scholar-label {
-  color: #aaa;
-  font-size: 0.75em;
+  color: #9fd;
+  font-size: 1.05em;          /* 🔥 increased */
+  font-weight: 600;
+  letter-spacing: 1.8px;
+  margin-bottom: 6px;
   text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 4px;
 }
 
+/* metric values (numbers) */
 .scholar-value {
-  color: #0ff;
-  font-size: 1.8em;
+  color: #58faff;
+  font-size: 2.7em;           /* 🔥 larger neon number */
   font-weight: bold;
-  text-shadow: 0 0 8px rgba(0,255,255,0.4);
-  text-align: center;
+  text-align: left;
+  text-shadow: 0 0 12px rgba(0,255,255,0.45);
+  margin-bottom: 22px;
+  display: block;
 }
+
+/* spacing between items */
+.scholar-item {
+  margin-bottom: 25px;
+}
+
 
   </style>
 </head>
