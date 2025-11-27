@@ -32,9 +32,9 @@ def fetch_metrics():
             i10_index = table[2]["i10_index"]["all"]
 
             metrics = {
-                "rg_score": str(h_index),
+                "h_index": str(h_index),
                 "citations": str(citations),
-                "reads": str(i10_index)
+                "i10_index": str(i10_index)
             }
 
             with open("rg_stats.json", "w") as f:
