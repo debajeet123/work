@@ -5,7 +5,7 @@
       "label": "Auto Git Commit and Push",
       "type": "shell",
       // "command": "git add . && git commit -m '🛰️ Auto-commit (Cursor)' && git push",
-      "command": "git add . && git commit -m '🧠 Auto-commit (Cursor)' && git push origin dev",
+      "command": "git add . && git commit -m '🧠 Auto-commit (Cursor)' && git push origin delta",
 
       "group": {
         "kind": "build",
