@@ -837,6 +837,24 @@
   <div class="profile-photo">
     <img src="profile.jpg" alt="Debajeet Barman">
   </div>
+
+  <div id="scholar-box">
+    <div class="scholar-item">
+      <div class="scholar-label">H-Index</div>
+      <div class="scholar-value" id="hindex-val">?</div>
+    </div>
+  
+    <div class="scholar-item">
+      <div class="scholar-label">Citations</div>
+      <div class="scholar-value" id="citations-val">?</div>
+    </div>
+  
+    <div class="scholar-item">
+      <div class="scholar-label">i10-Index</div>
+      <div class="scholar-value" id="i10-val">?</div>
+    </div>
+  </div>
+  
   <div id="globe-container"></div>
   <div style="
   text-align: center;
@@ -1068,6 +1086,24 @@
 </section>
 
 
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+  
+    function updateScholarBox() {
+      fetch('./rg_stats.json?t=' + Date.now())
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById('hindex-val').textContent = data.h_index;
+          document.getElementById('citations-val').textContent = data.citations;
+          document.getElementById('i10-val').textContent = data.i10_index;
+        })
+        .catch(err => console.error("Error loading GS metrics:", err));
+    }
+  
+    updateScholarBox();
+    setInterval(updateScholarBox, 60000); // refresh every minute
+  });
+  </script>
   
   
   <script>
