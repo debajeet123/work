@@ -790,10 +790,11 @@
 /* === GOOGLE SCHOLAR METRICS BOX === */
 #scholar-box {
   position: absolute;
-  top: 330px;               /* sits perfectly under your photo */
-  left: 50px;               /* aligns with circular profile left edge */
+  top: 330px;
+  left: 50px;
+
   width: 310px;
-  padding: 32px 30px;
+  padding: 35px 32px;
 
   background: rgba(0,0,0,0.60);
   border: 1px solid rgba(0,255,255,0.28);
@@ -803,33 +804,40 @@
   font-family: 'Courier New', monospace;
   z-index: 2000;
   transform: none !important;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;   /* 🔥 even spacing */
+  height: 260px;                     /* 🔥 perfect visual proportion */
 }
 
-/* Each row spacing */
+/* Each metric row */
 .scholar-item {
-  margin-bottom: 26px;     /* more breathing room */
+  display: flex;
+  flex-direction: column;
 }
 
-/* LABEL (H-index, Citations, i10-index) */
+/* Labels (H-index, Citations, i10-index) */
 .scholar-label {
   color: #b5ffff;
-  font-size: 1.05em;        /* bigger & readable */
+  font-size: 1.05em;
   letter-spacing: 2px;
-  margin-bottom: 6px;
   text-transform: uppercase;
   font-weight: 600;
   opacity: 0.9;
+  margin-bottom: 6px;
 }
 
-/* VALUE (The numbers) */
+/* Values (the numbers) */
 .scholar-value {
   color: #5efbff;
-  font-size: 2.6em;         /* strong neon numeric size */
+  font-size: 2.6em;
   font-weight: bold;
   text-shadow: 0 0 14px rgba(0,255,255,0.55);
-  text-align: left;         /* aligns perfectly with design */
+  text-align: left;
   padding-left: 2px;
 }
+
 
 
   </style>
