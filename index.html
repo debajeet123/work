@@ -885,6 +885,58 @@
   text-shadow: 0 0 5px rgba(0,255,255,0.35);
 }
 
+.usa-map-panel {
+  width: 100%;
+  height: 350px;
+  background: rgba(0,0,0,0.35);
+  border: 1px solid rgba(0,255,255,0.3);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+#usa-svg path {
+  fill: rgba(0,255,255,0.08);
+  stroke: #0ff;
+  stroke-width: 1;
+  stroke-linejoin: round;
+
+  /* animated “line draw” */
+  stroke-dasharray: 2000;
+  stroke-dashoffset: 2000;
+  animation: usaDraw 2.5s ease-out forwards,
+             usaGlow 3s ease-in-out infinite alternate 2.6s;
+}
+
+@keyframes usaDraw {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes usaGlow {
+  0% { filter: drop-shadow(0 0 3px rgba(0,255,255,0.4)); }
+  100% { filter: drop-shadow(0 0 12px rgba(0,255,255,1)); }
+}
+
+/* pulsing seismic dots */
+.usa-pulse {
+  fill: #0ff;
+  opacity: 0.8;
+  animation: pulse 2.2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,100% {
+    r: 4;
+    opacity: 0.4;
+  }
+  50% {
+    r: 8;
+    opacity: 1;
+    filter: drop-shadow(0 0 12px #0ff);
+  }
+}
 
 
 
