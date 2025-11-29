@@ -1566,11 +1566,17 @@
   });
   </script>
   
-  
-
-
-
-
-  
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // remove active from all tabs + sections
+        document.querySelectorAll('.tab-link').forEach(l => l.classList.remove('active'));
+        document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
+    
+        // set ABOUT tab active
+        document.querySelector('.tab-link[href="#about"]').classList.add('active');
+        document.querySelector('#about').classList.add('active');
+    });
+    </script>
+      
 </body>
 </html>
