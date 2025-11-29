@@ -788,51 +788,47 @@
 
 /* END Projects Presentation Section */
 /* === GOOGLE SCHOLAR METRICS BOX === */
+/* --- Tight Metric Box --- */
 #scholar-box {
   position: absolute;
-  top: 300px;
-  left: 50px;
-
-  width: 210px;                /* reduced width */
-  padding: 8px 12px;           /* VERY tight padding */
-
+  top: 300px;            /* Just below the profile picture */
+  left: 50px;            /* Align with left edge of photo */
+  width: 210px;          /* Narrower box */
+  padding: 8px 12px;     /* Minimal padding */
   background: rgba(0,0,0,0.45);
   border: 1px solid rgba(0,255,255,0.22);
   border-radius: 10px;
   box-shadow: 0 0 16px rgba(0,255,255,0.25);
-
   font-family: "Courier New", monospace;
   z-index: 2000;
-
+  transform: none !important;
   display: flex;
   flex-direction: column;
-  gap: 8px;                    /* minimal spacing between items */
+  gap: 8px;             /* Tight spacing between rows */
 }
 
-/* Each metric line */
 .scholar-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 0;                   /* remove any extra space */
-  padding: 0;                  /* remove vertical padding */
+  margin: 0;
+  padding: 0;
 }
 
-/* Label text */
 .scholar-label {
   color: #b5faff;
-  font-size: 0.70em;           /* smaller label */
+  font-size: 0.70em;     /* Smaller label */
   letter-spacing: 0.5px;
   opacity: 0.85;
 }
 
-/* Value text */
 .scholar-value {
   color: #67ffff;
-  font-size: 1.25em;           /* reduced number size */
+  font-size: 1.25em;     /* Reduced number size */
   font-weight: bold;
   text-shadow: 0 0 5px rgba(0,255,255,0.35);
 }
+
 
 
 
