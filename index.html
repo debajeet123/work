@@ -1661,6 +1661,52 @@
         document.querySelector('#about').classList.add('active');
     });
     </script>
-      
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const svg = d3.select("#usa-svg");
+    const width = 960;
+    const height = 600;
+
+    const projection = d3.geoAlbersUsa()
+        .translate([width / 2, height / 2])
+        .scale(1200);
+
+    const path = d3.geoPath().projection(projection);
+
+    // Load USA TopoJSON
+    d3.json("https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json").then(us => {
+        const states = topojson.feature(us, us.objects.states).features;
+
+        // Draw states
+        svg.selectAll("path")
+            .data(states)
+            .enter()
+            .append("path")
+            .attr("d", path);
+
+        // Add sample seismic pulses (you can position using lat/lng)
+        const events = [
+            {lat: 34.05, lon: -118.24}, // LA
+            {lat: 40.71, lon: -74.00},  // NYC
+            {lat: 47.61, lon: -122.33}, // Seattle
+            {lat: 32.78, lon: -96.80},  // Dallas
+        ];
+
+        svg.selectAll("circle")
+            .data(events)
+            .enter()
+            .append("circle")
+            .attr("class", "usa-pulse")
+            .attr("cx", d => projection([d.lon, d.lat])[0])
+            .attr("cy", d => projection([d.lon, d.lat])[1])
+            .attr("r", 5);
+    });
+});
+</script>
+
 </body>
 </html>
