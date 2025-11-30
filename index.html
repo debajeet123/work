@@ -1112,28 +1112,30 @@
   </div>
   <div class="ascii-panel usa-map-panel">
     <svg id="usa-svg" viewBox="0 0 960 600">
-
+  
       <defs>
         <!-- Gaussian radial gradient -->
         <radialGradient id="gaussWave" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stop-color="rgba(0,255,255,0.7)" />
+          <stop offset="0%" stop-color="rgba(0,255,255,0.8)" />
           <stop offset="40%" stop-color="rgba(0,255,255,0.35)" />
           <stop offset="75%" stop-color="rgba(0,255,255,0.12)" />
           <stop offset="100%" stop-color="rgba(0,255,255,0)" />
         </radialGradient>
       </defs>
-    
-      <!-- Gaussian wavefront circle -->
+  
+      <!-- WAVE CIRCLE (now visible) -->
       <circle id="waveCircle"
               cx="480"
               cy="800"
               r="0"
               fill="url(#gaussWave)"
-              opacity="0.8">
+              opacity="0.85"
+              pointer-events="none">
       </circle>
-    
+  
     </svg>
-      </div>
+  </div>
+  
   
   
 
