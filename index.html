@@ -1125,13 +1125,15 @@
   
       <!-- WAVE CIRCLE (now visible) -->
       <circle id="waveCircle"
-              cx="480"
-              cy="800"
-              r="0"
-              fill="url(#gaussWave)"
-              opacity="0.85"
-              pointer-events="none">
-      </circle>
+        cx="480"
+        cy="800"
+        r="0"
+        fill="url(#gaussWave)"
+        opacity="0.9"
+        style="filter: drop-shadow(0 0 16px rgba(255, 50, 50, 0.9));"
+        pointer-events="none">
+</circle>
+
   
     </svg>
   </div>
@@ -1840,97 +1842,106 @@ document.addEventListener("DOMContentLoaded", () => {
   </script>
 
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-  
-    const svg = d3.select("#usa-svg");
-    const width = 960;
-    const height = 600;
-  
-    const projection = d3.geoAlbersUsa()
-        .translate([width / 2, height / 2])
-        .scale(1200);
-  
-    const path = d3.geoPath().projection(projection);
-  
-    // Load USA map
-    d3.json("https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json")
-      .then(us => {
-  
-        const states = topojson.feature(us, us.objects.states).features;
-  
-        // Draw state outlines
-        svg.selectAll("path")
-          .data(states)
-          .enter()
-          .append("path")
-          .attr("d", path)
-          .attr("fill", "rgba(0,255,255,0.08)")
-          .attr("stroke", "#0ff")
-          .attr("stroke-width", "1")
-          .attr("stroke-linejoin", "round")
-          .attr("stroke-dasharray", 2000)
-          .attr("stroke-dashoffset", 2000)
-          .transition()
-          .duration(2400)
-          .attr("stroke-dashoffset", 0);
-  
-        // Bring waveCircle to front so it's NOT hidden
-        svg.select("#waveCircle").raise();
-  
-        // Sample seismic pulse points
-        const events = [
-          {lat: 34.05, lon: -118.24}, // LA
-          {lat: 40.71, lon: -74.00},  // NYC
-          {lat: 47.61, lon: -122.33}, // Seattle
-          {lat: 32.78, lon: -96.80},  // Dallas
-        ];
-  
-        svg.selectAll(".usa-pulse")
-          .data(events)
-          .enter()
-          .append("circle")
-          .attr("class", "usa-pulse")
-          .attr("cx", d => projection([d.lon, d.lat])[0])
-          .attr("cy", d => projection([d.lon, d.lat])[1])
-          .attr("r", 5);
-  
-      });
-  
-  
-    // ======= GAUSSIAN TRAVELLING WAVE ANIMATION =======
-    const wave = d3.select("#waveCircle");
-    let startY = height + 150;
-    const centerX = width / 2;
-  
-    function animateWave() {
-      let y = startY;
-      let radius = 40;
-  
-      function frame() {
-        y -= 2.1;          // northward
-        radius += 1.4;     // expand
-        let opacity = 0.9 * Math.exp(-radius / 260);
-  
-        wave
-          .attr("cx", centerX)
-          .attr("cy", y)
-          .attr("r", radius)
-          .attr("opacity", opacity);
-  
-        if (y < -200) {
-          setTimeout(animateWave, 600);
-          return;
-        }
-        requestAnimationFrame(frame);
+document.addEventListener("DOMContentLoaded", () => {
+
+  const svg = d3.select("#usa-svg");
+  const width = 960;
+  const height = 600;
+
+  const projection = d3.geoAlbersUsa()
+      .translate([width / 2, height / 2])
+      .scale(1200);
+
+  const path = d3.geoPath().projection(projection);
+
+  // Load USA map
+  d3.json("https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json")
+    .then(us => {
+
+      const states = topojson.feature(us, us.objects.states).features;
+
+      // Draw state outlines
+      svg.selectAll("path")
+        .data(states)
+        .enter()
+        .append("path")
+        .attr("d", path)
+        .attr("fill", "rgba(0,255,255,0.08)")
+        .attr("stroke", "#0ff")
+        .attr("stroke-width", "1")
+        .attr("stroke-linejoin", "round")
+        .attr("stroke-dasharray", 2000)
+        .attr("stroke-dashoffset", 2000)
+        .transition()
+        .duration(2400)
+        .attr("stroke-dashoffset", 0);
+
+      // Bring waveCircle to front so it's NOT hidden
+      svg.select("#waveCircle").raise();
+
+      // Sample seismic pulse points
+      const events = [
+        {lat: 34.05, lon: -118.24}, // LA
+        {lat: 40.71, lon: -74.00},  // NYC
+        {lat: 47.61, lon: -122.33}, // Seattle
+        {lat: 32.78, lon: -96.80},  // Dallas
+      ];
+
+      svg.selectAll(".usa-pulse")
+        .data(events)
+        .enter()
+        .append("circle")
+        .attr("class", "usa-pulse")
+        .attr("cx", d => projection([d.lon, d.lat])[0])
+        .attr("cy", d => projection([d.lon, d.lat])[1])
+        .attr("r", 5);
+
+    });
+
+
+  // ======= GAUSSIAN TRAVELLING WAVE ANIMATION =======
+  const wave = d3.select("#waveCircle");
+  let startY = height + 150;
+  const centerX = width / 2;
+
+  function animateWave() {
+    let y = startY;
+    let radius = 40;
+
+    function frame() {
+      y -= 2.1;          // northward
+      radius += 1.4;     // expand
+      let opacity = 0.9 * Math.exp(-radius / 260);
+
+      wave
+        .attr("cx", centerX)
+        .attr("cy", y)
+        .attr("r", radius)
+        .attr("opacity", opacity);
+
+      if (y < -200) {
+        setTimeout(animateWave, 600);
+        return;
       }
-  
-      frame();
+      requestAnimationFrame(frame);
     }
-  
-    animateWave();
-  
-  });
-  </script>
-  
+
+    frame();
+  }
+
+  animateWave();
+
+});
+</script>
+<defs>
+  <!-- 🔥 RED Gaussian radial gradient -->
+  <radialGradient id="gaussWave" cx="50%" cy="50%" r="50%">
+    <stop offset="0%"   stop-color="rgba(255, 60, 60, 0.85)" />
+    <stop offset="35%"  stop-color="rgba(255, 60, 60, 0.45)" />
+    <stop offset="70%"  stop-color="rgba(255, 60, 60, 0.15)" />
+    <stop offset="100%" stop-color="rgba(255, 60, 60, 0)" />
+  </radialGradient>
+</defs>
+
 </body>
 </html>
