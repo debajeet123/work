@@ -1266,49 +1266,6 @@
     color: #ccc;
   "></div>
 </section>
-
-
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-  
-      const svg = d3.select("#usa-svg");
-      const wave = d3.select("#waveCircle");
-  
-      const width = 960;
-      const height = 600;
-  
-      let startY = height + 150;  
-      const centerX = width / 2; 
-  
-      function animateWave() {
-          let y = startY;
-          let radius = 40;
-  
-          function frame() {
-              y -= 2.1;
-              radius += 1.4;
-              let opacity = 0.9 * Math.exp(-radius / 260);
-              
-              wave
-                .attr("cx", centerX)
-                .attr("cy", y)
-                .attr("r", radius)
-                .attr("opacity", opacity);
-  
-              if (y < -200) {
-                  setTimeout(animateWave, 700);
-                  return;
-              }
-  
-              requestAnimationFrame(frame);
-          }
-          frame();
-      }
-  
-      animateWave();
-  });
-  </script>
-  
   
   
   <script>
