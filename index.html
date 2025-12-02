@@ -883,22 +883,44 @@
 /* === GOOGLE SCHOLAR METRICS BOX === */
 /* --- Tight Metric Box --- */
 #scholar-box {
-  position: absolute;
-  top: 300px;            /* Just below the profile picture */
-  left: 50px;            /* Align with left edge of photo */
-  width: 210px;          /* Narrower box */
-  padding: 8px 12px;     /* Minimal padding */
-  background: rgba(0,0,0,0.45);
-  border: 1px solid rgba(0,255,255,0.22);
-  border-radius: 10px;
-  box-shadow: 0 0 16px rgba(0,255,255,0.25);
-  font-family: "Courier New", monospace;
-  z-index: 2000;
-  transform: none !important;
+  position: fixed;
+  top: 270px;         /* just under photo */
+  left: 50px;
+  width: 210px;
+  padding: 10px 14px;
+
+  background: rgba(0,0,0,0.55);
+  border: 1px solid rgba(0,255,255,0.25);
+  border-radius: 12px;
+  box-shadow: 0 0 18px rgba(0,255,255,0.35);
+
   display: flex;
   flex-direction: column;
-  gap: 8px;             /* Tight spacing between rows */
+  gap: 6px;
+
+  font-family: "Courier New", monospace;
+  z-index: 4000;   /* prevent hiding */
 }
+
+.scholar-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.scholar-label {
+  color: #b5faff;
+  font-size: 0.7em;
+  opacity: 0.8;
+}
+
+.scholar-value {
+  color: #67ffff;
+  font-size: 1.25em;
+  font-weight: bold;
+  text-shadow: 0 0 6px rgba(0,255,255,0.4);
+}
+
 
 .scholar-item {
   display: flex;
@@ -1009,6 +1031,7 @@
       <div class="scholar-value" id="i10-val">?</div>
     </div>
   </div>
+  
   
   <div id="globe-container"></div>
   <div style="
@@ -1834,6 +1857,21 @@ document.addEventListener("DOMContentLoaded", () => {
     <stop offset="100%" stop-color="rgba(255, 60, 60, 0)" />
   </radialGradient>
 </defs>
+
+<script>
+  function updateScholarBox() {
+    fetch('./rg_stats.json?t=' + Date.now())
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('hindex-val').textContent = data.h_index;
+        document.getElementById('citations-val').textContent = data.citations;
+        document.getElementById('i10-val').textContent = data.i10_index;
+      });
+  }
+
+  updateScholarBox();
+  setInterval(updateScholarBox, 60000);
+</script>
 
 </body>
 </html>
