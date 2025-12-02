@@ -1775,51 +1775,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 </script>
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-  
-    const svg = d3.select("#usa-svg");
-    const wave = d3.select("#waveCircle");
-  
-    const width = 960;
-    const height = 600;
-  
-    // Starting point (just below southern US)
-    let startY = height + 150;  
-    const centerX = width / 2; 
-  
-    function animateWave() {
-      let y = startY;
-      let radius = 30;
-  
-      function frame() {
-        y -= 2.2;          // moves upward (north)
-        radius += 1.4;     // expands
-        let opacity = 0.8 * Math.exp(-radius / 250);  // Gaussian fade
-  
-        wave
-          .attr("cx", centerX)
-          .attr("cy", y)
-          .attr("r", radius)
-          .attr("opacity", opacity);
-  
-        // Restart once wave passes Canada
-        if (y < -200) {
-          setTimeout(animateWave, 700); // delay before next wave
-          return;
-        }
-  
-        requestAnimationFrame(frame);
-      }
-  
-      frame();
-    }
-  
-    // Start the infinite loop
-    animateWave();
-  
-  });
-  </script>
+
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
