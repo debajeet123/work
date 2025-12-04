@@ -1460,14 +1460,12 @@
           <h4>DRL-Based Seismic Multiple Suppression</h4>
           <h2>Deep Reinforcement Learning for Multiple Suppression (DRL-AutoMute)</h2>
           <p>
-            Combined distributed acoustic sensing (DAS) strain responses with
-            micro-gravity anomalies to constrain shallow subsurface structure in
-            environments where conventional receivers are sparse or impractical.
+            Python/PyTorch environment and DQN agent for adaptive muting of seismic multiples. The environment defines actions as mute-parameter updates (e.g., slope, intercept, taper length), and the reward is computed from residual multiple energy and preservation of primary amplitudes. Developed originally for Shell’s AutoMatch project to demonstrate that DRL can outperform static Bayesian parameter searches for multiple attenuation.
           </p>
-          <p>
+          <!-- <p>
             Designed joint objective functions that balance sensitivity to density
             and elastic moduli, improving resolution of near-surface heterogeneity.
-          </p>
+          </p> -->
           <div class="project-tags">
             <span class="project-tag">DAS</span>
             <span class="project-tag">Micro-gravity</span>
