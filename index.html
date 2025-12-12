@@ -1232,6 +1232,16 @@
 .contact-card:hover {
   transform: scale(1.03);
 }
+#pub-world{
+  position: fixed; top: 470px; left: 50px; width: 210px;
+  background: rgba(0,0,0,0.45);
+  border: 1px solid rgba(0,255,255,0.18);
+  border-radius: 12px; padding: 8px 10px;
+  box-shadow: 0 0 12px rgba(0,255,255,0.2);
+}
+.pw-title{ color:#0ff; font-size:.75em; text-align:center; margin-bottom:6px;}
+#pw-map circle{ fill:#0ff; opacity:.8; }
+#pw-map path{ fill:rgba(0,255,255,.06); stroke:#0ff; stroke-width:.5; }
 
 
   </style>
@@ -1268,24 +1278,11 @@
     </div>
   </div>
 
-  <div id="crustal-pubs">
-    <div class="crustal-title">Recent Crustal Modeling</div>
-  
-    <div class="crustal-item">
-      <strong>Barman et al. (2024)</strong><br>
-      Ambient seismic noise tomography of the Suwannee suture zone
-    </div>
-  
-    <div class="crustal-item">
-      <strong>Vanga, Barman et al. (2022)</strong><br>
-      Finite-difference wave propagation for crustal modeling
-    </div>
-  
-    <div class="crustal-item">
-      <strong>Quiros, Pulliam, Barman (2018)</strong><br>
-      Ambient noise tomography of Hispaniola & Puerto Rico
-    </div>
+  <div id="pub-world">
+    <div class="pw-title">Publications · Global</div>
+    <svg id="pw-map" viewBox="0 0 360 180"></svg>
   </div>
+  
   
 
   <div id="globe-container"></div>
@@ -2149,6 +2146,34 @@
     updateScholarBox();
     setInterval(updateScholarBox, 60000);
   </script>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson@3"></script>
+<script>
+const pubs = [
+  {lon:-84, lat:33},   // SE USA (Suwannee)
+  {lon:-98, lat:35},   // Central USA
+  {lon:-66, lat:18},   // Puerto Rico
+  {lon: 90, lat:23},   // India
+  {lon:-3,  lat:55}    // Europe
+];
+
+const svg=d3.select("#pw-map"), w=360,h=180;
+const proj=d3.geoEquirectangular().fitSize([w,h],{type:"Sphere"});
+const path=d3.geoPath(proj);
+
+d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json")
+.then(world=>{
+  svg.append("path")
+     .datum(topojson.feature(world, world.objects.countries))
+     .attr("d",path);
+
+  svg.selectAll("circle").data(pubs).enter()
+     .append("circle")
+     .attr("cx",d=>proj([d.lon,d.lat])[0])
+     .attr("cy",d=>proj([d.lon,d.lat])[1])
+     .attr("r",2.5);
+});
+</script>
 
 </body>
 
