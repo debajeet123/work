@@ -10,12 +10,14 @@
     gtag('js', new Date());
     gtag('config', 'G-ERJ1DQTCN0');
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
 
   <meta charset="UTF-8" />
   <title>Debajeet Barman – Geophysicist</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <style>
+    
     .metric{
   margin-top:8px;
   background:rgba(0,0,0,0.55);
@@ -33,6 +35,11 @@
   font-size:1.4em;
   color:#0ff;
   text-shadow:0 0 6px rgba(0,255,255,0.45);
+}
+.metric{
+  position: fixed;
+  top: 500px;   /* below scholar box */
+  left: 50px;
 }
 
     @keyframes flipDigits {
@@ -2197,33 +2204,9 @@ d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json")
      .attr("r",2.5);
 });
 </script>
-<script>
-  const el = document.getElementById('citations');
-  let last = 0;
+
   
-  function animateTo(target){
-    anime({
-      targets:{v:last},
-      v:target,
-      duration:900,
-      easing:'easeOutQuint',
-      round:1,
-      update:a => el.textContent = a.animations[0].currentValue,
-      complete:() => last = target
-    });
-  }
-  
-  function updateMetric(){
-    fetch('./rg_stats.json?t=' + Date.now())
-      .then(r => r.json())
-      .then(d => animateTo(+d.citations))
-      .catch(()=>{});
-  }
-  
-  updateMetric();
-  setInterval(updateMetric, 60000);
-  </script>
-  
+
 </body>
 
 </html>
