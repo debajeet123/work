@@ -2205,6 +2205,36 @@ d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json")
 });
 </script>
 
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const el = document.getElementById('citations');
+    if (!el) return;
+  
+    let last = 0;
+  
+    function animateTo(target){
+      anime({
+        targets: { v: last },
+        v: target,
+        duration: 900,
+        easing: 'easeOutQuint',
+        round: 1,
+        update: a => el.textContent = a.animations[0].currentValue,
+        complete: () => last = target
+      });
+    }
+  
+    function updateMetric(){
+      fetch('./rg_stats.json?t=' + Date.now())
+        .then(r => r.json())
+        .then(d => animateTo(+d.citations))
+        .catch(()=>{});
+    }
+  
+    updateMetric();
+    setInterval(updateMetric, 60000);
+  });
+  </script>
   
 
 </body>
