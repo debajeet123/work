@@ -16,6 +16,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <style>
+    .metric{
+  margin-top:8px;
+  background:rgba(0,0,0,0.55);
+  border:1px solid rgba(0,255,255,0.25);
+  border-radius:10px;
+  padding:8px 12px;
+  font-family:Courier New, monospace;
+  box-shadow:0 0 12px rgba(0,255,255,0.3);
+}
+.metric .label{
+  font-size:0.7em;
+  color:#9ff;
+}
+.metric .value{
+  font-size:1.4em;
+  color:#0ff;
+  text-shadow:0 0 6px rgba(0,255,255,0.45);
+}
+
     @keyframes flipDigits {
       0% {
         transform: rotateX(90deg);
@@ -1259,7 +1278,11 @@
   <div class="profile-photo">
     <img src="profile.jpg" alt="Debajeet Barman">
   </div>
-
+  <div class="metric">
+    <div class="label">Citations</div>
+    <div class="value" id="citations">0</div>
+  </div>
+  
   <div id="scholar-box">
     <div class="scholar-item">
       <div class="scholar-label">H-Index</div>
@@ -2174,7 +2197,33 @@ d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json")
      .attr("r",2.5);
 });
 </script>
-
+<script>
+  const el = document.getElementById('citations');
+  let last = 0;
+  
+  function animateTo(target){
+    anime({
+      targets:{v:last},
+      v:target,
+      duration:900,
+      easing:'easeOutQuint',
+      round:1,
+      update:a => el.textContent = a.animations[0].currentValue,
+      complete:() => last = target
+    });
+  }
+  
+  function updateMetric(){
+    fetch('./rg_stats.json?t=' + Date.now())
+      .then(r => r.json())
+      .then(d => animateTo(+d.citations))
+      .catch(()=>{});
+  }
+  
+  updateMetric();
+  setInterval(updateMetric, 60000);
+  </script>
+  
 </body>
 
 </html>
