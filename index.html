@@ -38,6 +38,22 @@
   color:#0ff;
   text-shadow:0 0 6px rgba(0,255,255,0.45);
 }
+.geo-wrap{
+  position:fixed;
+  left:18px;
+  bottom:18px;
+  width:260px;
+  z-index:1200;
+  pointer-events:none;
+}
+#geo *{
+  fill:none;
+  stroke:#0ff;
+  stroke-width:2.5;
+  stroke-linecap:round;
+}
+#geo rect{fill:rgba(0,255,255,.1)}
+#geo .magnet{stroke:#ff8800;fill:rgba(255,136,0,.18)}
 
 
     @keyframes flipDigits {
@@ -1669,6 +1685,24 @@
     <ul id="quake-list"></ul>
   </div>
 
+  <div class="geo-wrap">
+    <svg id="geo" viewBox="0 0 520 260">
+      <rect x="60" y="30" width="400" height="170" rx="8"/>
+      <path d="M240 200h40l-20 50z"/>
+  
+      <path class="spring"
+        d="M260 40v10l-15 8 30 8-30 8 30 8-30 8 30 8-15 8v10"/>
+  
+      <g id="mass">
+        <rect x="210" y="120" width="100" height="55" rx="10"/>
+        <path d="M210 135c18-14 82-14 100 0"/>
+        <path d="M210 150c18-14 82-14 100 0"/>
+        <path d="M210 165c18-14 82-14 100 0"/>
+        <rect x="240" y="128" width="40" height="40" rx="6" class="magnet"/>
+      </g>
+    </svg>
+  </div>
+  
   <script>
     const quakeList = document.getElementById('quake-list');
     const quakeAPI = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson';
