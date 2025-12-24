@@ -2046,7 +2046,45 @@
 
     });
   </script>
-
+<script>
+anime({
+  targets:"#mass",
+  translateY:[-6,6],
+  direction:"alternate",
+  loop:true,
+  easing:"easeInOutSine",
+  duration:520
+});
+anime({
+  targets:".spring",
+  scaleY:[0.9,1.1],
+  transformOrigin:"260px 40px",
+  direction:"alternate",
+  loop:true,
+  duration:520,
+  easing:"easeInOutSine"
+});
+</script>
+<script>
+  anime({
+    targets:"#mass",
+    translateY:[-6,6],
+    direction:"alternate",
+    loop:true,
+    easing:"easeInOutSine",
+    duration:520
+  });
+  anime({
+    targets:".spring",
+    scaleY:[0.9,1.1],
+    transformOrigin:"260px 40px",
+    direction:"alternate",
+    loop:true,
+    duration:520,
+    easing:"easeInOutSine"
+  });
+  </script>
+  
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       // remove active from all tabs + sections
