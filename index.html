@@ -1287,18 +1287,18 @@
   <div id="scholar-box">
     <div class="scholar-item">
       <div class="scholar-label">H-Index</div>
-      <div class="scholar-value" id="hindex-val">?</div>
+      <div class="scholar-value loading" id="hindex-val">?</div>
     </div>
 
 
     <div class="scholar-item">
       <div class="scholar-label">Citations</div>
-      <div class="scholar-value" id="citations-val">?</div>
+      <div class="scholar-value loading" id="citations-val">?</div>
     </div>
 
     <div class="scholar-item">
       <div class="scholar-label">i10-Index</div>
-      <div class="scholar-value" id="i10-val">?</div>
+      <div class="scholar-value loading" id="i10-val">?</div>
     </div>
   </div>
 
@@ -2152,16 +2152,15 @@
     </radialGradient>
   </defs>
 
-
-
-
-
   <script>
     document.addEventListener('DOMContentLoaded', () => {
     
+      const hEl  = document.getElementById('hindex-val');
+      const cEl  = document.getElementById('citations-val');
+      const iEl  = document.getElementById('i10-val');
+    
       const loaders = document.querySelectorAll('.scholar-value.loading');
     
-      // animated ? → … → ? loop
       const loadingAnim = anime({
         targets: loaders,
         opacity: [0.3, 1],
@@ -2171,9 +2170,9 @@
         easing: 'linear'
       });
     
-      const state = { h: 0, c: 0, i10: 0 };
+      const state = { h: 0, c: 0, i: 0 };
     
-      function tick(el, from, to){
+      function tick(el, from, to) {
         anime({
           targets: { v: from },
           v: to,
@@ -2184,20 +2183,20 @@
         });
       }
     
-      function updateScholar(){
+      function updateScholar() {
         fetch('./rg_stats.json?t=' + Date.now())
           .then(r => r.json())
           .then(d => {
             loadingAnim.pause();
             loaders.forEach(el => el.classList.remove('loading'));
     
-            tick(hindex-val,     state.h,   d.h_index);
-            tick(citations-val, state.c,   d.citations);
-            tick(i10-val,       state.i10, d.i10_index);
+            tick(hEl, state.h, d.h_index);
+            tick(cEl, state.c, d.citations);
+            tick(iEl, state.i, d.i10_index);
     
             state.h = d.h_index;
             state.c = d.citations;
-            state.i10 = d.i10_index;
+            state.i = d.i10_index;
           });
       }
     
@@ -2206,10 +2205,6 @@
     });
     </script>
     
-    
-    
-
-  
 </body>
 
 </html>
