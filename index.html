@@ -2162,94 +2162,42 @@
 
 
 
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const el = document.getElementById('citations');
-    if (!el) return;
-  
-    let last = 0;
-  
-    function animateTo(target){
-      anime({
-        targets: { v: last },
-        v: target,
-        duration: 900,
-        easing: 'easeOutQuint',
-        round: 1,
-        update: a => el.textContent = a.animations[0].currentValue,
-        complete: () => last = target
-      });
-    }
-  
-    function updateMetric(){
-      fetch('./rg_stats.json?t=' + Date.now())
-        .then(r => r.json())
-        .then(d => animateTo(+d.citations))
-        .catch(()=>{});
-    }
-  
-    updateMetric();
-    setInterval(updateMetric, 60000);
-  });
-  </script>
-  
   <script>
     document.addEventListener('DOMContentLoaded', () => {
     
-      const state = {
-        h: 0,
-        c: 0,
-        i10: 0
-      };
+      const state = { h: 0, c: 0, i10: 0 };
     
-      function animateNumber(el, from, to) {
+      function tick(el, from, to){
         anime({
           targets: { v: from },
           v: to,
-          duration: 900,
-          easing: 'easeOutQuint',
+          duration: 1200,
+          easing: 'linear',   // timer feel
           round: 1,
           update: a => el.textContent = a.animations[0].currentValue
         });
       }
     
-      function refreshMetrics() {
+      function updateScholarTimer(){
         fetch('./rg_stats.json?t=' + Date.now())
           .then(r => r.json())
           .then(d => {
-    
-            animateNumber(
-              document.getElementById('hindex-val'),
-              state.h, d.h_index
-            );
-    
-            animateNumber(
-              document.getElementById('citations-val'),
-              state.c, d.citations
-            );
-    
-            animateNumber(
-              document.getElementById('i10-val'),
-              state.i10, d.i10_index
-            );
-    
-            // Global map citation number (if present)
-            const mapCount = document.querySelector('#pub-world .pw-title span');
-            if (mapCount) {
-              animateNumber(mapCount, state.c, d.citations);
-            }
+            tick(hindex-val,    state.h,   d.h_index);
+            tick(citations-val,state.c,   d.citations);
+            tick(i10-val,      state.i10, d.i10_index);
     
             state.h   = d.h_index;
             state.c   = d.citations;
             state.i10 = d.i10_index;
           })
-          .catch(() => {});
+          .catch(()=>{});
       }
     
-      refreshMetrics();
-      setInterval(refreshMetrics, 60000); // auto-refresh every minute
+      updateScholarTimer();
+      setInterval(updateScholarTimer, 60000);
     });
     </script>
+    
     
 
   
