@@ -1891,29 +1891,7 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      function updateRGStats() {
-        fetch('./rg_stats.json?t=' + Date.now())
-          .then(res => {
-            if (!res.ok) throw new Error(res.statusText);
-            return res.json();
-          })
-          .then(data => {
-            document.querySelector('#flip-rg-score .back').textContent = data.rg_score;
-            document.querySelector('#flip-citations .back').textContent = data.citations;
-            document.querySelector('#flip-reads .back').textContent = data.reads;
-
-            // Optional: trigger animation
-            ['#flip-rg-score', '#flip-citations', '#flip-reads'].forEach(id => {
-              const el = document.querySelector(id + ' .flap');
-              el.classList.remove('flipped');
-              void el.offsetWidth; // Force reflow
-              el.classList.add('flipped');
-            });
-          })
-          .catch(err => {
-            console.error('Failed to update RG stats:', err);
-          });
-      }
+      
 
       updateRGStats();                 // initial
       setInterval(updateRGStats, 60000); // every 60 seconds
