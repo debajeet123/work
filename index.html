@@ -2159,6 +2159,18 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
     
+      const loaders = document.querySelectorAll('.scholar-value.loading');
+    
+      // animated ? → … → ? loop
+      const loadingAnim = anime({
+        targets: loaders,
+        opacity: [0.3, 1],
+        duration: 600,
+        direction: 'alternate',
+        loop: true,
+        easing: 'linear'
+      });
+    
       const state = { h: 0, c: 0, i10: 0 };
     
       function tick(el, from, to){
@@ -2166,31 +2178,34 @@
           targets: { v: from },
           v: to,
           duration: 1200,
-          easing: 'linear',   // timer feel
+          easing: 'linear',
           round: 1,
           update: a => el.textContent = a.animations[0].currentValue
         });
       }
     
-      function updateScholarTimer(){
+      function updateScholar(){
         fetch('./rg_stats.json?t=' + Date.now())
           .then(r => r.json())
           .then(d => {
-            tick(hindex-val,    state.h,   d.h_index);
-            tick(citations-val,state.c,   d.citations);
-            tick(i10-val,      state.i10, d.i10_index);
+            loadingAnim.pause();
+            loaders.forEach(el => el.classList.remove('loading'));
     
-            state.h   = d.h_index;
-            state.c   = d.citations;
+            tick(hindex-val,     state.h,   d.h_index);
+            tick(citations-val, state.c,   d.citations);
+            tick(i10-val,       state.i10, d.i10_index);
+    
+            state.h = d.h_index;
+            state.c = d.citations;
             state.i10 = d.i10_index;
-          })
-          .catch(()=>{});
+          });
       }
     
-      updateScholarTimer();
-      setInterval(updateScholarTimer, 60000);
+      updateScholar();
+      setInterval(updateScholar, 60000);
     });
     </script>
+    
     
     
 
