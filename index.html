@@ -2162,20 +2162,7 @@
     </radialGradient>
   </defs>
 
-  <script>
-    function updateScholarBox() {
-      fetch('./rg_stats.json?t=' + Date.now())
-        .then(res => res.json())
-        .then(data => {
-          document.getElementById('hindex-val').textContent = data.h_index;
-          document.getElementById('citations-val').textContent = data.citations;
-          document.getElementById('i10-val').textContent = data.i10_index;
-        });
-    }
 
-    updateScholarBox();
-    setInterval(updateScholarBox, 60000);
-  </script>
 <script src="https://d3js.org/d3.v7.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/topojson@3"></script>
 <script>
@@ -2236,7 +2223,66 @@ d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json")
   });
   </script>
   
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+    
+      const state = {
+        h: 0,
+        c: 0,
+        i10: 0
+      };
+    
+      function animateNumber(el, from, to) {
+        anime({
+          targets: { v: from },
+          v: to,
+          duration: 900,
+          easing: 'easeOutQuint',
+          round: 1,
+          update: a => el.textContent = a.animations[0].currentValue
+        });
+      }
+    
+      function refreshMetrics() {
+        fetch('./rg_stats.json?t=' + Date.now())
+          .then(r => r.json())
+          .then(d => {
+    
+            animateNumber(
+              document.getElementById('hindex-val'),
+              state.h, d.h_index
+            );
+    
+            animateNumber(
+              document.getElementById('citations-val'),
+              state.c, d.citations
+            );
+    
+            animateNumber(
+              document.getElementById('i10-val'),
+              state.i10, d.i10_index
+            );
+    
+            // Global map citation number (if present)
+            const mapCount = document.querySelector('#pub-world .pw-title span');
+            if (mapCount) {
+              animateNumber(mapCount, state.c, d.citations);
+            }
+    
+            state.h   = d.h_index;
+            state.c   = d.citations;
+            state.i10 = d.i10_index;
+          })
+          .catch(() => {});
+      }
+    
+      refreshMetrics();
+      setInterval(refreshMetrics, 60000); // auto-refresh every minute
+    });
+    </script>
+    
 
+  
 </body>
 
 </html>
