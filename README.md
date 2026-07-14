@@ -5,10 +5,10 @@ This repository contains the code for a simple personal webpage highlighting the
 ## Contents
 
 - `index.html` – main webpage with information, images and navigation tabs
-- `globe.css` and `globe 2.css` – stylesheets used by the page
+- `globe.css` – stylesheet used by the page
 - `publications.json` – list of publications generated from Google Scholar
 - Python utilities:
-  - `generate_background.py` and variants – create starry background images
+  - `generate_background.py` – create starry background images
   - `pubcreate.py` – fetch publication data from Scholar
   - `3dmodel.py` – experiments in generating 3‑D objects using the `pythonocc` library
 

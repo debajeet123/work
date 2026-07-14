@@ -1,0 +1,17 @@
+# Dependencies (reproducible from package.json / package-lock.json)
+node_modules/
+
+# Python
+venv/
+.venv/
+__pycache__/
+*.pyc
+
+# macOS
+.DS_Store
+
+# Editor
+.vscode/*
+!.vscode/tasks.json
+!.vscode/task.json
+!.vscode/settings.json
