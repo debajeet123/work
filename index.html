@@ -1678,49 +1678,30 @@
 
 
   <script>
-    fetch('https://api.github.com/repos/debajeet123/Geological_feature_tool/commits')
-      .then(response => response.json())
-      .then(data => {
-        const list = document.getElementById('commit-list');
-        data.slice(0, 5).forEach(commit => {
-          const item = document.createElement('li');
-          item.innerHTML = `
-            <a href="${commit.html_url}" target="_blank">
-              ${commit.commit.message.split('\n')[0]} – <em>${commit.commit.author.name}</em>
-            </a>
-          `;
-          list.appendChild(item);
-        });
-      });
-
-
-    let currentSlide = 0;
-
-    function showSlide(index) {
-      const slides = document.getElementById('slides');
-      const totalSlides = slides.children.length;
-      currentSlide = (index + totalSlides) % totalSlides;
-      slides.style.transform = `translateX(-${currentSlide * 100}%)`;
+    // Recent-commits list — only fetch if the target element exists on this page.
+    // (Previously this ran unconditionally and appended to a null #commit-list,
+    //  producing an uncaught promise error on every load.)
+    if (document.getElementById('commit-list')) {
+      fetch('https://api.github.com/repos/debajeet123/Geological_feature_tool/commits')
+        .then(response => response.json())
+        .then(data => {
+          const list = document.getElementById('commit-list');
+          data.slice(0, 5).forEach(commit => {
+            const item = document.createElement('li');
+            item.innerHTML = `
+              <a href="${commit.html_url}" target="_blank">
+                ${commit.commit.message.split('\n')[0]} – <em>${commit.commit.author.name}</em>
+              </a>
+            `;
+            list.appendChild(item);
+          });
+        })
+        .catch(() => {});
     }
 
-    function nextSlide() {
-      showSlide(currentSlide + 1);
-    }
-
-    function prevSlide() {
-      showSlide(currentSlide - 1);
-    }
-    function showSlide(index) {
-      const slides = document.getElementById('slides');
-      const totalSlides = slides.children.length;
-      currentSlide = (index + totalSlides) % totalSlides;
-      slides.style.transform = `translateX(-${currentSlide * 100}%)`;
-      slides.style.transition = 'transform 0.6s ease-in-out';
-    }
-
-    document.addEventListener('DOMContentLoaded', () => showSlide(0));
-
-
+    // Removed dead carousel code (showSlide/nextSlide/prevSlide + a showSlide(0)
+    // call on DOMContentLoaded). It referenced a #slides element that does not
+    // exist, throwing "Cannot read properties of null (reading 'children')".
   </script>
 
 <section id="contact" class="tab-section">
@@ -1856,8 +1837,10 @@
       });
     });
   </script>
-  <!-- Globe.gl + Three.js -->
-  <script src="https://unpkg.com/three"></script>
+  <!-- Globe.gl (bundles its own Three.js).
+       The standalone unpkg "three" script was removed: it is a CJS/ESM build that
+       threw "exports is not defined" as a classic <script> and caused a duplicate
+       Three.js instance. No global THREE is used on the page. -->
   <script src="https://unpkg.com/globe.gl"></script>
   <!-- Required for topojson -->
   <script src="https://unpkg.com/topojson@3"></script>
