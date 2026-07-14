@@ -1386,6 +1386,28 @@
       *{ animation-duration:.001ms!important; animation-iteration-count:1!important; transition-duration:.001ms!important; }
     }
 
+    /* Layout fix: the tab-section panels were fixed & vertically centered, so on
+       shorter viewports they grew taller than the screen (clipping top & bottom)
+       and their <h1> slid up behind the decorative strata band. Anchor them just
+       below the header band and let them scroll internally instead. */
+    .tab-section{
+      top: 290px;
+      transform: translate(-50%, 0) !important;
+      box-sizing: border-box;
+      max-height: calc(100vh - 305px);
+      overflow-y: auto;
+      overscroll-behavior: contain;
+    }
+    /* inner scroll containers no longer need their own tall cap — let the panel
+       own the scrolling so there's a single, predictable scrollbar */
+    #about .about-scroll, #Publications .about-scroll, #readme-section .about-scroll,
+    #projects .project-deck{
+      max-height: none;
+    }
+    @media (max-width: 600px){
+      .tab-section{ top: 270px; max-height: calc(100vh - 285px); width: 92%; padding: 20px !important; }
+    }
+
   </style>
 </head>
 
