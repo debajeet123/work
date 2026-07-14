@@ -173,11 +173,7 @@
       background-position: center -150px;
       z-index: 1;
       opacity: 0.9;
-
-      -webkit-mask-image: url('./mask-pattern.svg');
-      mask-image: url('./mask-pattern.svg');
-      mask-size: 100% 100%;
-      mask-repeat: no-repeat;
+      /* mask-pattern.svg not present in repo; masking removed to avoid a 404. */
     }
 
     @keyframes windFlag {
@@ -287,18 +283,8 @@
 
     }
 
-    .tabs-background::after {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 30px;
-      background: url('torn-edge.png') repeat-x;
-      background-size: contain;
-      pointer-events: none;
-      z-index: 3;
-    }
+    /* .tabs-background::after used torn-edge.png, which is not in the repo (404).
+       Removed the decorative torn-edge overlay rather than ship a broken image ref. */
 
     .tabs-wrapper {
       max-width: var(--tabs-width);
@@ -1960,28 +1946,11 @@
           .pointRadius('size');
       });
 
-    fetch('https://raw.githubusercontent.com/opengeoscience/geo-data/main/volcanoes.json')
-      .then(res => res.json())
-      .then(data => {
-        const volcanoes = data.features.map(v => ({
-          lat: v.geometry.coordinates[1],
-          lng: v.geometry.coordinates[0],
-          name: v.properties.V_Name
-        }));
-
-        world
-          .customLayerData(volcanoes)
-          .customThreeObject(d => {
-            const sprite = new THREE.Sprite(new THREE.SpriteMaterial({
-              color: '#ff4444'
-            }));
-            sprite.scale.set(0.5, 0.5, 0.5); // Adjust size
-            return sprite;
-          })
-          .customThreeObjectUpdate((obj, d) => {
-            obj.position.copy(world.getCoords(d.lat, d.lng));
-          });
-      });
+    // Volcano markers removed: the source
+    // (raw.githubusercontent.com/opengeoscience/geo-data/main/volcanoes.json)
+    // is permanently 404 and threw an uncaught JSON parse error on every load.
+    // To restore, point the fetch at a valid GeoJSON of volcanoes and re-add the
+    // world.customLayerData(...) sprite layer here.
 
   </script>
 
@@ -2039,14 +2008,9 @@
       });
   </script>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      
-
-      updateRGStats();                 // initial
-      setInterval(updateRGStats, 60000); // every 60 seconds
-    });
-  </script>
+  <!-- Scholar metrics are populated by updateScholar() near the end of <body>,
+       which handles the initial load and a 60s refresh. (Removed a dead call to
+       the undefined updateRGStats() that threw a ReferenceError on every load.) -->
 
   <script>
     const traceCanvas = document.getElementById('trace');
