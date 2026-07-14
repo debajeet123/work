@@ -1389,14 +1389,17 @@
     /* Layout fix: the tab-section panels were fixed & vertically centered, so on
        shorter viewports they grew taller than the screen (clipping top & bottom)
        and their <h1> slid up behind the decorative strata band. Anchor them just
-       below the header band and let them scroll internally instead. */
+       under the nav — above the band (z-index) so the heading stays visible —
+       and let them scroll internally, removing the large empty gap up top. */
     .tab-section{
-      top: 290px;
+      top: 150px;
       transform: translate(-50%, 0) !important;
       box-sizing: border-box;
-      max-height: calc(100vh - 305px);
+      max-height: calc(100vh - 172px);
       overflow-y: auto;
       overscroll-behavior: contain;
+      z-index: 60;               /* above the strata band (2) so the h1 isn't hidden */
+      padding: 26px 34px !important;
     }
     /* inner scroll containers no longer need their own tall cap — let the panel
        own the scrolling so there's a single, predictable scrollbar */
@@ -1405,7 +1408,7 @@
       max-height: none;
     }
     @media (max-width: 600px){
-      .tab-section{ top: 270px; max-height: calc(100vh - 285px); width: 92%; padding: 20px !important; }
+      .tab-section{ top: 140px; max-height: calc(100vh - 160px); width: 92%; padding: 18px !important; }
     }
 
   </style>
